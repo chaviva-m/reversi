@@ -20,36 +20,6 @@ Board::Board(int rows, int columns) : rows_(rows), columns_(columns) {
   }
 }
 
-void Board::printBoardToConsole() const {
-  //first row - #s of columns
-  cout << " | ";
-  for (int i = 0; i < this->columns_; i++) {
-    cout << i << " | ";
-  }
-  cout << endl;
-  for (int k = 0; k < (this->columns_ * 4 + 2); k++) {
-    cout << "-";
-  }
-  cout << endl;
-  //following rows - # of rows & board itself
-  for (int i = 0; i < this->rows_; i++) {
-    cout << i << "| ";
-    for (int j = 0; j < this->columns_; j++) {
-      if (this->board_[i][j].hasDisk()) {
-        cout << this->board_[i][j].getDisk()->getColor();
-      } else {
-        cout << " ";
-      }
-      cout << " | ";
-    }
-    cout << endl;
-    for (int k = 0; k < (this->columns_ * 4 + 2); k++) {
-      cout << "-";
-    }
-    cout << endl;
-  }
-}
-
 int Board::getRows() const {
   return this->rows_;
 }
@@ -96,4 +66,35 @@ Board::~Board() {
     delete[] this->board_[i];
   }
   delete this->board_;
+}
+
+ostream& operator << (ostream &out, const Board &board) {
+  //first row - #s of columns
+  out << " | ";
+  for (int i = 0; i < board.columns_; i++) {
+    out << i << " | ";
+  }
+  out << endl;
+  for (int k = 0; k < (board.columns_ * 4 + 2); k++) {
+    out << "-";
+  }
+  out << endl;
+  //following rows - # of rows & board itself
+  for (int i = 0; i < board.rows_; i++) {
+    out << i << "| ";
+    for (int j = 0; j < board.columns_; j++) {
+      if (board.board_[i][j].hasDisk()) {
+        out << board.board_[i][j].getDisk()->getColor();
+      } else {
+        out << " ";
+      }
+        out << " | ";
+      }
+      out << endl;
+    for (int k = 0; k < (board.columns_ * 4 + 2); k++) {
+      out << "-";
+    }
+    out << endl;
+  }
+  return out;
 }

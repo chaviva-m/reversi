@@ -7,10 +7,11 @@
 
 #include "GameFlow.h"
 using namespace std;
+using namespace message;
 
 GameFlow::GameFlow(Board& board, GameLogic& logic,
-    const map<Color, Player*>& players, Narrator& narrator) :
-    board_(board), logic_(logic), players_(players), narrator_(narrator) {
+    const map<Color, Player*>& players, Printer& printer) :
+    board_(board), logic_(logic), players_(players), printer_(printer) {
   num_disks_played_ = 0;
 }
 
@@ -40,18 +41,20 @@ void GameFlow::initializeBoard() {
 
 bool GameFlow::playOneRound() {
   for (int c = BLACK; c < LAST_COLOR; c++) {
-    narrator_.printBoard(board_);
+    printer_.printMessage(currentBoard());
+    printer_.printBoard(board_);
     //game is over if board is full
     if (num_disks_played_ == (board_.getRows() * board_.getCols())) {
       return false;
     }
-    narrator_.startTurn(players_[Color(c)]->getName());
+    printer_.printMessage(startTurn(players_[Color(c)]->getName()));
     vector<Cell*> moves(logic_.getPossibleMoves(board_, Color(c)));
     bool invalid_move = true;
       //player places a disk in one of possible moves
       if (!moves.empty()) {
           while(invalid_move) {
-          Point move = narrator_.getMove(moves);
+            printer_.printMessage(possibleMoves(moves));
+            Point move = players_[Color(c)]->decideOnAMove(board_, moves, logic_);
           if (board_.getCell(move.getRow(), move.getCol()) != NULL
               && find(moves.begin(), moves.end(),
               board_.getCell(move.getRow(), move.getCol())) != moves.end()) {
@@ -62,16 +65,20 @@ bool GameFlow::playOneRound() {
               players_[Color(c)]->flipDisks(logic_.getCellsToFlip(board_,
                   move.getRow(), move.getCol(), Color(c)));
           } else {
-            narrator_.invalidInput();
+            printer_.printMessage(invalidInput());
           }
         }
       //player has no possible moves
       } else {
-        narrator_.noPossibleMoves();
+        printer_.printMessage(noPossibleMoves());
         //if next player has no moves as well, game is over
         if (logic_.getPossibleMoves(board_,
             Color((c + 1) % LAST_COLOR)).empty()) {
           return false;
+        //else, play passes on to next player
+        } else {
+          string any_key; // or char
+          getline(cin, any_key); //or cin << any_key
         }
       }
   }
@@ -82,9 +89,9 @@ bool GameFlow::playOneRound() {
 void GameFlow::endGame() {
   Player* winner = this->determineWinner();
   if (winner == NULL) {
-    narrator_.declareTie();
+    printer_.printMessage(declareTie());
   } else {
-    narrator_.declareWinner(winner->getName());
+    printer_.printMessage(declareWinner(winner->getName()));
   }
 }
 

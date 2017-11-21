@@ -15,8 +15,9 @@
 #include "Board.h"
 #include "color.h"
 #include "GameLogic.h"
-#include "Narrator.h"
+#include "messages.h"
 #include "Player.h"
+#include "Printer.h"
 
 /**
  * controls flow of game
@@ -24,13 +25,13 @@
 class GameFlow {
 public:
   /**
-   * constructs game flow with board, game logic, players and narrator
+   * constructs game flow with board, game logic, players and printer
    * input: Board& board, GameLogic& logic,
-   *        std::map<Color, Player*> players, Narrator& narrator
+   *        std::map<Color, Player*> players, Printer& printer
    * output: void
    */
   GameFlow(Board& board, GameLogic& logic,
-            const std::map<Color, Player*>& players, Narrator& narrator);
+            const std::map<Color, Player*>& players, Printer& printer);
   /**
    * play game
    * input: void
@@ -67,7 +68,7 @@ private:
   Board& board_;
   GameLogic& logic_;
   std::map<Color,Player*> players_;
-  Narrator& narrator_;
+  Printer& printer_;
   int num_disks_played_;
 };
 

@@ -28,12 +28,6 @@ public:
    */
   Board(int rows = 0, int columns = 0);
   /**
-   * prints board to console
-   * input: void
-   * output: void
-   */
-  void printBoardToConsole() const;
-  /**
    * access # of rows of board
    * input: void
    * output: int rows
@@ -63,6 +57,12 @@ public:
    * output: void
    */
   ~Board();
+  /**
+   * board output
+   * input: std::ostream &out, const Board &board
+   * output: std::ostream& output
+   */
+  friend std::ostream& operator << (std::ostream &out, const Board &board);
 
 private:
   int rows_;

@@ -13,7 +13,7 @@
 
 #include "Cell.h"
 #include "color.h"
-
+#include "GameLogic.h"
 /**
  * player in game, has name and color
  */
@@ -50,7 +50,12 @@ public:
    */
   void flipDisks(const std::vector<Cell*>& cells_to_flip) const;
 
-private:
+  virtual Point decideOnAMove(Board& board,
+      std::vector<Cell*>& possibleMoves, GameLogic& logic) = 0;
+
+  virtual ~Player() {};
+
+protected:
   std::string name_;
   Color color_;
 };

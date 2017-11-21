@@ -11,11 +11,13 @@
 #include <map>
 #include <vector>
 
-#include "ConsoleNarrator.h"
 #include "GameFlow.h"
 #include "GameLogic.h"
-#include "Narrator.h"
+#include "HumanPlayer.h"
+#include "messages.h"
 #include "Player.h"
+#include "Printer.h"
+#include "ConsolePrinter.h"
 #include "StandardGameLogic.h"
 
 /**
@@ -51,14 +53,17 @@ private:
    */
   GameLogic* standardLogic();
   /**
-   * return narrator for console
+   * return printer for console
    * input: void
-   * output: Narrator*
+   * output: Printer*
    */
-  Narrator* consoleInterface();
+  Printer* consoleInterface();
+
+  std::map<Color,Player*> consolePlayers();
+
   Board* board_;
   GameLogic* logic_;
-  Narrator* narrator_;
+  Printer* printer_;
   std::map<Color,Player*> players_;
 };
 
