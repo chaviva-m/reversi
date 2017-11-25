@@ -36,6 +36,35 @@ Point AIPlayer::convertStrToPoint(string& input) {
 Point AIPlayer::decideOnAMove(Board& board, std::vector<Cell*>& possibleMoves,
     GameLogic& logic) {
 
+//	Board copyBoard(board);
+//
+//	Point p = possibleMoves[0]->getLocation();
+//
+//	cout << "copy: " << endl;
+//	cout << copyBoard;
+//	cout << "insert "<< p << endl;
+//
+//	this->insertDisk(*copyBoard.getCell(p));
+//	cout << copyBoard;
+//
+//	cout << "flip: " << endl;
+//	this->flipDisks(logic.getCellsToFlip(copyBoard, p, this->color_));//insertDisk(*copyBoard.getCell(0, 0));
+//	cout << copyBoard;
+//
+//
+//	cout << board.getCols() << ", " << board.getRows() << endl;
+//	cout << "board: " << endl;
+//	cout << board;
+//
+//	copyBoard = board;
+//	cout << "copy reset: " << endl;
+//	cout << copyBoard;
+//
+//	cout << "try:" << endl ;
+//	Board copy(4,4);
+//	copy = board;
+//	cout << copy;
+
 
 	Point AImove;
 	int minRivalScoring = board.getRows() * board.getRows();
