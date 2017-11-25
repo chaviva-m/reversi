@@ -14,6 +14,7 @@
 #include "color.h"
 #include "GameLogic.h"
 
+
 /**
  * supplies game logic according to standard game rules
  */
@@ -32,6 +33,8 @@ public:
   virtual ~StandardGameLogic();
 
 private:
+
+
   const std::vector<Cell*> cellsToFlipInDirection(const Board& board,
       int row, int col, Color color, Direction dir);
   /**

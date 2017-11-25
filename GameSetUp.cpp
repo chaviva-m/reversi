@@ -13,7 +13,7 @@ GameSetUp::GameSetUp(int board_rows, int board_cols) {
   this->board_ = new Board(board_rows, board_cols);
   this->logic_ = this->standardLogic();
   this->printer_ = this->consoleInterface();
-  this->players_ = this->consolePlayers();
+  this->players_ = this->AIAndConsolePlayers();
 
 }
 
@@ -35,6 +35,23 @@ map<Color,Player*> GameSetUp::consolePlayers() {
   }
   return players;
 }
+map<Color,Player*> GameSetUp::AIAndConsolePlayers() {
+  map<Color,Player*> players;
+  int i;
+  for (i = BLACK; i < LAST_COLOR-1; i++) {
+    this->printer_->printMessage(getPlayerName((Color((i)))));
+    string name;
+    getline(cin, name);
+    players[Color(i)] = new HumanPlayer(name, Color(i));
+  }
+  players[Color(i)] = new AIPlayer("AI", Color(i));
+  return players;
+
+
+}
+
+
+
 
 void GameSetUp::playGame() const {
   GameFlow game = GameFlow(*board_, *logic_, players_, *printer_);

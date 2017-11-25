@@ -11,6 +11,20 @@ Cell::Cell(int row, int column) : location_(row, column), disk_(NULL),
               isEmpty_(true) {
 }
 
+//Copy c'tor Cell
+Cell::Cell(const Cell &oldCell) : location_(oldCell.getLocation().getRow(),
+		oldCell.getLocation().getCol()) {
+//	cout <<endl <<"~~~Copy c'tor Cell~~~"<<endl;
+
+  if (oldCell.hasDisk()) {
+	  insertDisk(oldCell.getDisk()->getColor());
+  } else {
+	  disk_ = NULL;
+	  isEmpty_ = true;
+  }
+}
+
+
 Point Cell::getLocation() const {
   return this->location_;
 }

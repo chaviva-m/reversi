@@ -12,6 +12,9 @@
 #include "Disk.h"
 #include "Point.h"
 
+#include "iostream"
+using namespace std;
+
 /**
  * cell in specific location in board.
  * can be empty or can hold disk.
@@ -24,6 +27,29 @@ public:
    * output: void
    */
   Cell(int row = 0, int column = 0);
+
+
+  // copy constructor
+  Cell(const Cell &oldCell);
+
+  //Assignment Cell
+  Cell& operator=(const Cell& oldCell) {
+//	  cout <<endl <<"~~~Assignment Cell~~~"<<endl;
+
+    if (this != &oldCell) {
+      delete disk_;
+      // Copy the inherited part
+      if (oldCell.isEmpty_) {
+    	  disk_  = NULL;
+      } else {
+    	  insertDisk(oldCell.getDisk()->getColor());
+      }
+      location_ = Point(oldCell.getLocation().getRow(),
+      		oldCell.getLocation().getCol());
+    }
+    return *this;
+  }
+
   /**
    * access location of cell
    * input: void

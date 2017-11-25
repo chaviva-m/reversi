@@ -43,6 +43,7 @@ public:
    * output: void
    */
   void insertDisk(Cell& cell) const;
+//  void insertDisk(Cell& cell, Color color) const;
   /**
    * flip disks in given cells
    * input: std::vector<Cell*> cells_to_flip

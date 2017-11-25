@@ -20,6 +20,6 @@ int Point::getRow() const {
 }
 
 ostream& operator << (ostream &out, const Point &point) {
-  out << "(" << point.row_ << "," << point.column_ << ")";
+  out << "(" << point.row_+1 << "," << point.column_ +1 << ")";
   return out;
 }

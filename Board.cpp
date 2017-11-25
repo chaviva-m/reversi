@@ -20,6 +20,21 @@ Board::Board(int rows, int columns) : rows_(rows), columns_(columns) {
   }
 }
 
+//Copy c'tor Board
+Board::Board(const Board &oldBoard) : rows_(oldBoard.getRows()),
+		columns_(oldBoard.getCols())  {
+//	cout <<endl <<"~~~Copy c'tor Board~~~"<<endl;
+  this->board_ = new Cell*[this->rows_];
+	for (int i = 0; i < this->rows_; i++) {
+	  this->board_[i] = new Cell[this->columns_];
+	}
+	for (int i = 0; i < rows_; i++) {
+	  for (int j = 0; j < columns_; j++) {
+	    this->board_[i][j] = *oldBoard.getCell(i, j);
+	  }
+	}
+}
+
 int Board::getRows() const {
   return this->rows_;
 }
@@ -35,6 +50,10 @@ Cell* Board::getCell(int row, int col) const{
   } else {
     return NULL;
   }
+}
+
+Cell* Board::getCell(Point p) const{
+  return this->getCell(p.getRow(), p.getCol());
 }
 
 Cell* Board::getNeighboringCell(int row, int col, Direction dir) const {
@@ -72,7 +91,7 @@ ostream& operator << (ostream &out, const Board &board) {
   //first row - #s of columns
   out << " | ";
   for (int i = 0; i < board.columns_; i++) {
-    out << i << " | ";
+    out << i+1 << " | ";
   }
   out << endl;
   for (int k = 0; k < (board.columns_ * 4 + 2); k++) {
@@ -81,7 +100,7 @@ ostream& operator << (ostream &out, const Board &board) {
   out << endl;
   //following rows - # of rows & board itself
   for (int i = 0; i < board.rows_; i++) {
-    out << i << "| ";
+    out << i+1 << "| ";
     for (int j = 0; j < board.columns_; j++) {
       if (board.board_[i][j].hasDisk()) {
         out << board.board_[i][j].getDisk()->getColor();

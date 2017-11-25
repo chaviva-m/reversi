@@ -12,6 +12,8 @@
 
 #include "Board.h"
 #include "color.h"
+#include <map>
+
 
 /**
  * supplies game logic according to game rules.
@@ -40,6 +42,14 @@ public:
    */
   const std::vector<Cell*> getCellsToFlip(const Board& board,
                     int row, int col, Color color);
+  const std::vector<Cell*> getCellsToFlip(const Board& board,
+                    Point p, Color color);
+
+  const map<Color, int> getScores(const Board& board);
+
+
+
+
   /**
    * destructs game logic
    * input: void

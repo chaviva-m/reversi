@@ -27,6 +27,26 @@ namespace message {
     return msg.str();
   }
 
+  const string startTurn(const Color c) {
+      stringstream msg;
+      msg << c << ": It's your turn." << endl;
+      return msg.str();
+    }
+
+  const string finishTurn(const string& player, const Point p) {
+    stringstream msg;
+    msg << player << " played " << p << '\n'<< endl;
+    return msg.str();
+  }
+
+  const string finishTurn(const Color c, const Point p) {
+	stringstream msg;
+	msg << c << " played " << p << '\n'<< endl;
+	return msg.str();
+
+  }
+
+
   const string possibleMoves(const vector<Cell*>& moves) {
     stringstream msg;
     msg << "Your possible moves: ";

@@ -14,6 +14,7 @@
 #include "GameFlow.h"
 #include "GameLogic.h"
 #include "HumanPlayer.h"
+#include "AIPlayer.h"
 #include "messages.h"
 #include "Player.h"
 #include "Printer.h"
@@ -58,6 +59,8 @@ private:
    * output: Printer*
    */
   Printer* consoleInterface();
+
+  std::map<Color,Player*> AIAndConsolePlayers();
 
   std::map<Color,Player*> consolePlayers();
 

@@ -1,12 +1,12 @@
 /*
- * HumanPlayer.h
+ * AIPlayer.h
  *
- *  Created on: Nov 20, 2017
- *      Author: chaviva
+ *  Created on: Nov 24, 2017
+ *      Author: djoffe
  */
 
-#ifndef HUMANPLAYER_H_
-#define HUMANPLAYER_H_
+#ifndef AIPLAYER_H_
+#define AIPLAYER_H_
 
 #include "Board.h"
 #include "Player.h"
@@ -14,15 +14,15 @@
 #include <string>
 #include <sstream>
 
-class HumanPlayer: public Player {
+class AIPlayer: public Player {
 public:
-	HumanPlayer(const std::string& name, Color color);
+	AIPlayer(const std::string& name, Color color);
     virtual Point decideOnAMove(Board& board,
       std::vector<Cell*>& possibleMoves, GameLogic& logic);
-	virtual ~HumanPlayer() {};
-
+    virtual ~AIPlayer() {};
 private:
 	Point convertStrToPoint(std::string& input);
 };
 
-#endif /* HUMANPLAYER_H_ */
+
+#endif /* AIPLAYER_H_ */

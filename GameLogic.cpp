@@ -11,6 +11,26 @@ using namespace std;
 GameLogic::GameLogic() {
 }
 
+const map<Color, int> GameLogic::getScores(const Board& board) {
+  map<Color, int> num_of_disks;
+  for (int c = BLACK; c < LAST_COLOR; c++) {
+    num_of_disks[Color(c)] = 0;
+  }
+  //count disks of each color
+  for (int i = 0; i < board.getRows(); i++) {
+	for (int j = 0; j < board.getCols(); j++) {
+      if (board.getCell(i,j)->getDisk() != NULL) {
+ 	    for (int c = BLACK; c < LAST_COLOR; c++) {
+	      if (board.getCell(i,j)->getDisk()->getColor() == Color(c)) {
+	      num_of_disks[Color(c)]++;
+	      }
+        }
+      }
+    }
+  }
+  return num_of_disks;
+}
+
 const vector<Cell*> GameLogic::getCellsToFlip(const Board& board, int row,
     int col, Color color) {
   vector<Cell*> cells_to_flip;
@@ -23,6 +43,10 @@ const vector<Cell*> GameLogic::getCellsToFlip(const Board& board, int row,
     cells_d.clear();
   }
   return cells_to_flip;
+}
+const std::vector<Cell*> GameLogic::getCellsToFlip(const Board& board,
+                  Point p, Color color) {
+	return this->getCellsToFlip(board, p.getRow(), p.getCol(), color);
 }
 
 const vector<Cell*> GameLogic::cellsToFlipInDirection(const Board& board,

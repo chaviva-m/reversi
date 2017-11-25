@@ -22,7 +22,7 @@ public:
    * input: int row, int column
    * output: void
    */
-  Point(int row, int column);
+  Point(int row=-1, int column=-1);
   /**
    * access column coordinate of point
    * input: void

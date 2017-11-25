@@ -30,7 +30,7 @@ Point HumanPlayer::convertStrToPoint(string& input) {
       finishOneNum = true;
     }
   }
-  return (Point(r,c));
+  return (Point(r-1,c-1));
 }
 
 Point HumanPlayer::decideOnAMove(Board& board, std::vector<Cell*>& possibleMoves,

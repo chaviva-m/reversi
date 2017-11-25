@@ -27,6 +27,10 @@ namespace message {
   const string currentBoard();
 
   const string startTurn(const string& player);
+  const string startTurn(const Color c);
+  const string finishTurn(const string& player, const Point p);
+  const string finishTurn(const Color c, const Point p);
+
 
   const string possibleMoves(const vector<Cell*>& moves);
 

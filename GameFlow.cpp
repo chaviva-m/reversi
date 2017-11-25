@@ -17,6 +17,9 @@ GameFlow::GameFlow(Board& board, GameLogic& logic,
 
 void GameFlow::playGame() {
   this->initializeBoard();
+  printer_.printMessage("\n");
+  printer_.printMessage(currentBoard());
+  printer_.printBoard(board_);
   //loop through rounds till game over
   bool continue_game = true;
   while (continue_game) {
@@ -41,32 +44,30 @@ void GameFlow::initializeBoard() {
 
 bool GameFlow::playOneRound() {
   for (int c = BLACK; c < LAST_COLOR; c++) {
-    printer_.printMessage(currentBoard());
-    printer_.printBoard(board_);
+	Point move;
     //game is over if board is full
     if (num_disks_played_ == (board_.getRows() * board_.getCols())) {
       return false;
     }
-    printer_.printMessage(startTurn(players_[Color(c)]->getName()));
+    printer_.printMessage(startTurn(players_[Color(c)]->getColor()));
     vector<Cell*> moves(logic_.getPossibleMoves(board_, Color(c)));
     bool invalid_move = true;
       //player places a disk in one of possible moves
-      if (!moves.empty()) {
-          while(invalid_move) {
+    if (!moves.empty()) {
+        while(invalid_move) {
             printer_.printMessage(possibleMoves(moves));
-            Point move = players_[Color(c)]->decideOnAMove(board_, moves, logic_);
-          if (board_.getCell(move.getRow(), move.getCol()) != NULL
-              && find(moves.begin(), moves.end(),
-              board_.getCell(move.getRow(), move.getCol())) != moves.end()) {
-              invalid_move = false;
-              players_[Color(c)]->insertDisk(*board_.getCell(move.getRow(),
-                           move.getCol()));
-              this->num_disks_played_++;
-              players_[Color(c)]->flipDisks(logic_.getCellsToFlip(board_,
-                  move.getRow(), move.getCol(), Color(c)));
-          } else {
-            printer_.printMessage(invalidInput());
-          }
+            move = players_[Color(c)]->decideOnAMove(board_, moves, logic_);
+            printer_.printMessage("\n");
+            if (board_.getCell(move) != NULL && find(moves.begin(),
+            		moves.end(), board_.getCell(move)) != moves.end()) {
+                invalid_move = false;
+                players_[Color(c)]->insertDisk(*board_.getCell(move));
+                this->num_disks_played_++;
+                players_[Color(c)]->flipDisks(logic_.getCellsToFlip(board_,
+                		move, Color(c)));
+            } else {
+                printer_.printMessage(invalidInput());
+            }
         }
       //player has no possible moves
       } else {
@@ -81,6 +82,12 @@ bool GameFlow::playOneRound() {
           getline(cin, any_key); //or cin << any_key
         }
       }
+    printer_.printMessage(currentBoard());
+    printer_.printBoard(board_);
+    if (move.getRow()>-1){
+    	printer_.printMessage(finishTurn(players_[Color(c)]->getName(), move));
+    }
+
   }
   //game continues
   return true;
