@@ -13,8 +13,33 @@ GameSetUp::GameSetUp(int board_rows, int board_cols) {
   this->board_ = new Board(board_rows, board_cols);
   this->logic_ = this->standardLogic();
   this->printer_ = this->consoleInterface();
-  this->players_ = this->AIAndConsolePlayers();
+  this->setPlayers();
+}
 
+
+void GameSetUp::setPlayers() {
+	this->printer_->printMessage("for playing against human player: press 1\n"
+			"for playing against the computer: press 2\n");
+	int input;
+	string dummy;
+	cin >> input;
+	bool valid = false;
+	while (!valid) {
+	  switch(input) {
+	  	case(1):
+		   getline(cin, dummy);
+	  	   this->players_ = this->consolePlayers();
+	  	   valid = true;
+	  	   break;
+	  	case(2):
+     	   getline(cin, dummy);
+           this->players_ = this->AIAndConsolePlayers();
+	  	   valid = true;
+	  	   break;
+  		default:
+		   this->printer_->printMessage("that was not an option. choose again\n");
+	  }
+	}
 }
 
 GameLogic* GameSetUp::standardLogic() {

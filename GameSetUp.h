@@ -64,6 +64,9 @@ private:
 
   std::map<Color,Player*> consolePlayers();
 
+  void setPlayers();
+
+
   Board* board_;
   GameLogic* logic_;
   Printer* printer_;
