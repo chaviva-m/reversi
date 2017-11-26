@@ -23,7 +23,7 @@ Board::Board(int rows, int columns) : rows_(rows), columns_(columns) {
 //Copy c'tor Board
 Board::Board(const Board &oldBoard) : rows_(oldBoard.getRows()),
 		columns_(oldBoard.getCols())  {
-//	cout <<endl <<"~~~Copy c'tor Board~~~"<<endl;
+	cout <<endl <<"~~~Copy c'tor Board~~~"<<endl;
   this->board_ = new Cell*[this->rows_];
 	for (int i = 0; i < this->rows_; i++) {
 	  this->board_[i] = new Cell[this->columns_];

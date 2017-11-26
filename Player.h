@@ -54,6 +54,9 @@ public:
   virtual Point decideOnAMove(Board& board,
       std::vector<Cell*>& possibleMoves, GameLogic& logic) = 0;
 
+  virtual void hasNoMoves() const =0;
+
+
   virtual ~Player() {};
 
 protected:

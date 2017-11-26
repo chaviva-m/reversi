@@ -34,7 +34,7 @@ public:
 
   //Assignment Cell
   Cell& operator=(const Cell& oldCell) {
-//	  cout <<endl <<"~~~Assignment Cell~~~"<<endl;
+	  cout <<endl <<"~~~Assignment Cell~~~"<<endl;
 
     if (this != &oldCell) {
       delete disk_;
@@ -48,6 +48,15 @@ public:
       		oldCell.getLocation().getCol());
     }
     return *this;
+  }
+
+  //nobody calls this func
+  bool operator ==(const Cell& cell) const {
+	  cout << "Cell: operator ==" << endl;
+
+	  Point mine = this->getLocation();
+	  Point other = cell.getLocation();
+	  return  mine.getRow()== other.getRow() && mine.getCol() == other.getCol();
   }
 
   /**

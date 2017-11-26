@@ -20,6 +20,8 @@ public:
     virtual Point decideOnAMove(Board& board,
       std::vector<Cell*>& possibleMoves, GameLogic& logic);
 	virtual ~HumanPlayer() {};
+	virtual void hasNoMoves() const;
+
 
 private:
 	Point convertStrToPoint(std::string& input);

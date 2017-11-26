@@ -34,10 +34,10 @@ void GameFlow::initializeBoard() {
   //place 2 disks of each color in center of board
   for (int i = BLACK; i < LAST_COLOR; i++) {
     this->players_[Color(i)]->insertDisk(*this->board_.getCell(b_r/2 - 1,
-           b_c/2 - 1 + i));
+           b_c/2 - 1 + (1- i)));
     this->num_disks_played_++;
     this->players_[Color(i)]->insertDisk(*this->board_.getCell(b_r/2,
-           b_c/2 - i));
+           b_c/2 - (1-i)));
     this->num_disks_played_++;
   }
 }
@@ -78,8 +78,7 @@ bool GameFlow::playOneRound() {
           return false;
         //else, play passes on to next player
         } else {
-          string any_key; // or char
-          getline(cin, any_key); //or cin << any_key
+        	players_[Color(c)]->hasNoMoves();
         }
       }
     printer_.printMessage(currentBoard());
@@ -103,8 +102,8 @@ void GameFlow::endGame() {
 }
 
 Player* GameFlow::determineWinner() {
-  map<Color, int> num_of_disks;
-  for (int c = BLACK; c < LAST_COLOR; c++) {
+  map<Color, int> num_of_disks = this->logic_.getScores(this->board_);
+  /*for (int c = BLACK; c < LAST_COLOR; c++) {
     num_of_disks[Color(c)] = 0;
   }
   //count disks of each color
@@ -119,6 +118,8 @@ Player* GameFlow::determineWinner() {
       }
     }
   }
+  */
+
   //return winner or null if tie
   if (num_of_disks[BLACK] > num_of_disks[WHITE]) {
     return players_[BLACK];

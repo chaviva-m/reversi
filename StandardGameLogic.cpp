@@ -31,22 +31,6 @@ const vector<Cell*> StandardGameLogic::getPossibleMoves(const Board& board,
   return possible_moves;
 }
 
-//const vector<Cell*> StandardGameLogic::filterPossibleMoves(vector<Cell*>& possibleMoves) {
-////	set<Cell*> moves;
-////	for(set<Cell*>::iterator it=rivalsMoveOptions.begin();
-////							iter!=rivalsMoveOptions.end();iter++){
-////				cout << (*it)->getLocation() << " ";
-////
-////
-//
-//
-//
-//	return possibleMoves;
-//}
-
-
-
-
 bool StandardGameLogic::flipInDirection(const Board& board,
     int row, int col, Direction dir, Color color) {
   //cell is taken

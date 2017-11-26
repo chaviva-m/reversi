@@ -12,5 +12,3 @@ int main() {
   GameSetUp g = GameSetUp();
   g.playGame();
 }
-
-

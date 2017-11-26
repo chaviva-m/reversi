@@ -33,7 +33,7 @@ public:
 
   //Assignment Board
   Board& operator=(const Board& oldBoard) {
-//	  cout <<endl <<"~~~Assignment Board~~~"<<endl;
+	  cout <<endl <<"~~~Assignment Board~~~"<<endl;
 
     if (this != &oldBoard) {
       if (this->rows_!= oldBoard.getRows() || this->columns_!= oldBoard.getCols()) {
@@ -43,11 +43,11 @@ public:
 //      for (int i = 0; i < this->rows_; i++) {
 //        delete[] this->board_[i];
 //      }
-//      for (int i = 0; i < this->rows_; i++) {
-//        for (int j = 0; j < this->rows_; j++) {
-//        	delete this->board_[i][j];
-//     	}
-//      }
+      for (int i = 0; i < this->rows_; i++) {
+        for (int j = 0; j < this->rows_; j++) {
+        	delete this->board_[i][j].getDisk();
+     	}
+      }
 
 
       // Copy the inherited part

@@ -12,6 +12,12 @@ AIPlayer::AIPlayer(const string& name, Color color) :
     Player(name, color) {
 }
 
+
+void AIPlayer::hasNoMoves() const {
+	return;
+}
+
+
 Point AIPlayer::convertStrToPoint(string& input) {
   int r = 0, c = 0;
   int er = 0, ec = 0;
@@ -36,34 +42,7 @@ Point AIPlayer::convertStrToPoint(string& input) {
 Point AIPlayer::decideOnAMove(Board& board, std::vector<Cell*>& possibleMoves,
     GameLogic& logic) {
 
-//	Board copyBoard(board);
-//
-//	Point p = possibleMoves[0]->getLocation();
-//
-//	cout << "copy: " << endl;
-//	cout << copyBoard;
-//	cout << "insert "<< p << endl;
-//
-//	this->insertDisk(*copyBoard.getCell(p));
-//	cout << copyBoard;
-//
-//	cout << "flip: " << endl;
-//	this->flipDisks(logic.getCellsToFlip(copyBoard, p, this->color_));//insertDisk(*copyBoard.getCell(0, 0));
-//	cout << copyBoard;
-//
-//
-//	cout << board.getCols() << ", " << board.getRows() << endl;
-//	cout << "board: " << endl;
-//	cout << board;
-//
-//	copyBoard = board;
-//	cout << "copy reset: " << endl;
-//	cout << copyBoard;
-//
-//	cout << "try:" << endl ;
-//	Board copy(4,4);
-//	copy = board;
-//	cout << copy;
+
 
 
 	Point AImove;
@@ -80,7 +59,7 @@ Point AIPlayer::decideOnAMove(Board& board, std::vector<Cell*>& possibleMoves,
 		std::vector<Cell*> rivalsMoveOptions = logic.getPossibleMoves(boardAfterAIMove,
 				rivalColor);
 		Point rivalMove;
-		int maxScoring = -1;
+		double maxScoring = - std::numeric_limits<double>::infinity();
 		for(vector<Cell*>::iterator iter=rivalsMoveOptions.begin();
 				iter!=rivalsMoveOptions.end();iter++) {
 			Board boardAfterRivalMove = boardAfterAIMove;
@@ -102,4 +81,5 @@ Point AIPlayer::decideOnAMove(Board& board, std::vector<Cell*>& possibleMoves,
 		}
 	}
 	return AIfinalMove->getLocation();
+//	return Point (1,1);
 }

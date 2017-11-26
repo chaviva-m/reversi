@@ -20,6 +20,7 @@ public:
     virtual Point decideOnAMove(Board& board,
       std::vector<Cell*>& possibleMoves, GameLogic& logic);
     virtual ~AIPlayer() {};
+    virtual void hasNoMoves() const;
 private:
 	Point convertStrToPoint(std::string& input);
 };
