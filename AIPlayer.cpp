@@ -42,9 +42,6 @@ Point AIPlayer::convertStrToPoint(string& input) {
 Point AIPlayer::decideOnAMove(Board& board, std::vector<Cell*>& possibleMoves,
     GameLogic& logic) {
 
-
-
-
 	Point AImove;
 	int minRivalScoring = board.getRows() * board.getRows();
 	Cell* AIfinalMove;

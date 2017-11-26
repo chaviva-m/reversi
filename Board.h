@@ -40,15 +40,14 @@ public:
     	cout << "Could not make Board Assignment. Sizes don't match"<<endl;
       	return *this;
       }
-//      for (int i = 0; i < this->rows_; i++) {
-//        delete[] this->board_[i];
-//      }
       for (int i = 0; i < this->rows_; i++) {
-        for (int j = 0; j < this->rows_; j++) {
-        	delete this->board_[i][j].getDisk();
-     	}
+        delete[] this->board_[i];
       }
 
+      this->board_ = new Cell*[this->rows_];
+      for (int i = 0; i < this->rows_; i++) {
+      	this->board_[i] = new Cell[this->columns_];
+      }
 
       // Copy the inherited part
       for (int i = 0; i < this->rows_; i++) {

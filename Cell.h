@@ -34,21 +34,28 @@ public:
 
   //Assignment Cell
   Cell& operator=(const Cell& oldCell) {
-	  cout <<endl <<"~~~Assignment Cell~~~"<<endl;
+	cout <<endl <<"~~~Assignment Cell~~~"<<endl;
 
     if (this != &oldCell) {
-      delete disk_;
+      delete this->disk_;
       // Copy the inherited part
       if (oldCell.isEmpty_) {
     	  disk_  = NULL;
       } else {
-    	  insertDisk(oldCell.getDisk()->getColor());
+//    	  insertDisk(oldCell.getDisk()->getColor());
+    	  this->disk_ = new Disk(oldCell.getDisk()->getColor());
+    	  this->isEmpty_ = false;
       }
       location_ = Point(oldCell.getLocation().getRow(),
       		oldCell.getLocation().getCol());
     }
     return *this;
   }
+
+
+  //NULL pointer
+
+
 
   //nobody calls this func
   bool operator ==(const Cell& cell) const {
