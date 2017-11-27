@@ -24,7 +24,7 @@ Board::Board(int rows, int columns) : rows_(rows), columns_(columns) {
 Board::Board(const Board &oldBoard) : rows_(oldBoard.getRows()),
 		columns_(oldBoard.getCols())  {
 //	cout <<endl <<"~~~Copy c'tor Board~~~"<<endl;
-  this->board_ = new Cell*[this->rows_];
+    this->board_ = new Cell*[this->rows_];
 	for (int i = 0; i < this->rows_; i++) {
 	  this->board_[i] = new Cell[this->columns_];
 	}
@@ -84,7 +84,7 @@ Board::~Board() {
   for (int i = 0; i < this->rows_; i++) {
     delete[] this->board_[i];
   }
-  delete this->board_;
+  delete[] this->board_;//CHANGE
 }
 
 ostream& operator << (ostream &out, const Board &board) {

@@ -43,6 +43,9 @@ public:
       for (int i = 0; i < this->rows_; i++) {
         delete[] this->board_[i];
       }
+      delete[] this->board_;
+
+
 
       this->board_ = new Cell*[this->rows_];
       for (int i = 0; i < this->rows_; i++) {
