@@ -1,8 +1,8 @@
 /*
  * HumanPlayer.cpp
  *
- *  Created on: Nov 20, 2017
- *      Author: chaviva
+ * Author1: name & ID: Dana Joffe 312129240
+ * Author2: name & ID: Chaviva Moshavi 322082892
  */
 
 #include "HumanPlayer.h"
@@ -13,8 +13,8 @@ HumanPlayer::HumanPlayer(const string& name, Color color) :
 }
 
 void HumanPlayer::hasNoMoves() const {
-	string any_key; // or char
-	getline(cin, any_key); //or cin << any_key
+	string any_key;
+	getline(cin, any_key);
 	return;
 }
 

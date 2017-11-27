@@ -1,8 +1,8 @@
 /*
  * gtest_main.cpp
  *
- *  Created on: Nov 26, 2017
- *      Author: chaviva
+ * Author1: name & ID: Dana Joffe 312129240
+ * Author2: name & ID: Chaviva Moshavi 322082892
  */
 
 #include "gtest/gtest.h"

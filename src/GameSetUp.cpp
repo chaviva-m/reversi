@@ -1,8 +1,8 @@
 /*
  * GameSetUp.cpp
  *
- * Author: Chaviva Moshavi
- * ID: 322082892
+ * Author1: name & ID: Dana Joffe 312129240
+ * Author2: name & ID: Chaviva Moshavi 322082892
  */
 
 #include "GameSetUp.h"
@@ -21,8 +21,8 @@ void GameSetUp::setPlayersMenu() {
 	string strInput;
 	bool valid = false;
 	do {
-		this->printer_->printMessage("for playing against human player: press 1\n"
-			"for playing against the computer: press 2\n");
+		this->printer_->printMessage("to play against human player: press 1\n"
+			"to play against the computer: press 2\n");
 		getline(cin, strInput);
 		input = convertStrToPoint(strInput);
 		switch(input) {

@@ -1,17 +1,14 @@
 /*
  * test_StandardGameLogic.cpp
  *
- *  Created on: Nov 25, 2017
- *      Author: chaviva
+ * Author1: name & ID: Dana Joffe 312129240
+ * Author2: name & ID: Chaviva Moshavi 322082892
  */
 
 #include "Board.h"
 #include "color.h"
 #include "gtest/gtest.h"
 #include "StandardGameLogicTest.h"
-/*
- * CANT ACTUALLY CHECK IF VECTORS EQUAL THIS WAY
- */
 
 //test getPossibleMoves in standard game logic when there are no possible moves
 TEST_F(StandardGameLogicTest, NoPossibleMoves) {

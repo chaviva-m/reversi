@@ -1,8 +1,8 @@
 /*
  * Cell.h
  *
- * Author: Chaviva Moshavi
- * ID: 322082892
+ * Author1: name & ID: Dana Joffe 312129240
+ * Author2: name & ID: Chaviva Moshavi 322082892
  */
 
 #ifndef CELL_H_
@@ -51,10 +51,12 @@ public:
   }
 
   /**
-  * return true if the points have the same (x,y) values.
+  * return true if the cells have the same points and the same disk.
   */
   bool operator ==(const Cell& cell) const;
-
+  /**
+  * return true if the cells are unequal
+  */
   bool operator !=(const Cell &cell) const;
 
   /**
