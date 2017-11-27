@@ -21,8 +21,7 @@ void GameSetUp::setPlayersMenu() {
 	string strInput;
 	bool valid = false;
 	do {
-		this->printer_->printMessage("to play against human player: press 1\n"
-			"to play against the computer: press 2\n");
+		this->printer_->printMessage(openingMenu());
 		getline(cin, strInput);
 		input = convertStrToPoint(strInput);
 		switch(input) {
@@ -35,7 +34,7 @@ void GameSetUp::setPlayersMenu() {
 			  valid = true;
 			  break;
 		  	default:
-			  this->printer_->printMessage("'" + strInput + "'" + " was not an option. choose again\n");
+			  this->printer_->printMessage(invalidInput());
 			  break;
 	    }
 

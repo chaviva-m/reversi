@@ -25,6 +25,7 @@ using namespace std;
  */
 namespace message {
 
+  const string openingMenu();
   /*
    * returns a string with the player's name (the player who's
    * color is the input color).

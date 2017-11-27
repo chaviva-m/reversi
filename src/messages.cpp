@@ -9,6 +9,14 @@
 
 namespace message {
 
+  const string openingMenu() {
+    stringstream msg;
+    msg << "Choose an opponent type:" << endl;
+    msg << "1. a human local player" << endl;
+    msg << "2. an AI player" << endl;
+    return msg.str();
+  }
+
   const string getPlayerName(Color color) {
     stringstream msg;
     msg << "Player " << color << " please enter your name: ";
@@ -69,7 +77,7 @@ namespace message {
 
   const string invalidInput() {
     stringstream msg;
-    msg << "invalid input" << endl;
+    msg << "Input is invalid. Please try again." << endl;
     return msg.str();
   }
 
