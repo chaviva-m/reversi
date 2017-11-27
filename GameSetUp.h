@@ -10,7 +10,6 @@
 
 #include <map>
 #include <vector>
-
 #include "GameFlow.h"
 #include "GameLogic.h"
 #include "HumanPlayer.h"
@@ -59,15 +58,30 @@ private:
    * output: Printer*
    */
   Printer* consoleInterface();
-
+  /*
+   * generates a solo console player and a computer AI player.
+   * input: void
+   * output: a map of players and their representative color.
+   */
   std::map<Color,Player*> AIAndConsolePlayers();
-
+  /*
+   * generates two console players.
+   * input: void
+   * output: a map of players and their representative color.
+   */
   std::map<Color,Player*> consolePlayers();
 
-  void setPlayers();
+  /*
+   * asks the user the kind of player he wants to play with, and respectively
+   * set the game players in GamesetUp.
+   */
+  void setPlayersMenu();
+  /*
+   * input: a string.
+   * output: if the input contains an integer (even separated)- this func will
+   * return it. else- return 0.
+   */
   int convertStrToPoint(string& input);
-
-
 
   Board* board_;
   GameLogic* logic_;

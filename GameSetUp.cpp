@@ -13,11 +13,10 @@ GameSetUp::GameSetUp(int board_rows, int board_cols) {
   this->board_ = new Board(board_rows, board_cols);
   this->logic_ = this->standardLogic();
   this->printer_ = this->consoleInterface();
-  this->setPlayers();
+  this->setPlayersMenu();
 }
 
-
-void GameSetUp::setPlayers() {
+void GameSetUp::setPlayersMenu() {
 	int input;
 	string strInput;
 	bool valid = false;
@@ -43,21 +42,17 @@ void GameSetUp::setPlayers() {
 	}while (!valid) ;
 }
 
-
 int GameSetUp::convertStrToPoint(string& input) {
-  int r = 0;
-  int er = 0;
+  int asciiGap = 48;
+  int num = 0;
   for (unsigned int i = 0; i < input.size(); i++) {
     if (isdigit(input.at(i))) {
-      int k = (int)input[i] - 48;
-        r = r*(10^er) + k;
+      int digit = (int)input[i] - asciiGap;
+        num = num*10 + digit;
     }
   }
-  return (r);
+  return (num);
 }
-
-
-
 
 GameLogic* GameSetUp::standardLogic() {
   return new StandardGameLogic();
@@ -88,12 +83,7 @@ map<Color,Player*> GameSetUp::AIAndConsolePlayers() {
   }
   players[Color(i)] = new AIPlayer("AI", Color(i));
   return players;
-
-
 }
-
-
-
 
 void GameSetUp::playGame() const {
   GameFlow game = GameFlow(*board_, *logic_, players_, *printer_);

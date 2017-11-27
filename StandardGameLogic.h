@@ -9,11 +9,9 @@
 #define STANDARDGAMELOGIC_H_
 
 #include <vector>
-
 #include "Board.h"
 #include "color.h"
 #include "GameLogic.h"
-
 
 /**
  * supplies game logic according to standard game rules
@@ -26,17 +24,17 @@ public:
    * output: void
    */
   StandardGameLogic();
+  /*
+   *
+   */
   virtual const std::vector<Cell*> getPossibleMoves(const Board& board,
       Color color);
-  const std::vector<Cell*> getCellsToFlip(const Board& board,
-                    int row, int col, Color color);
+  /*
+   * destructor.
+   */
   virtual ~StandardGameLogic();
 
 private:
-
-
-  const std::vector<Cell*> cellsToFlipInDirection(const Board& board,
-      int row, int col, Color color, Direction dir);
   /**
    * check if insertion in (row,col) will flip neighboring disks
    * input: const Board& board, int row, int col, Direction dir, Color color
@@ -44,7 +42,6 @@ private:
    */
   bool flipInDirection(const Board& board, int row, int col,
                         Direction dir, Color color);
-
 };
 
 #endif /* STANDARDGAMELOGIC_H_ */

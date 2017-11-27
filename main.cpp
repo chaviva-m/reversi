@@ -6,9 +6,11 @@
  */
 
 #include "GameSetUp.h"
+#include "Player.h"
+#include "HumanPlayer.h"
 
 //run game
 int main() {
-  GameSetUp g = GameSetUp(4,4);
+  GameSetUp g = GameSetUp();
   g.playGame();
 }

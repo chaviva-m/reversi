@@ -12,34 +12,15 @@ AIPlayer::AIPlayer(const string& name, Color color) :
     Player(name, color) {
 }
 
-
 void AIPlayer::hasNoMoves() const {
 	return;
 }
 
-Point AIPlayer::convertStrToPoint(string& input) {
-  int r = 0, c = 0;
-  int er = 0, ec = 0;
-  bool startOneNum = false;
-  bool finishOneNum = false;
-  for (unsigned int i = 0; i < input.size(); i++) {
-    if (isdigit(input.at(i))) {
-      int k = (int)input[i] - 48;
-      if (!finishOneNum) {
-        startOneNum = true;
-        r = r*(10^er) + k;
-      } else {
-        c = c*(10^ec) + k;
-      }
-    } else if (startOneNum) {
-      finishOneNum = true;
-    }
-  }
-  return (Point(r-1,c-1));
-}
-
 Point AIPlayer::decideOnAMove(Board& board, std::vector<Cell*>& possibleMoves,
-    GameLogic& logic) {
+    GameLogic& logic) throw(){
+	if (possibleMoves.empty()) {
+		 throw logic_error("Called to AIPlayer::decideOnAMove with no possible moves");
+	}
 
 	Point AImove;
 	int minRivalScoring = board.getRows() * board.getRows();

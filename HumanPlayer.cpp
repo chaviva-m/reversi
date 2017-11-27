@@ -12,20 +12,14 @@ HumanPlayer::HumanPlayer(const string& name, Color color) :
     Player(name, color) {
 }
 
-
-
 void HumanPlayer::hasNoMoves() const {
 	string any_key; // or char
 	getline(cin, any_key); //or cin << any_key
 	return;
 }
 
-
-
-
 Point HumanPlayer::convertStrToPoint(string& input) {
   int r = 0, c = 0;
-  int er = 0, ec = 0;
   bool startOneNum = false;
   bool finishOneNum = false;
   for (unsigned int i = 0; i < input.size(); i++) {
@@ -33,9 +27,9 @@ Point HumanPlayer::convertStrToPoint(string& input) {
       int k = (int)input[i] - 48;
       if (!finishOneNum) {
         startOneNum = true;
-        r = r*(10^er) + k;
+        r = r*10 + k;
       } else {
-        c = c*(10^ec) + k;
+        c = c*10 + k;
       }
     } else if (startOneNum) {
       finishOneNum = true;
@@ -45,7 +39,10 @@ Point HumanPlayer::convertStrToPoint(string& input) {
 }
 
 Point HumanPlayer::decideOnAMove(Board& board, std::vector<Cell*>& possibleMoves,
-    GameLogic& logic) {
+    GameLogic& logic) throw(){
+  if (possibleMoves.empty()) {
+	  throw logic_error("Called to HumanPlayer::decideOnAMove with no possible moves");
+  }
   string point;
   getline(cin, point);
   Point move = this->convertStrToPoint(point);
