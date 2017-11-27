@@ -1,6 +1,3 @@
-# name: Chaviva Moshavi
-# ID: 322082892
-
 a.out: compileAll
 	g++ *.o 
 	rm -f *.o
