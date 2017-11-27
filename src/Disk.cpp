@@ -27,3 +27,11 @@ void Disk::flipDisk() {
       break;
   }
 }
+
+bool Disk::operator ==(const Disk& disk) const {
+  return (color_ == disk.getColor());
+}
+
+bool Disk::operator !=(const Disk& disk) const {
+  return !(*this == disk);
+}

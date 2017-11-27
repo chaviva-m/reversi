@@ -19,7 +19,7 @@ TEST_F(BoardTest, CheckAssigmentOverload) {
   ASSERT_EQ(b_.getCols(), b_2.getCols());
   for (int i = 0; i < b_.getRows(); i++) {
     for (int j = 0; j < b_.getCols(); j++) {
-      EXPECT_EQ(b_.getCell(i, j), b_2.getCell(i, j));
+      EXPECT_EQ(*b_.getCell(i, j), *b_2.getCell(i, j));
     }
   }
 }
@@ -53,12 +53,12 @@ TEST_F(BoardTest, GetOutOfBoundsCellNeighbor) {
 }
 //test getNeighboringCell with neighbor in board
 TEST_F(BoardTest, GetCellNeighbor) {
-  EXPECT_EQ(*b_.getNeighboringCell(r_/2, c_/2, W), Cell(r_/2,c_/2 -1));
-  EXPECT_EQ(*b_.getNeighboringCell(r_/2, c_/2, NW), Cell(r_/2 -1,c_/2 -1));
-  EXPECT_EQ(*b_.getNeighboringCell(r_/2, c_/2, N), Cell(r_/2 -1,c_/2));
-  EXPECT_EQ(*b_.getNeighboringCell(r_/2, c_/2, NE), Cell(r_/2 -1,c_/2 +1));
-  EXPECT_EQ(*b_.getNeighboringCell(r_/2, c_/2, E), Cell(r_/2,c_/2 +1));
-  EXPECT_EQ(*b_.getNeighboringCell(r_/2, c_/2, SE), Cell(r_/2 +1,c_/2 +1));
-  EXPECT_EQ(*b_.getNeighboringCell(r_/2, c_/2, S), Cell(r_/2 +1,c_/2));
-  EXPECT_EQ(*b_.getNeighboringCell(r_/2, c_/2, SW), Cell(r_/2 +1,c_/2 -1));
+  EXPECT_EQ(*b_.getNeighboringCell(r_/2, c_/2, W), *b_.getCell(r_/2,c_/2 -1));
+  EXPECT_EQ(*b_.getNeighboringCell(r_/2, c_/2, NW), *b_.getCell(r_/2 -1,c_/2 -1));
+  EXPECT_EQ(*b_.getNeighboringCell(r_/2, c_/2, N), *b_.getCell(r_/2 -1,c_/2));
+  EXPECT_EQ(*b_.getNeighboringCell(r_/2, c_/2, NE), *b_.getCell(r_/2 -1,c_/2 +1));
+  EXPECT_EQ(*b_.getNeighboringCell(r_/2, c_/2, E), *b_.getCell(r_/2,c_/2 +1));
+  EXPECT_EQ(*b_.getNeighboringCell(r_/2, c_/2, SE), *b_.getCell(r_/2 +1,c_/2 +1));
+  EXPECT_EQ(*b_.getNeighboringCell(r_/2, c_/2, S), *b_.getCell(r_/2 +1,c_/2));
+  EXPECT_EQ(*b_.getNeighboringCell(r_/2, c_/2, SW), *b_.getCell(r_/2 +1,c_/2 -1));
 }

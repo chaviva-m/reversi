@@ -96,6 +96,8 @@ public:
    * output: void
    */
   ~Board();
+  bool operator ==(const Board& board) const;
+  bool operator !=(const Board& board) const;
   /**
    * board output
    * input: std::ostream &out, const Board &board

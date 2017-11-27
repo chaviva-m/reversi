@@ -35,12 +35,18 @@ public:
    * output: void
    */
   int getRow() const;
+
+  bool operator ==(const Point &point) const;
+
+  bool operator !=(const Point &point) const;
+
   /**
    * point output
    * input: std::ostream &out, const Point &point
    * output: std::ostream& output
    */
   friend std::ostream& operator << (std::ostream &out, const Point &point);
+
 
 private:
   int row_;

@@ -52,19 +52,9 @@ public:
     return *this;
   }
 
+  bool operator ==(const Cell& cell) const;
 
-  //NULL pointer
-
-
-
-  //nobody calls this func
-  bool operator ==(const Cell& cell) const {
-	  cout << "Cell: operator ==" << endl;
-
-	  Point mine = this->getLocation();
-	  Point other = cell.getLocation();
-	  return  mine.getRow()== other.getRow() && mine.getCol() == other.getCol();
-  }
+  bool operator !=(const Cell &cell) const;
 
   /**
    * access location of cell

@@ -117,3 +117,22 @@ ostream& operator << (ostream &out, const Board &board) {
   }
   return out;
 }
+
+bool Board::operator ==(const Board& board) const {
+  if (rows_ == board.getRows() && columns_ == board.getCols()) {
+    for (int i = 0; i < rows_; i++) {
+      for (int j = 0; j < columns_; j++) {
+        if (*getCell(i, j) != *board.getCell(i, j)) {
+          return false;
+        }
+      }
+    }
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool Board::operator !=(const Board& board) const {
+  return !(*this == board);
+}

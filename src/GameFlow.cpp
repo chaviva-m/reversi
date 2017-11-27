@@ -103,23 +103,6 @@ void GameFlow::endGame() {
 
 Player* GameFlow::determineWinner() {
   map<Color, int> num_of_disks = this->logic_.getScores(this->board_);
-  /*for (int c = BLACK; c < LAST_COLOR; c++) {
-    num_of_disks[Color(c)] = 0;
-  }
-  //count disks of each color
-  for (int i = 0; i < board_.getRows(); i++) {
-    for (int j = 0; j < board_.getCols(); j++) {
-      if (board_.getCell(i,j)->getDisk() != NULL) {
-        for (int c = BLACK; c < LAST_COLOR; c++) {
-          if (board_.getCell(i,j)->getDisk()->getColor() == Color(c)) {
-            num_of_disks[Color(c)]++;
-          }
-        }
-      }
-    }
-  }
-  */
-
   //return winner or null if tie
   if (num_of_disks[BLACK] > num_of_disks[WHITE]) {
     return players_[BLACK];

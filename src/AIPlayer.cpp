@@ -42,7 +42,7 @@ Point AIPlayer::decideOnAMove(Board& board, std::vector<Cell*>& possibleMoves,
     GameLogic& logic) {
 
 	Point AImove;
-	int minRivalScoring = board.getRows() * board.getRows();
+	int minRivalScoring = board.getRows() * board.getCols();
 	Cell* AIfinalMove;
 	Board boardAfterAIMove(board.getRows(), board.getCols());
 	// build the result board for each location.

@@ -42,6 +42,22 @@ Disk* Cell::getDisk() const {
   return this->disk_;
 }
 
+bool Cell::operator ==(const Cell &cell) const {
+  bool same_disk = false;
+  if (this->hasDisk() && cell.hasDisk()) {
+    same_disk = (*disk_ == *cell.getDisk());
+  } else {
+    same_disk = (this->hasDisk() == cell.hasDisk());
+  }
+  return (location_.getRow() == cell.getLocation().getRow() &&
+          location_.getCol() == cell.getLocation().getCol() &&
+          same_disk);
+}
+
+bool Cell::operator !=(const Cell &cell) const {
+  return !(*this == cell);
+}
+
 Cell::~Cell() {
   delete this->disk_;
 }

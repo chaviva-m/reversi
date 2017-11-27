@@ -20,7 +20,7 @@ TEST_F(GameLogicTest, NoCellsToFlip) {
   //move near same color
   EXPECT_TRUE(logic_->getCellsToFlip(board_, 5, 3, WHITE).empty());
   //move near rival's color that ends in blanks & edge of board
-  EXPECT_TRUE(logic_->getCellsToFlip(board_, 2, 4, WHITE).empty());
+  EXPECT_TRUE(logic_->getCellsToFlip(board_, 5, 4, WHITE).empty());
 }
 
 //test getCellsToFlip in game logic with move that will flip cells
@@ -57,19 +57,8 @@ TEST_F(GameLogicTest,CheckScoreZero) {
 TEST_F(GameLogicTest, CheckPositiveScores) {
   //board with unequal scores
   EXPECT_EQ(logic_->getScores(board_).find(WHITE)->second, 2);
-  EXPECT_EQ(logic_->getScores(board_).find(BLACK)->second, 8);
+  EXPECT_EQ(logic_->getScores(board_).find(BLACK)->second, 9);
   //board is full and tied
-  Board full_board(4, 4);
-  for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 2; j++) {
-      board_.getCell(i, j)->insertDisk(BLACK);
-    }
-  }
-  for (int i = 0; i < 4; i++) {
-    for (int j = 2; j < 4; j++) {
-      board_.getCell(i, j)->insertDisk(WHITE);
-    }
-  }
-  EXPECT_EQ(logic_->getScores(full_board).find(WHITE)->second, 8);
-  EXPECT_EQ(logic_->getScores(full_board).find(BLACK)->second, 8);
+  EXPECT_EQ(logic_->getScores(board_full).find(WHITE)->second, 32);
+  EXPECT_EQ(logic_->getScores(board_full).find(BLACK)->second, 32);
 }

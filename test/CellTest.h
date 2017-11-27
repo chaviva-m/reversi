@@ -9,6 +9,10 @@
 #include "color.h"
 #include "gtest/gtest.h"
 
+/*
+ * Test fixture for CellTest.
+ * class holds cell
+ */
 class CellTest: public testing::Test {
 public:
   CellTest() : c_(0, 100) {};

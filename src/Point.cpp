@@ -23,3 +23,11 @@ ostream& operator << (ostream &out, const Point &point) {
   out << "(" << point.row_+1 << "," << point.column_ +1 << ")";
   return out;
 }
+
+bool Point::operator ==(const Point& point) const {
+  return (row_ == point.getRow() && column_ == point.getCol());
+}
+
+bool Point::operator !=(const Point& point) const {
+  return !(*this == point);
+}

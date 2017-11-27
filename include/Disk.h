@@ -37,6 +37,10 @@ public:
    */
 	void flipDisk();
 
+	bool operator ==(const Disk& disk) const;
+
+	bool operator !=(const Disk& disk) const;
+
 private:
 	Color color_;
 };

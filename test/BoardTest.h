@@ -9,6 +9,10 @@
 #include "color.h"
 #include "gtest/gtest.h"
 
+/*
+ * Test fixture for BoardTest.
+ * class holds board & board dimensions.
+ */
 class BoardTest: public testing::Test {
 public:
   BoardTest() : r_(8), c_(8), b_(Board(r_, c_)) {};
@@ -18,12 +22,12 @@ public:
     b_.getCell(3, 3)->insertDisk(BLACK);
     b_.getCell(4, 4)->insertDisk(BLACK);
   }
-  virtual void TearDown() {
-    //delete b_;
-  };
-  Board b_;
+  virtual void TearDown() {};
+
+protected:
   int r_;
   int c_;
+  Board b_;
 };
 
 

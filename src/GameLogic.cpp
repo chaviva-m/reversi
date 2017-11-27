@@ -18,12 +18,12 @@ const map<Color, int> GameLogic::getScores(const Board& board) {
   }
   //count disks of each color
   for (int i = 0; i < board.getRows(); i++) {
-	for (int j = 0; j < board.getCols(); j++) {
+    for (int j = 0; j < board.getCols(); j++) {
       if (board.getCell(i,j)->getDisk() != NULL) {
- 	    for (int c = BLACK; c < LAST_COLOR; c++) {
-	      if (board.getCell(i,j)->getDisk()->getColor() == Color(c)) {
-	      num_of_disks[Color(c)]++;
-	      }
+        for (int c = BLACK; c < LAST_COLOR; c++) {
+          if (board.getCell(i,j)->getDisk()->getColor() == Color(c)) {
+            num_of_disks[Color(c)]++;
+          }
         }
       }
     }
