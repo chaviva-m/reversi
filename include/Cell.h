@@ -11,7 +11,6 @@
 #include "color.h"
 #include "Disk.h"
 #include "Point.h"
-
 #include "iostream"
 using namespace std;
 
@@ -27,31 +26,33 @@ public:
    * output: void
    */
   Cell(int row = 0, int column = 0);
-
-
-  // copy constructor
+  /*
+   * copy constructor.
+   */
   Cell(const Cell &oldCell);
 
-  //Assignment Cell
-  Cell& operator=(const Cell& oldCell) {
-//	cout <<endl <<"~~~Assignment Cell~~~"<<endl;
-
-    if (this != &oldCell) {
+  /*
+   * assignment cell.
+   * reset this cell with newCell.
+   */
+  Cell& operator=(const Cell& newCell) {
+    if (this != &newCell) {
       delete this->disk_;
       // Copy the inherited part
-      if (oldCell.isEmpty_) {
+      if (newCell.isEmpty_) {
     	  disk_  = NULL;
       } else {
-//    	  insertDisk(oldCell.getDisk()->getColor());
-    	  this->disk_ = new Disk(oldCell.getDisk()->getColor());
-    	  this->isEmpty_ = false;
+    	  insertDisk(newCell.getDisk()->getColor());
       }
-      location_ = Point(oldCell.getLocation().getRow(),
-      		oldCell.getLocation().getCol());
+      location_ = Point(newCell.getLocation().getRow(),
+      		newCell.getLocation().getCol());
     }
     return *this;
   }
 
+  /**
+  * return true if the points have the same (x,y) values.
+  */
   bool operator ==(const Cell& cell) const;
 
   bool operator !=(const Cell &cell) const;

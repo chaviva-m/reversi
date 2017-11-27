@@ -10,7 +10,6 @@
 
 #include <vector>
 #include <string>
-
 #include "Cell.h"
 #include "color.h"
 #include "GameLogic.h"
@@ -43,20 +42,28 @@ public:
    * output: void
    */
   void insertDisk(Cell& cell) const;
-//  void insertDisk(Cell& cell, Color color) const;
   /**
    * flip disks in given cells
    * input: std::vector<Cell*> cells_to_flip
    * output: void
    */
   void flipDisks(const std::vector<Cell*>& cells_to_flip) const;
-
+  /*
+   * asks the player to decide on a move to execute.
+   * input: board- current game board
+   * 		possibleMoves - move options.
+   * 		logic - current game logic (game rules).
+   * output: the chosen move in Point representation.
+   */
   virtual Point decideOnAMove(Board& board,
-      std::vector<Cell*>& possibleMoves, GameLogic& logic) = 0;
-
+      std::vector<Cell*>& possibleMoves, GameLogic& logic) throw() = 0;
+  /*
+   * informs the player that he has no moves to execute.
+   */
   virtual void hasNoMoves() const =0;
-
-
+  /*
+   * destructor.
+   */
   virtual ~Player() {};
 
 protected:

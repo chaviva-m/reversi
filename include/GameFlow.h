@@ -11,7 +11,6 @@
 #include <algorithm>
 #include <map>
 #include <vector>
-
 #include "Board.h"
 #include "color.h"
 #include "GameLogic.h"
