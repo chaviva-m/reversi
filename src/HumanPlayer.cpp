@@ -12,6 +12,17 @@ HumanPlayer::HumanPlayer(const string& name, Color color) :
     Player(name, color) {
 }
 
+
+
+void HumanPlayer::hasNoMoves() const {
+	string any_key; // or char
+	getline(cin, any_key); //or cin << any_key
+	return;
+}
+
+
+
+
 Point HumanPlayer::convertStrToPoint(string& input) {
   int r = 0, c = 0;
   int er = 0, ec = 0;

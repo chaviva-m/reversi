@@ -9,8 +9,6 @@
 
 //run game
 int main() {
-  GameSetUp g = GameSetUp();
+  GameSetUp g = GameSetUp(4,4);
   g.playGame();
 }
-
-

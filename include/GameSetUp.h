@@ -65,6 +65,8 @@ private:
   std::map<Color,Player*> consolePlayers();
 
   void setPlayers();
+  int convertStrToPoint(string& input);
+
 
 
   Board* board_;
