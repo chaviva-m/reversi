@@ -34,7 +34,7 @@ public:
 
   //Assignment Cell
   Cell& operator=(const Cell& oldCell) {
-	cout <<endl <<"~~~Assignment Cell~~~"<<endl;
+//	cout <<endl <<"~~~Assignment Cell~~~"<<endl;
 
     if (this != &oldCell) {
       delete this->disk_;

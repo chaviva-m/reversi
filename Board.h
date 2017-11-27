@@ -33,7 +33,7 @@ public:
 
   //Assignment Board
   Board& operator=(const Board& oldBoard) {
-	  cout <<endl <<"~~~Assignment Board~~~"<<endl;
+//	  cout <<endl <<"~~~Assignment Board~~~"<<endl;
 
     if (this != &oldBoard) {
       if (this->rows_!= oldBoard.getRows() || this->columns_!= oldBoard.getCols()) {

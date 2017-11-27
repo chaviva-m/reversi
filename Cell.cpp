@@ -14,7 +14,7 @@ Cell::Cell(int row, int column) : location_(row, column), disk_(NULL),
 //Copy c'tor Cell
 Cell::Cell(const Cell &oldCell) : location_(oldCell.getLocation().getRow(),
 		oldCell.getLocation().getCol()) {
-	cout <<endl <<"~~~Copy c'tor Cell~~~"<<endl;
+//	cout <<endl <<"~~~Copy c'tor Cell~~~"<<endl;
 
   if (oldCell.hasDisk()) {
 	  insertDisk(oldCell.getDisk()->getColor());

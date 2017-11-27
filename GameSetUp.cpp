@@ -18,29 +18,46 @@ GameSetUp::GameSetUp(int board_rows, int board_cols) {
 
 
 void GameSetUp::setPlayers() {
-	this->printer_->printMessage("for playing against human player: press 1\n"
-			"for playing against the computer: press 2\n");
 	int input;
-	string dummy;
-	cin >> input;
+	string strInput;
 	bool valid = false;
-	while (!valid) {
-	  switch(input) {
-	  	case(1):
-		   getline(cin, dummy);
-	  	   this->players_ = this->consolePlayers();
-	  	   valid = true;
-	  	   break;
-	  	case(2):
-     	   getline(cin, dummy);
-           this->players_ = this->AIAndConsolePlayers();
-	  	   valid = true;
-	  	   break;
-  		default:
-		   this->printer_->printMessage("that was not an option. choose again\n");
-	  }
-	}
+	do {
+		this->printer_->printMessage("for playing against human player: press 1\n"
+			"for playing against the computer: press 2\n");
+		getline(cin, strInput);
+		input = convertStrToPoint(strInput);
+		switch(input) {
+			case(1):
+			  this->players_ = this->consolePlayers();
+			  valid = true;
+			  break;
+			case(2):
+		      this->players_ = this->AIAndConsolePlayers();
+			  valid = true;
+			  break;
+		  	default:
+			  this->printer_->printMessage("'" + strInput + "'" + " was not an option. choose again\n");
+			  break;
+	    }
+
+	}while (!valid) ;
 }
+
+
+int GameSetUp::convertStrToPoint(string& input) {
+  int r = 0;
+  int er = 0;
+  for (unsigned int i = 0; i < input.size(); i++) {
+    if (isdigit(input.at(i))) {
+      int k = (int)input[i] - 48;
+        r = r*(10^er) + k;
+    }
+  }
+  return (r);
+}
+
+
+
 
 GameLogic* GameSetUp::standardLogic() {
   return new StandardGameLogic();
