@@ -1,13 +1,21 @@
 /*
  * messages.cpp
  *
- *  Created on: Nov 20, 2017
- *      Author: chaviva
+ * Author1: name & ID: Dana Joffe 312129240
+ * Author2: name & ID: Chaviva Moshavi 322082892
  */
 
 #include "messages.h"
 
 namespace message {
+
+  const string openingMenu() {
+    stringstream msg;
+    msg << "Choose an opponent type:" << endl;
+    msg << "1. a human local player" << endl;
+    msg << "2. an AI player" << endl;
+    return msg.str();
+  }
 
   const string getPlayerName(Color color) {
     stringstream msg;
@@ -69,7 +77,7 @@ namespace message {
 
   const string invalidInput() {
     stringstream msg;
-    msg << "invalid input" << endl;
+    msg << "Input is invalid. Please try again." << endl;
     return msg.str();
   }
 

@@ -1,8 +1,8 @@
 /*
  * test_GameLogic.cpp
  *
- *  Created on: Nov 25, 2017
- *      Author: chaviva
+ * Author1: name & ID: Dana Joffe 312129240
+ * Author2: name & ID: Chaviva Moshavi 322082892
  */
 #include <map>
 #include <vector>
@@ -30,7 +30,7 @@ TEST_F(GameLogicTest, GetCellsToFlip) {
   flip_1_dir.push_back(board_.getCell(3, 3));
   ASSERT_EQ(logic_->getCellsToFlip(board_, 2, 3, WHITE).size(),
                                             flip_1_dir.size());
-  EXPECT_EQ(logic_->getCellsToFlip(board_, 2, 3, WHITE)[0], flip_1_dir[0]);
+  EXPECT_EQ(*logic_->getCellsToFlip(board_, 2, 3, WHITE)[0], *flip_1_dir[0]);
   //move will flip neighbors in multiple directions
   vector<Cell*> flip_mult_dir;
   flip_mult_dir.push_back(board_.getCell(4, 2));
@@ -38,7 +38,7 @@ TEST_F(GameLogicTest, GetCellsToFlip) {
   EXPECT_EQ(logic_->getCellsToFlip(board_, 5, 2, BLACK).size(),
                                           flip_mult_dir.size());
   for (unsigned i = 0; i < flip_mult_dir.size(); i++) {
-    EXPECT_EQ(logic_->getCellsToFlip(board_, 5, 2, BLACK)[i], flip_mult_dir[i]);
+    EXPECT_EQ(*logic_->getCellsToFlip(board_, 5, 2, BLACK)[i], *flip_mult_dir[i]);
   }
 }
 

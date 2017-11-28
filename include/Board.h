@@ -1,8 +1,8 @@
 /*
  * Board.h
  *
- * Author: Chaviva Moshavi
- * ID: 322082892
+ * Author1: name & ID: Dana Joffe 312129240
+ * Author2: name & ID: Chaviva Moshavi 322082892
  */
 
 #ifndef BOARD_H_
@@ -96,7 +96,13 @@ public:
    * output: void
    */
   ~Board();
+  /**
+   * returns true if board is equal to this
+   */
   bool operator ==(const Board& board) const;
+  /**
+   * returns true if board is unequal to this
+   */
   bool operator !=(const Board& board) const;
   /**
    * board output

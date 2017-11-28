@@ -1,8 +1,8 @@
 /*
  * StandardGameLogic.h
  *
- * Author: Chaviva Moshavi
- * ID: 322082892
+ * Author1: name & ID: Dana Joffe 312129240
+ * Author2: name & ID: Chaviva Moshavi 322082892
  */
 
 #ifndef STANDARDGAMELOGIC_H_

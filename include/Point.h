@@ -1,8 +1,8 @@
 /*
  * Point.h
  *
- * Author: Chaviva Moshavi
- * ID: 322082892
+ * Author1: name & ID: Dana Joffe 312129240
+ * Author2: name & ID: Chaviva Moshavi 322082892
  */
 
 #ifndef POINT_H_
@@ -35,11 +35,14 @@ public:
    * output: void
    */
   int getRow() const;
-
+  /**
+   * return true if points are equal.
+   */
   bool operator ==(const Point &point) const;
-
+  /**
+   * return true if points are unequal.
+   */
   bool operator !=(const Point &point) const;
-
   /**
    * point output
    * input: std::ostream &out, const Point &point

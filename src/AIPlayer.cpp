@@ -1,8 +1,8 @@
 /*
  * AIPlayer.cpp
  *
- *  Created on: Nov 24, 2017
- *      Author: djoffe
+ * Author1: name & ID: Dana Joffe 312129240
+ * Author2: name & ID: Chaviva Moshavi 322082892
  */
 
 #include "AIPlayer.h"

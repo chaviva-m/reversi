@@ -1,8 +1,8 @@
 /*
  * messages.h
  *
- *  Created on: Nov 20, 2017
- *      Author: chaviva
+ * Author1: name & ID: Dana Joffe 312129240
+ * Author2: name & ID: Chaviva Moshavi 322082892
  */
 
 #ifndef MESSAGES_H_
@@ -25,6 +25,7 @@ using namespace std;
  */
 namespace message {
 
+  const string openingMenu();
   /*
    * returns a string with the player's name (the player who's
    * color is the input color).

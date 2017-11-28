@@ -1,8 +1,8 @@
 /*
  * test_Board.cpp
  *
- *  Created on: Nov 25, 2017
- *      Author: chaviva
+ * Author1: name & ID: Dana Joffe 312129240
+ * Author2: name & ID: Chaviva Moshavi 322082892
  */
 
 #include <vector>

@@ -1,8 +1,8 @@
 /*
  * GameFlow.cpp
  *
- * Author: Chaviva Moshavi
- * ID: 322082892
+ * Author1: name & ID: Dana Joffe 312129240
+ * Author2: name & ID: Chaviva Moshavi 322082892
  */
 
 #include "GameFlow.h"
@@ -49,7 +49,7 @@ bool GameFlow::playOneRound() {
     if (num_disks_played_ == (board_.getRows() * board_.getCols())) {
       return false;
     }
-    printer_.printMessage(startTurn(players_[Color(c)]->getColor()));
+    printer_.printMessage(startTurn(players_[Color(c)]->getName()));
     vector<Cell*> moves(logic_.getPossibleMoves(board_, Color(c)));
     bool invalid_move = true;
       //player places a disk in one of possible moves
@@ -84,7 +84,7 @@ bool GameFlow::playOneRound() {
     printer_.printMessage(currentBoard());
     printer_.printBoard(board_);
     if (move.getRow()>-1){
-    	printer_.printMessage(finishTurn(players_[Color(c)]->getName(), move));
+    	printer_.printMessage(finishTurn(players_[Color(c)]->getColor(), move));
     }
 
   }
