@@ -10,9 +10,7 @@
 #include "HumanPlayer.h"
 
 //run game
-/*
 int main() {
   GameSetUp g = GameSetUp();
   g.playGame();
 }
-*/
