@@ -17,11 +17,7 @@ void AIPlayer::hasNoMoves() const {
 }
 
 Point AIPlayer::decideOnAMove(Board& board, std::vector<Cell*>& possibleMoves,
-    GameLogic& logic) throw(){
-	if (possibleMoves.empty()) {
-		 throw logic_error("Called to AIPlayer::decideOnAMove with no possible moves");
-	}
-
+    GameLogic& logic){
 	Point AImove;
 	int minRivalScoring = board.getRows() * board.getCols();
 	Cell* AIfinalMove;

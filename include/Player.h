@@ -56,7 +56,7 @@ public:
    * output: the chosen move in Point representation.
    */
   virtual Point decideOnAMove(Board& board,
-      std::vector<Cell*>& possibleMoves, GameLogic& logic) throw() = 0;
+      std::vector<Cell*>& possibleMoves, GameLogic& logic) = 0;
   /*
    * informs the player that he has no moves to execute.
    */

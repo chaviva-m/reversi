@@ -39,10 +39,7 @@ Point HumanPlayer::convertStrToPoint(string& input) {
 }
 
 Point HumanPlayer::decideOnAMove(Board& board, std::vector<Cell*>& possibleMoves,
-    GameLogic& logic) throw(){
-  if (possibleMoves.empty()) {
-	  throw logic_error("Called to HumanPlayer::decideOnAMove with no possible moves");
-  }
+    GameLogic& logic){
   string point;
   getline(cin, point);
   Point move = this->convertStrToPoint(point);

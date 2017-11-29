@@ -33,7 +33,7 @@ public:
 	* output: the chosen move in Point representation.
 	*/
     virtual Point decideOnAMove(Board& board,
-      std::vector<Cell*>& possibleMoves, GameLogic& logic) throw();
+      std::vector<Cell*>& possibleMoves, GameLogic& logic);
     /*
      * destructor.
      */
