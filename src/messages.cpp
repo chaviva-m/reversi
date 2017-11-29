@@ -12,8 +12,8 @@ namespace message {
   const string openingMenu() {
     stringstream msg;
     msg << "Choose an opponent type:" << endl;
-    msg << "1. a human local player" << endl;
-    msg << "2. an AI player" << endl;
+    msg << CONSOLE_RIVAL << ". a human local player" << endl;
+    msg << AI_RIVAL << ". an AI player" << endl;
     return msg.str();
   }
 

@@ -17,6 +17,7 @@
 #include "color.h"
 #include "Point.h"
 
+enum Rival {NONE, CONSOLE_RIVAL, AI_RIVAL};
 using namespace std;
 
 /*

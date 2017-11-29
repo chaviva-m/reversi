@@ -25,11 +25,11 @@ void GameSetUp::setPlayersMenu() {
 		getline(cin, strInput);
 		input = convertStrToPoint(strInput);
 		switch(input) {
-			case(1):
+			case(CONSOLE_RIVAL):
 			  this->players_ = this->consolePlayers();
 			  valid = true;
 			  break;
-			case(2):
+			case(AI_RIVAL):
 		      this->players_ = this->AIAndConsolePlayers();
 			  valid = true;
 			  break;
