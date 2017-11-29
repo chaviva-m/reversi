@@ -31,7 +31,7 @@ public:
    * input: int board_rows (default: 8), int board_cols (default: 8)
    * output: void
    */
-  GameSetUp(int board_rows = 8, int board_cols = 8);
+  GameSetUp(int board_rows = DEFAULT_ROWS, int board_cols = DEFAULT_COLS);
   /**
    * play game
    * input: void
@@ -82,7 +82,8 @@ private:
    * return it. else- return 0.
    */
   int convertStrToPoint(string& input);
-
+  static const int DEFAULT_ROWS = 8;
+  static const int DEFAULT_COLS = 8;
   Board* board_;
   GameLogic* logic_;
   Printer* printer_;

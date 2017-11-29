@@ -1,3 +1,53 @@
+commit e2161c34d1730b2316289fe1b4392c8148e5c543
+Author: Dana Joffe <djoffe94@gmail.com>
+Date:   Wed Nov 29 10:17:44 2017 -0800
+
+    added enum to menu to avoid magic numbers
+
+commit a86b0654a9efaca74a65efd49ac16dae39f2da0a
+Author: Dana Joffe <djoffe94@gmail.com>
+Date:   Tue Nov 28 07:52:43 2017 -0800
+
+    info.txt
+
+commit 4f6f4e050629d868d7144f2da095fd0d503f0571
+Author: Dana Joffe <djoffe94@gmail.com>
+Date:   Tue Nov 28 01:56:57 2017 -0800
+
+    Decisions_on_system_design.pdf IMPROVED
+
+commit 139e52fac11c1ebff4f2e80357b0aade20f2a9f6
+Author: Dana Joffe <djoffe94@gmail.com>
+Date:   Mon Nov 27 21:57:24 2017 -0800
+
+    Decisions_on_system_design.pdf
+
+commit e31e9bdb53447077f9d4f71575ecfb0fc7a1341b
+Merge: 1b09b09 ff769eb
+Author: Dana Joffe <djoffe94@gmail.com>
+Date:   Mon Nov 27 20:47:29 2017 -0800
+
+    for updating makefile and oter files
+    Merge branch 'master' of https://github.com/chaviva-m/reversi
+
+commit 1b09b09d3a08586a26738803d62122cc5d9eba72
+Author: Dana Joffe <djoffe94@gmail.com>
+Date:   Mon Nov 27 20:47:14 2017 -0800
+
+    no change
+
+commit ff769eb071f65412859b1c59577ec597f54fa06f
+Author: Chaviva Moshavi <chaviva.moshavi@gmail.com>
+Date:   Mon Nov 27 21:56:18 2017 +0200
+
+    added openingMenu message. Switched input error string to invalidInput message
+
+commit 2ed582374652a57499f9c0b02e36dc61c6d9771c
+Author: Chaviva Moshavi <chaviva.moshavi@gmail.com>
+Date:   Mon Nov 27 20:19:35 2017 +0200
+
+    added log
+
 commit a39a3b92862b662735dbbd0288d9e3b53e8781c6
 Author: Chaviva Moshavi <chaviva.moshavi@gmail.com>
 Date:   Mon Nov 27 20:07:26 2017 +0200
