@@ -38,6 +38,7 @@ Point AIPlayer::decideOnAMove(Board& board, std::vector<Cell*>& possibleMoves,
 		}
 		Board boardAfterRivalMove(board.getRows(), board.getCols());
 		Point rivalMove;
+		// calculate rival's moves and score according to AImove.
 		double maxScoring = - std::numeric_limits<double>::infinity();
 		for(vector<Cell*>::iterator iter=rivalsMoveOptions.begin();
 				iter!=rivalsMoveOptions.end();iter++) {
