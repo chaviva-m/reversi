@@ -15,9 +15,9 @@
 #include <unistd.h>
 using namespace std;
 Client::Client(const char *serverIP, int serverPort):
-serverIP(serverIP), serverPort(serverPort),
-clientSocket(0) {
- cout << "Client" << endl;
+		serverIP(serverIP), serverPort(serverPort),
+		clientSocket(0) {
+	cout << "Client" << endl;
 }
 void Client::connectToServer() {
 	// Create a socket point
@@ -68,6 +68,13 @@ int Client::sendExercise(int arg1, char op, int arg2) {
 	// Read the result from the server
 	int result;
 	n = read(clientSocket, &result, sizeof(result));
+
+
+
+	//CHANGE
+	//int player2move = read(clientSocket, &result, sizeof(result));
+
+
 	if (n == -1) {
 		throw "Error reading result from socket";
 	}

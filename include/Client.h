@@ -14,10 +14,11 @@ public:
 	Client(const char *serverIP, int serverPort);
 	void connectToServer();
 	int sendExercise(int arg1, char op, int arg2);
+	int clientSocket;
+
 private:
 	const char *serverIP;
 	int serverPort;
-	int clientSocket;
 };
 
 
