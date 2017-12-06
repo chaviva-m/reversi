@@ -35,6 +35,7 @@ void GameSetUp::setPlayersMenu() {
 			  break;
 			case(REMOTE_RIVAL):
 			  this->players_ = this->onlinePlayers();
+			  valid = true;
 			  break;
 		  default:
 			  this->printer_->printMessage(invalidInput());
@@ -90,6 +91,8 @@ map<Color,Player*> GameSetUp::AIAndConsolePlayers() {
 map<Color, Player*> GameSetUp::onlinePlayers() {
   map<Color,Player*> players;
   this->channel_ = new CommunicationChannel("127.0.0.1", 8000); //read from file
+  this->channel_->connectToServer(*printer_);
+
   printer_->printMessage(waitingForAnotherPlayer());
   int color;
   int n = read(channel_->getClientSocket(), &color, sizeof(color));
@@ -97,8 +100,11 @@ map<Color, Player*> GameSetUp::onlinePlayers() {
     printer_->printMessage(errorReadingFromSocket());
     return players;
   }
+  this->printer_->printMessage(getPlayerName(Color(color-1)));
+  string name;
+  getline(cin, name);
   players[Color(color-1)] = new PresentOnlinePlayer
-      (getPlayerName(Color(color-1)), Color(color-1), *channel_);
+        (name, Color(color-1), *channel_);
   stringstream second_color;
   second_color << Color(color % LAST_COLOR);
   players[Color(color % LAST_COLOR)] = new RemoteOnlinePlayer
@@ -127,18 +133,3 @@ GameSetUp::~GameSetUp() {
     delete this->channel_;
   }
 }
-
-/*
- * map<Color,Player*> GameSetUp::onlinePlayer() {
- * 		//connect to server -> get color from server
- *
- *
- *
- *
- *
- *
- *
- */
-
-
-

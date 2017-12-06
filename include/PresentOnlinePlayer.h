@@ -39,6 +39,11 @@ public:
    */
   virtual ~PresentOnlinePlayer() {};
 
+  void sendStatus(int stat, Printer& printer) const;
+  void sendMove(int row, int col, Printer& printer) const;
+
+
+
 protected:
   CommunicationChannel& channel_;
 };

@@ -97,6 +97,7 @@ private:
   GameLogic* logic_;
   Printer* printer_;
   std::map<Color,Player*> players_;
+
   CommunicationChannel* channel_ = NULL;
 };
 

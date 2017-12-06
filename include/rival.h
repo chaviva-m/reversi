@@ -11,5 +11,8 @@
 //rival options
 enum Rival {NONE, CONSOLE_RIVAL, AI_RIVAL, REMOTE_RIVAL};
 
+enum Input {NO_MOVES, HAS_MOVE, END};
+
+
 
 #endif /* INCLUDE_RIVAL_H_ */
