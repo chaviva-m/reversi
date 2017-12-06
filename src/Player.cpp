@@ -28,3 +28,23 @@ void Player::flipDisks(const vector<Cell*>& cells_to_flip) const {
     cells_to_flip[i]->getDisk()->flipDisk();
   }
 }
+
+Point Player::convertStrToPoint(string& input) {
+  int r = 0, c = 0;
+  bool startOneNum = false;
+  bool finishOneNum = false;
+  for (unsigned int i = 0; i < input.size(); i++) {
+    if (isdigit(input.at(i))) {
+      int k = (int)input[i] - 48;
+      if (!finishOneNum) {
+        startOneNum = true;
+        r = r*10 + k;
+      } else {
+        c = c*10 + k;
+      }
+    } else if (startOneNum) {
+      finishOneNum = true;
+    }
+  }
+  return (Point(r-1,c-1));
+}

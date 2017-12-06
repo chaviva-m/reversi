@@ -10,6 +10,9 @@
 
 #include "Board.h"
 #include "Player.h"
+#include "Printer.h"
+#include "messages.h"
+
 #include <limits>
 #include <string>
 #include <sstream>
@@ -32,24 +35,20 @@ public:
     * 		logic - current game logic (game rules).
     * output: the chosen move in Point representation.
     */
-	virtual Point decideOnAMove(Board& board,
-      std::vector<Cell*>& possibleMoves, GameLogic& logic);
-	/*
-	 * destructor.
-	 */
-	virtual ~HumanPlayer() {};
+	virtual Point decideOnAMove(Board& board, std::vector<Cell*>& possibleMoves,
+	    GameLogic& logic, Printer& printer);
 	/*
 	 * informs the player that he has no moves to execute.
 	 */
-	virtual void hasNoMoves() const;
-
-private:
+	virtual void hasNoMoves(Printer& printer);
 	/*
-	* input: a string that should contain two separated numbers.
-	* return: a Location object. Where the player want's to put his color.
-	* 	if a number is missing- zero is being put instead.
-	*/
-	Point convertStrToPoint(std::string& input);
+	 * finishes player's turn
+	 */
+	virtual void endTurn(Point* move, Printer& printer) const;
+  /*
+   * destructor.
+   */
+  virtual ~HumanPlayer() {};
 };
 
 #endif /* HUMANPLAYER_H_ */

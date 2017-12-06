@@ -10,15 +10,19 @@
 
 #include <map>
 #include <vector>
+#include "CommunicationChannel.h"
+#include "ConsolePrinter.h"
 #include "GameFlow.h"
 #include "GameLogic.h"
 #include "HumanPlayer.h"
 #include "AIPlayer.h"
 #include "messages.h"
 #include "Player.h"
+#include "PresentOnlinePlayer.h"
 #include "Printer.h"
-#include "ConsolePrinter.h"
 #include "StandardGameLogic.h"
+#include "RemoteOnlinePlayer.h"
+#include "rival.h"
 
 /**
  * sets up and starts game
@@ -70,7 +74,12 @@ private:
    * output: a map of players and their representative color.
    */
   std::map<Color,Player*> consolePlayers();
-
+  /*
+   * generates online players.
+   * input: void
+   * output: a map of players and their representative color.
+   */
+  std::map<Color, Player*> onlinePlayers();
   /*
    * asks the user the kind of player he wants to play with, and respectively
    * set the game players in GamesetUp.
@@ -88,6 +97,7 @@ private:
   GameLogic* logic_;
   Printer* printer_;
   std::map<Color,Player*> players_;
+  CommunicationChannel* channel_ = NULL;
 };
 
 #endif /* GAMESETUP_H_ */

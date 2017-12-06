@@ -30,10 +30,13 @@ void GameSetUp::setPlayersMenu() {
 			  valid = true;
 			  break;
 			case(AI_RIVAL):
-		      this->players_ = this->AIAndConsolePlayers();
+		    this->players_ = this->AIAndConsolePlayers();
 			  valid = true;
 			  break;
-		  	default:
+			case(REMOTE_RIVAL):
+			  this->players_ = this->onlinePlayers();
+			  break;
+		  default:
 			  this->printer_->printMessage(invalidInput());
 			  break;
 	    }
@@ -84,7 +87,30 @@ map<Color,Player*> GameSetUp::AIAndConsolePlayers() {
   return players;
 }
 
+map<Color, Player*> GameSetUp::onlinePlayers() {
+  map<Color,Player*> players;
+  this->channel_ = new CommunicationChannel("127.0.0.1", 8000); //read from file
+  printer_->printMessage(waitingForAnotherPlayer());
+  int color;
+  int n = read(channel_->getClientSocket(), &color, sizeof(color));
+  if (n == -1) {
+    printer_->printMessage(errorReadingFromSocket());
+    return players;
+  }
+  players[Color(color-1)] = new PresentOnlinePlayer
+      (getPlayerName(Color(color-1)), Color(color-1), *channel_);
+  stringstream second_color;
+  second_color << Color(color % LAST_COLOR);
+  players[Color(color % LAST_COLOR)] = new RemoteOnlinePlayer
+      (second_color.str(), Color(color % LAST_COLOR), *channel_);
+  return players;
+}
+
 void GameSetUp::playGame() const {
+  if (this->players_.empty()) {
+    printer_->printMessage(errorInitializingPlayers());
+    return;
+  }
   GameFlow game = GameFlow(*board_, *logic_, players_, *printer_);
   game.playGame();
 }
@@ -97,4 +123,7 @@ GameSetUp::~GameSetUp() {
     delete this->players_[Color(j)];
   }
   this->players_.clear();
+  if (this->channel_ != NULL) {
+    delete this->channel_;
+  }
 }

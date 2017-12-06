@@ -16,8 +16,8 @@
 #include "Cell.h"
 #include "color.h"
 #include "Point.h"
+#include "rival.h"
 
-enum Rival {NONE, CONSOLE_RIVAL, AI_RIVAL};
 using namespace std;
 
 /*
@@ -27,6 +27,16 @@ using namespace std;
 namespace message {
 
   const string openingMenu();
+
+  const string connectedToServer();
+
+  const string waitingForAnotherPlayer();
+
+  const string errorReadingFromSocket();
+
+  const string errorWritingToSocket();
+
+  const string errorInitializingPlayers();
   /*
    * returns a string with the player's name (the player who's
    * color is the input color).
@@ -61,7 +71,11 @@ namespace message {
   */
   const string possibleMoves(const vector<Cell*>& moves);
 
-  const string noPossibleMoves();
+  const string noPossibleMoves(Color color);
+
+  const string waitingForMove();
+
+  const string pressAnyKeyToContinue();
 
   const string invalidInput();
 

@@ -14,7 +14,39 @@ namespace message {
     msg << "Choose an opponent type:" << endl;
     msg << CONSOLE_RIVAL << ". a human local player" << endl;
     msg << AI_RIVAL << ". an AI player" << endl;
+    msg << REMOTE_RIVAL << ". a remote player" << endl;
     return msg.str();
+  }
+
+  const string connectedToServer() {
+    stringstream msg;
+    msg << "Connected to server" << endl;
+    return msg.str();
+  }
+
+  const string waitingForAnotherPlayer() {
+    stringstream msg;
+    msg << "Waiting for another player to join..." << endl;
+    return msg.str();
+  }
+
+  const string errorReadingFromSocket() {
+    stringstream msg;
+    msg << "Error reading from socket." << endl;
+    return msg.str();
+  }
+
+  const string errorWritingToSocket() {
+    stringstream msg;
+    msg << "Error writing to socket" << endl;
+    return msg.str();
+  }
+
+  const string errorInitializingPlayers() {
+    stringstream msg;
+    msg << "Error initializing players." << endl;
+    return msg.str();
+
   }
 
   const string getPlayerName(Color color) {
@@ -54,7 +86,6 @@ namespace message {
 
   }
 
-
   const string possibleMoves(const vector<Cell*>& moves) {
     stringstream msg;
     msg << "Your possible moves: ";
@@ -67,9 +98,20 @@ namespace message {
     return msg.str();
   }
 
-  const string noPossibleMoves() {
+  const string noPossibleMoves(Color color) {
     stringstream msg;
-    msg << "No possible moves." << endl;
+    msg << color << " has no possible moves." << endl;
+    return msg.str();
+  }
+
+  const string waitingForMove() {
+    stringstream msg;
+    msg << "Waiting for other player's move..." << endl;
+    return msg.str();
+  }
+
+  const string pressAnyKeyToContinue() {
+    stringstream msg;
     msg << "Play passes back to the other player." << endl;
     msg << "Press any key and then Enter to continue" << endl;
     return msg.str();

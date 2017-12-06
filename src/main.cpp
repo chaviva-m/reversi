@@ -5,17 +5,19 @@
  * Author2: name & ID: Chaviva Moshavi 322082892
  */
 
-//#include "GameSetUp.h"
-//#include "Player.h"
-//#include "HumanPlayer.h"
-//
-////run game
-//int main() {
-//  GameSetUp g = GameSetUp();
-//  g.playGame();
-//}
+#include "GameSetUp.h"
+#include "Player.h"
+#include "HumanPlayer.h"
 
+#include "messages.h"
 
+//run game
+int main() {
+  GameSetUp g = GameSetUp();
+  g.playGame();
+}
+
+/*
 #include "Client.h"
 #include <iostream>
 #include <stdlib.h>
@@ -43,19 +45,19 @@ int main() {
 
 //
 //	char message[80];
-//	int dummy = read(client.clientSocket, message, 80);
+//	int dummy = read(client.clientSocket_, message, 80);
 //	cout << message<<endl;
 
 	cout << "Waiting for another player to join..."<<endl;
 	int color;
-	int dummy = read(client.clientSocket, &color, sizeof(color));
+	int dummy = read(client.clientSocket_, &color, sizeof(color));
 	cout << "you'r color is: " << color<<endl;
 
 	if (color == 2) {
 		cout << "Waiting for the other player's move..."<<endl;
 		//char result1;
 		int result1;
-		int dummy = read(client.clientSocket, &result1, sizeof(result1));
+		int dummy = read(client.clientSocket_, &result1, sizeof(result1));
 		cout << "other player's result is: " << result1 << endl;
 	}
 	int num1, num2;
@@ -87,11 +89,12 @@ int main() {
 		cout << "Waiting for the other player's move..."<<endl;
 		//char result1;
 		int result1;
-		int dummy = read(client.clientSocket, &result1, sizeof(result1));
+		int dummy = read(client.clientSocket_, &result1, sizeof(result1));
 		cout << "other player's result is: " << result1 << endl;
 
 //		string player2move;
-//		int dummy = read(client.clientSocket, &player2move, sizeof(player2move));
+//		int dummy = read(client.clientSocket_, &player2move, sizeof(player2move));
 //		cout <<player2move<<endl;
 	}
 }
+*/

@@ -47,16 +47,16 @@ bool GameFlow::playOneRound() {
 	Point move;
     //game is over if board is full
     if (num_disks_played_ == (board_.getRows() * board_.getCols())) {
+      players_[Color(c)]->endGame(printer_);
       return false;
     }
-    printer_.printMessage(startTurn(players_[Color(c)]->getName()));
     vector<Cell*> moves(logic_.getPossibleMoves(board_, Color(c)));
     bool invalid_move = true;
-      //player places a disk in one of possible moves
+    //player places a disk in one of possible moves
     if (!moves.empty()) {
         while(invalid_move) {
-            printer_.printMessage(possibleMoves(moves));
-            move = players_[Color(c)]->decideOnAMove(board_, moves, logic_);
+            move = players_[Color(c)]->decideOnAMove(board_, moves,
+                                  logic_, printer_);
             printer_.printMessage("\n");
             if (board_.getCell(move) != NULL && find(moves.begin(),
             		moves.end(), board_.getCell(move)) != moves.end()) {
@@ -69,24 +69,27 @@ bool GameFlow::playOneRound() {
                 printer_.printMessage(invalidInput());
             }
         }
-      //player has no possible moves
       } else {
-        printer_.printMessage(noPossibleMoves());
+        //printer_.printMessage(noPossibleMoves());
         //if next player has no moves as well, game is over
         if (logic_.getPossibleMoves(board_,
             Color((c + 1) % LAST_COLOR)).empty()) {
           return false;
         //else, play passes on to next player
         } else {
-        	players_[Color(c)]->hasNoMoves();
+        	players_[Color(c)]->hasNoMoves(printer_);
         }
       }
     printer_.printMessage(currentBoard());
     printer_.printBoard(board_);
-    if (move.getRow()>-1){
-    	printer_.printMessage(finishTurn(players_[Color(c)]->getColor(), move));
+    /*if (move.getRow()>-1){
+      players_[Color(c)]->endTurn(&move);
+    }*/
+    if (!moves.empty()) {
+      players_[Color(c)]->endTurn(&move, printer_);
+    } else {
+      players_[Color(c)]->endTurn(NULL, printer_);
     }
-
   }
   //game continues
   return true;
