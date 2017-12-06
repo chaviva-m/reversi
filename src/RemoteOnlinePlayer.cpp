@@ -26,7 +26,8 @@ Point RemoteOnlinePlayer::decideOnAMove(Board& board,
   }
 
   if(status != HAS_MOVE) {
- 	cout <<"PROBLAME IN: RemoteOnlinePlayer::decideOnAMove" << endl;
+ 	cout <<"PROBLAME IN: RemoteOnlinePlayer::decideOnAMove. closing socket" << endl;
+ 	endGame(printer);
   }
   //Read move arguments
   r = read(channel_.getClientSocket(), &row, sizeof(row));
@@ -54,7 +55,8 @@ void RemoteOnlinePlayer::hasNoMoves(Printer& printer) {
 	      return;
 	  }
 	  if(status != NO_MOVES) {
-	 	cout <<"PROBLAME IN: RemoteOnlinePlayer::hasNoMoves" << endl;
+	 	cout <<"PROBLAME IN: RemoteOnlinePlayer::hasNoMoves. closing socket" << endl;
+	 	endGame(printer);
 	  }
 }
 

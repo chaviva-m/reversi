@@ -90,6 +90,9 @@ map<Color,Player*> GameSetUp::AIAndConsolePlayers() {
 
 map<Color, Player*> GameSetUp::onlinePlayers() {
   map<Color,Player*> players;
+  this->printer_->printMessage(getPlayerName(LAST_COLOR));
+  string name;
+  getline(cin, name);
   this->channel_ = new CommunicationChannel("127.0.0.1", 8000); //read from file
   this->channel_->connectToServer(*printer_);
 
@@ -100,9 +103,7 @@ map<Color, Player*> GameSetUp::onlinePlayers() {
     printer_->printMessage(errorReadingFromSocket());
     return players;
   }
-  this->printer_->printMessage(getPlayerName(Color(color-1)));
-  string name;
-  getline(cin, name);
+//  this->printer_->printMessage(getPlayerName(Color(color-1)));
   players[Color(color-1)] = new PresentOnlinePlayer
         (name, Color(color-1), *channel_);
   stringstream second_color;

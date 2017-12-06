@@ -51,7 +51,11 @@ namespace message {
 
   const string getPlayerName(Color color) {
     stringstream msg;
-    msg << "Player " << color << " please enter your name: ";
+    if(color == LAST_COLOR) {
+    	msg << "Please enter your name: ";
+    } else {
+    	msg << "Player " << color << " please enter your name: ";
+    }
     return msg.str();
   }
 
