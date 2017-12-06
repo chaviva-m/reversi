@@ -7,6 +7,7 @@
 
 #include "AIPlayer.h"
 #include "Board.h"
+#include "ConsolePrinter.h"
 #include "gtest/gtest.h"
 #include "StandardGameLogic.h"
 
@@ -64,6 +65,7 @@ protected:
   Board board_rival_negative_;
   Board board_rival_positive_;
   Board board_rival_no_moves_;
+  ConsolePrinter printer_;
 };
 
 

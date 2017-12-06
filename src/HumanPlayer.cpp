@@ -7,39 +7,28 @@
 
 #include "HumanPlayer.h"
 using namespace std;
+using namespace message;
 
 HumanPlayer::HumanPlayer(const string& name, Color color) :
     Player(name, color) {
 }
 
-void HumanPlayer::hasNoMoves() const {
+void HumanPlayer::hasNoMoves(Printer& printer) {
+  printer.printMessage(noPossibleMoves(this->color_));
+  printer.printMessage(pressAnyKeyToContinue());
 	string any_key;
 	getline(cin, any_key);
 	return;
 }
 
-Point HumanPlayer::convertStrToPoint(string& input) {
-  int r = 0, c = 0;
-  bool startOneNum = false;
-  bool finishOneNum = false;
-  for (unsigned int i = 0; i < input.size(); i++) {
-    if (isdigit(input.at(i))) {
-      int k = (int)input[i] - 48;
-      if (!finishOneNum) {
-        startOneNum = true;
-        r = r*10 + k;
-      } else {
-        c = c*10 + k;
-      }
-    } else if (startOneNum) {
-      finishOneNum = true;
-    }
-  }
-  return (Point(r-1,c-1));
+void HumanPlayer::endTurn(Point* move, Printer& printer) const {
+  return;
 }
 
-Point HumanPlayer::decideOnAMove(Board& board, std::vector<Cell*>& possibleMoves,
-    GameLogic& logic){
+Point HumanPlayer::decideOnAMove(Board& board, vector<Cell*>& moves,
+    GameLogic& logic, Printer& printer) {
+  printer.printMessage(startTurn(color_));
+  printer.printMessage(possibleMoves(moves));
   string point;
   getline(cin, point);
   Point move = this->convertStrToPoint(point);

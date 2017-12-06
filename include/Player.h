@@ -13,6 +13,7 @@
 #include "Cell.h"
 #include "color.h"
 #include "GameLogic.h"
+#include "Printer.h"
 /**
  * player in game, has name and color
  */
@@ -55,12 +56,20 @@ public:
    * 		logic - current game logic (game rules).
    * output: the chosen move in Point representation.
    */
-  virtual Point decideOnAMove(Board& board,
-      std::vector<Cell*>& possibleMoves, GameLogic& logic) = 0;
+  virtual Point decideOnAMove(Board& board, std::vector<Cell*>& possibleMoves,
+      GameLogic& logic, Printer& printer) = 0;
   /*
    * informs the player that he has no moves to execute.
    */
-  virtual void hasNoMoves() const =0;
+  virtual void hasNoMoves(Printer& printer) =0;
+  /*
+   * finishes player's turn
+   */
+  virtual void endTurn(Point* move, Printer& printer) const = 0;
+  /*
+   * end of game.
+   */
+  virtual void endGame(Printer& printer) {};
   /*
    * destructor.
    */
@@ -69,6 +78,12 @@ public:
 protected:
   std::string name_;
   Color color_;
+  /*
+  * input: a string that should contain two separated numbers.
+  * return: a Location object. Where the player want's to put his color.
+  *   if a number is missing- zero is being put instead.
+  */
+  Point convertStrToPoint(std::string& input);
 };
 
 #endif /* PLAYER_H_ */

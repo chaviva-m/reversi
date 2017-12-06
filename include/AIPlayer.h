@@ -10,6 +10,9 @@
 
 #include "Board.h"
 #include "Player.h"
+#include "Printer.h"
+#include "messages.h"
+
 #include <limits>
 #include <string>
 #include <sstream>
@@ -32,8 +35,8 @@ public:
 	* 		logic - current game logic (game rules).
 	* output: the chosen move in Point representation.
 	*/
-    virtual Point decideOnAMove(Board& board,
-      std::vector<Cell*>& possibleMoves, GameLogic& logic);
+    virtual Point decideOnAMove(Board& board, std::vector<Cell*>& possibleMoves,
+       GameLogic& logic, Printer& printer);
     /*
      * destructor.
      */
@@ -41,7 +44,12 @@ public:
     /*
      * informs the player that he has no moves to execute.
      */
-    virtual void hasNoMoves() const;
+    virtual void hasNoMoves(Printer& printer);
+    /*
+     * finishes player's turn
+     */
+    virtual void endTurn(Point* move, Printer& printer) const;
+
 };
 
 #endif /* AIPLAYER_H_ */

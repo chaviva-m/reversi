@@ -7,17 +7,18 @@
 
 #include "AIPlayer.h"
 using namespace std;
+using namespace message;
 
 AIPlayer::AIPlayer(const string& name, Color color) :
     Player(name, color) {
 }
 
-void AIPlayer::hasNoMoves() const {
+void AIPlayer::hasNoMoves(Printer& printer) {
 	return;
 }
 
 Point AIPlayer::decideOnAMove(Board& board, std::vector<Cell*>& possibleMoves,
-    GameLogic& logic){
+    GameLogic& logic, Printer& printer) {
 	Point AImove;
 	int minRivalScoring = board.getRows() * board.getCols();
 	Cell* AIfinalMove;
@@ -61,4 +62,12 @@ Point AIPlayer::decideOnAMove(Board& board, std::vector<Cell*>& possibleMoves,
 		}
 	}
 	return AIfinalMove->getLocation();
+}
+
+void AIPlayer::endTurn(Point* move, Printer& printer) const {
+  if (move != NULL) {
+    printer.printMessage(finishTurn(color_, *move));
+  } else {
+    printer.printMessage(noPossibleMoves(color_));
+  }
 }
