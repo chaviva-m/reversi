@@ -8,12 +8,12 @@
 #include "GameSetUp.h"
 #include "Player.h"
 #include "HumanPlayer.h"
-
-//run game
-int main() {
-  GameSetUp g = GameSetUp();
-  g.playGame();
-}
+//
+////run game
+//int main() {
+//  GameSetUp g = GameSetUp();
+//  g.playGame();
+//}
 
 #include "Client.h"
 #include <iostream>
@@ -43,8 +43,8 @@ Point convertStrToPoint(string& input) {
   return (Point(r,c));//needs minus -1 each
 }
 
-//int main()
-void Clientmain() {
+
+int main() {
 	Client client("127.0.0.1", 8000);//read from file
 	try {
 		client.connectToServer();

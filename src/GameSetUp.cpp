@@ -98,3 +98,18 @@ GameSetUp::~GameSetUp() {
   }
   this->players_.clear();
 }
+
+/*
+ * map<Color,Player*> GameSetUp::onlinePlayer() {
+ * 		//connect to server -> get color from server
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
+
+
+

@@ -88,6 +88,16 @@ bool GameFlow::playOneRound() {
     }
 
   }
+
+
+  //socket input
+  //int result = client.sendExercise(num1,op, num2);
+	//cout << "Result: " << result << endl;
+
+
+
+
+
   //game continues
   return true;
 }
