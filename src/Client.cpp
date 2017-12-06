@@ -51,7 +51,7 @@ void Client::connectToServer() {
 	}
 	cout << "Connected to server" << endl;
  }
-int Client::sendExercise(int arg1, char op, int arg2) {
+void Client::sendExercise(int arg1, char op, int arg2) {
 	// Write the exercise arguments to the socket
 	int n = write(clientSocket, &arg1, sizeof(arg1));
 	if (n == -1) {
@@ -66,17 +66,55 @@ int Client::sendExercise(int arg1, char op, int arg2) {
 		throw "Error writing arg2 to socket";
 	}
 	// Read the result from the server
+
+
+//	int result;
+//	n = read(clientSocket, &result, sizeof(result));
+//
+//	if (n == -1) {
+//		throw "Error reading result from socket";
+//	}
+//	return result;
+}
+void Client::sendStatus(int stat) {
+	// Write the exercise arguments to the socket
+	int n = write(clientSocket, &stat, sizeof(stat));
+	if (n == -1) {
+		throw "Error writing status to socket";
+	}
+}
+
+void Client::sendMove(int row, int col) {
+	// Write the exercise arguments to the socket
+	int n = write(clientSocket, &row, sizeof(row));
+	if (n == -1) {
+		throw "Error writing row to socket";
+	}
+
+	char op = ',';
+	n = write(clientSocket, &op, sizeof(op));
+	if (n == -1) {
+		throw "Error writing ',' to socket";
+	}
+
+	n = write(clientSocket, &col, sizeof(col));
+	if (n == -1) {
+		throw "Error writing col to socket";
+	}
+}
+
+
+
+
+
+//int Client::getRivalMove()
+
+int Client::getResault() {
 	int result;
-	n = read(clientSocket, &result, sizeof(result));
-
-
-
-	//CHANGE
-	//int player2move = read(clientSocket, &result, sizeof(result));
-
-
+	int n = read(clientSocket, &result, sizeof(result));
 	if (n == -1) {
 		throw "Error reading result from socket";
 	}
 	return result;
 }
+
