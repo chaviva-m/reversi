@@ -39,13 +39,12 @@ public:
    */
   virtual ~PresentOnlinePlayer() {};
 
+private:
+  CommunicationChannel& channel_;
   void sendStatus(int stat, Printer& printer) const;
   void sendMove(int row, int col, Printer& printer) const;
 
 
-
-protected:
-  CommunicationChannel& channel_;
 };
 
 #endif /* INCLUDE_PRESENTONLINEPLAYER_H_ */

@@ -25,7 +25,7 @@ void PresentOnlinePlayer::endTurn(Point* move, Printer& printer) const {
 void PresentOnlinePlayer::sendStatus(int stat, Printer& printer) const {
   int n = write(channel_.getClientSocket(), &stat, sizeof(stat));
   if (n == -1) {
-	printer.printMessage(errorWritingToSocket());
+    printer.printMessage(errorWritingToSocket());
   }
 }
 void PresentOnlinePlayer::sendMove(int row, int col, Printer& printer) const {
@@ -34,8 +34,8 @@ void PresentOnlinePlayer::sendMove(int row, int col, Printer& printer) const {
 		printer.printMessage(errorWritingToSocket());
 	}
 
-	char op = ',';
-	n = write(channel_.getClientSocket(), &op, sizeof(op));
+	char comma = ',';
+	n = write(channel_.getClientSocket(), &comma, sizeof(comma));
 	if (n == -1) {
 		printer.printMessage(errorWritingToSocket());
 	}
@@ -48,7 +48,10 @@ void PresentOnlinePlayer::sendMove(int row, int col, Printer& printer) const {
 
 
 void PresentOnlinePlayer::endGame(Printer& printer) {
-	cout << "Closing client socket" << endl;//**************************************************************
+	printer.printMessage("Closing client socket\n");//**************************************************************
 	sendStatus(END, printer);
-	close(channel_.getClientSocket());
+	close(channel_.getClientSocket()); //do we need to close client socket here?
+	                                   //Or do we just send message to server to close the sockets?
+	                                   //if wec do need to clse it here then we need to close it also
+	                                   //in endGame of RemoteOnlinePlayer
 }

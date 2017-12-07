@@ -24,10 +24,9 @@ Point RemoteOnlinePlayer::decideOnAMove(Board& board,
       printer.printMessage(errorReadingFromSocket());
       return Point(-1,-1); //change? ****************************************************************
   }
-
   if(status != HAS_MOVE) {
- 	cout <<"PROBLAME IN: RemoteOnlinePlayer::decideOnAMove. closing socket" << endl;
- 	endGame(printer);
+    printer.printMessage("ERROR IN: RemoteOnlinePlayer::decideOnAMove. closing socket\n");
+    endGame(printer);
   }
   //Read move arguments
   r = read(channel_.getClientSocket(), &row, sizeof(row));
@@ -55,8 +54,8 @@ void RemoteOnlinePlayer::hasNoMoves(Printer& printer) {
 	      return;
 	  }
 	  if(status != NO_MOVES) {
-	 	cout <<"PROBLAME IN: RemoteOnlinePlayer::hasNoMoves. closing socket" << endl;
-	 	endGame(printer);
+	    printer.printMessage("ERROR IN: RemoteOnlinePlayer::hasNoMoves. closing socket\n");
+	    endGame(printer);
 	  }
 }
 
@@ -72,7 +71,7 @@ void RemoteOnlinePlayer::endGame(Printer& printer) {
 	int stat = END;
 	int n = write(channel_.getClientSocket(), &stat, sizeof(stat));
     if (n == -1) {
-		printer.printMessage(errorWritingToSocket());
+      printer.printMessage(errorWritingToSocket());
 	    return;
 	}
 }
