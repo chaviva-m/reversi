@@ -68,6 +68,6 @@ void AIPlayer::endTurn(Point* move, Printer& printer) const {
   if (move != NULL) {
     printer.printMessage(finishTurn(color_, *move));
   } else {
-    printer.printMessage(noPossibleMoves(color_));
+    printer.printMessage(noPossibleMovesForPlayer(color_));
   }
 }

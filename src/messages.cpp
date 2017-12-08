@@ -102,9 +102,15 @@ namespace message {
     return msg.str();
   }
 
-  const string noPossibleMoves(Color color) {
+  const string noPossibleMovesForPlayer(Color color) {
     stringstream msg;
     msg << color << " has no possible moves." << endl;
+    return msg.str();
+  }
+
+  const string noPossibleMovesOnBoard() {
+    stringstream msg;
+    msg << "There are no more legal moves on the board for either player." << endl;
     return msg.str();
   }
 

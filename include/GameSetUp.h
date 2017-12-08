@@ -8,7 +8,9 @@
 #ifndef GAMESETUP_H_
 #define GAMESETUP_H_
 
+#include <fstream>
 #include <map>
+#include <string>
 #include <vector>
 #include "CommunicationChannel.h"
 #include "ConsolePrinter.h"
@@ -16,9 +18,9 @@
 #include "GameLogic.h"
 #include "HumanPlayer.h"
 #include "AIPlayer.h"
+#include "LocalOnlinePlayer.h"
 #include "messages.h"
 #include "Player.h"
-#include "PresentOnlinePlayer.h"
 #include "Printer.h"
 #include "StandardGameLogic.h"
 #include "RemoteOnlinePlayer.h"
@@ -91,6 +93,11 @@ private:
    * return it. else- return 0.
    */
   int convertStrToPoint(string& input);
+  /*
+   * open connection channel with server IP and port from file.
+   * output: CommunicationChannel
+   */
+  CommunicationChannel* openCommunicationChannel();
   static const int DEFAULT_ROWS = 8;
   static const int DEFAULT_COLS = 8;
   Board* board_;

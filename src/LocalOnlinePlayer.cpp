@@ -5,30 +5,30 @@
  *      Author: chaviva
  */
 
-#include "PresentOnlinePlayer.h"
+#include <LocalOnlinePlayer.h>
 using namespace message;
 
-PresentOnlinePlayer::PresentOnlinePlayer(const std::string& name, Color color,
+LocalOnlinePlayer::LocalOnlinePlayer(const std::string& name, Color color,
     CommunicationChannel& channel) :
     HumanPlayer(name, color), channel_(channel) {}
 
-void PresentOnlinePlayer::endTurn(Point* move, Printer& printer) const {
+void LocalOnlinePlayer::endTurn(Point* move, Printer& printer) const {
   if (move == NULL) {
     sendStatus(NO_MOVES, printer);
   } else {
-	sendStatus(HAS_MOVE, printer);
-	sendMove(move->getRow(), move->getCol(), printer);
+    sendStatus(HAS_MOVE, printer);
+    sendMove(move->getRow(), move->getCol(), printer);
   }
 }
 
 
-void PresentOnlinePlayer::sendStatus(int stat, Printer& printer) const {
+void LocalOnlinePlayer::sendStatus(int stat, Printer& printer) const {
   int n = write(channel_.getClientSocket(), &stat, sizeof(stat));
   if (n == -1) {
     printer.printMessage(errorWritingToSocket());
   }
 }
-void PresentOnlinePlayer::sendMove(int row, int col, Printer& printer) const {
+void LocalOnlinePlayer::sendMove(int row, int col, Printer& printer) const {
 	int n = write(channel_.getClientSocket(), &row, sizeof(row));
 	if (n == -1) {
 		printer.printMessage(errorWritingToSocket());
@@ -47,7 +47,7 @@ void PresentOnlinePlayer::sendMove(int row, int col, Printer& printer) const {
 }
 
 
-void PresentOnlinePlayer::endGame(Printer& printer) {
+void LocalOnlinePlayer::endGame(Printer& printer) {
 	printer.printMessage("Closing client socket\n");//**************************************************************
 	sendStatus(END, printer);
 	close(channel_.getClientSocket()); //do we need to close client socket here?

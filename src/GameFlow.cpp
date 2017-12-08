@@ -47,7 +47,7 @@ bool GameFlow::playOneRound() {
 	Point move;
     //game is over if board is full
     if (num_disks_played_ == (board_.getRows() * board_.getCols())) {
-      players_[Color(c)]->endGame(printer_);//its not the last player who made a move. makes a difference? **************
+      players_[Color(c)]->endGame(printer_);
       return false;
     }
     vector<Cell*> moves(logic_.getPossibleMoves(board_, Color(c)));
@@ -74,7 +74,9 @@ bool GameFlow::playOneRound() {
         //if next player has no moves as well, game is over
           if (logic_.getPossibleMoves(board_,
              Color((c + 1) % LAST_COLOR)).empty()) {
-               return false;
+            printer_.printMessage(noPossibleMovesOnBoard());
+            players_[Color(c)]->endGame(printer_);
+            return false;
         //else, play passes on to next player
           } else {
         	 players_[Color(c)]->hasNoMoves(printer_);

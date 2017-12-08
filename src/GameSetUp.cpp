@@ -89,13 +89,17 @@ map<Color,Player*> GameSetUp::AIAndConsolePlayers() {
 }
 
 map<Color, Player*> GameSetUp::onlinePlayers() {
+  //get name
   map<Color,Player*> players;
   this->printer_->printMessage(getPlayerName(LAST_COLOR));
   string name;
   getline(cin, name);
-  this->channel_ = new CommunicationChannel("127.0.0.1", 8000); //read from file
+  //connect to server
+  this->channel_ = this->openCommunicationChannel();
+  if (this->channel_ == NULL) {
+    return players;
+  }
   this->channel_->connectToServer(*printer_);
-
   printer_->printMessage(waitingForAnotherPlayer());
   int color;
   int n = read(channel_->getClientSocket(), &color, sizeof(color));
@@ -103,14 +107,32 @@ map<Color, Player*> GameSetUp::onlinePlayers() {
     printer_->printMessage(errorReadingFromSocket());
     return players;
   }
-//  this->printer_->printMessage(getPlayerName(Color(color-1)));
-  players[Color(color-1)] = new PresentOnlinePlayer
+  //create players
+  printer_->printMessage("Your color is .."); //add msg - pass Color(color-1)
+  players[Color(color-1)] = new LocalOnlinePlayer
         (name, Color(color-1), *channel_);
   stringstream second_color;
   second_color << Color(color % LAST_COLOR);
   players[Color(color % LAST_COLOR)] = new RemoteOnlinePlayer
       (second_color.str(), Color(color % LAST_COLOR), *channel_);
   return players;
+}
+
+CommunicationChannel* GameSetUp::openCommunicationChannel() {
+  //get server IP and port from file
+  ifstream server_info;
+  server_info.open("server_info.txt");
+  if(!server_info.is_open()) {
+    cout << "Cannot open file with server information." << endl;
+    return NULL;
+  }
+  char server_IP[50];
+  server_info.getline(server_IP, 50);
+  int port_num;
+  server_info >> port_num;
+  server_info.close();
+  CommunicationChannel* channel = new CommunicationChannel(server_IP, port_num);
+  return channel;
 }
 
 void GameSetUp::playGame() const {

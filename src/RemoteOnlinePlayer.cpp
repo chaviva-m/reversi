@@ -63,15 +63,16 @@ void RemoteOnlinePlayer::endTurn(Point* move, Printer& printer) const {
   if (move != NULL) {
     printer.printMessage(finishTurn(color_, *move));
   } else {
-    printer.printMessage(noPossibleMoves(color_));
+    printer.printMessage(noPossibleMovesForPlayer(color_));
   }
 }
 
 void RemoteOnlinePlayer::endGame(Printer& printer) {
-	int stat = END;
+	/*int stat = END;
 	int n = write(channel_.getClientSocket(), &stat, sizeof(stat));
     if (n == -1) {
       printer.printMessage(errorWritingToSocket());
 	    return;
-	}
+	}*/
+  close(channel_.getClientSocket());
 }

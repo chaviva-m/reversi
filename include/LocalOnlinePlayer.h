@@ -5,8 +5,8 @@
  *      Author: chaviva
  */
 
-#ifndef INCLUDE_PRESENTONLINEPLAYER_H_
-#define INCLUDE_PRESENTONLINEPLAYER_H_
+#ifndef INCLUDE_LOCALONLINEPLAYER_H_
+#define INCLUDE_LOCALONLINEPLAYER_H_
 
 #include "HumanPlayer.h"
 #include "color.h"
@@ -22,9 +22,9 @@
 #include <string.h>
 #include <unistd.h>
 
-class PresentOnlinePlayer: public HumanPlayer {
+class LocalOnlinePlayer: public HumanPlayer {
 public:
-  PresentOnlinePlayer(const std::string& name, Color color,
+  LocalOnlinePlayer(const std::string& name, Color color,
                     CommunicationChannel& channel);
   /*
    * finishes player's turn
@@ -37,7 +37,7 @@ public:
   /*
    * destructor
    */
-  virtual ~PresentOnlinePlayer() {};
+  virtual ~LocalOnlinePlayer() {};
 
 private:
   CommunicationChannel& channel_;
@@ -47,4 +47,4 @@ private:
 
 };
 
-#endif /* INCLUDE_PRESENTONLINEPLAYER_H_ */
+#endif /* INCLUDE_LOCALONLINEPLAYER_H_ */
