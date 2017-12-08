@@ -18,6 +18,12 @@ namespace message {
     return msg.str();
   }
 
+  const string errorOpeningFile() {
+    stringstream msg;
+    msg << "Cannot open file with server information." << endl;
+    return msg.str();
+  }
+
   const string connectedToServer() {
     stringstream msg;
     msg << "Connected to server" << endl;

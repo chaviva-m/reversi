@@ -123,7 +123,7 @@ CommunicationChannel* GameSetUp::openCommunicationChannel() {
   ifstream server_info;
   server_info.open("server_info.txt");
   if(!server_info.is_open()) {
-    cout << "Cannot open file with server information." << endl;
+    printer_->printMessage(errorOpeningFile());
     return NULL;
   }
   char server_IP[50];

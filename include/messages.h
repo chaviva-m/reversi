@@ -28,6 +28,8 @@ namespace message {
 
   const string openingMenu();
 
+  const string errorOpeningFile();
+
   const string connectedToServer();
 
   const string waitingForAnotherPlayer();
