@@ -14,7 +14,8 @@ HumanPlayer::HumanPlayer(const string& name, Color color) :
 }
 
 void HumanPlayer::hasNoMoves(Printer& printer) {
-  printer.printMessage(noPossibleMoves(this->color_));
+  printer.printMessage(startTurn(color_));
+  printer.printMessage(noPossibleMovesForPlayer(this->color_));
   printer.printMessage(pressAnyKeyToContinue());
 	string any_key;
 	getline(cin, any_key);

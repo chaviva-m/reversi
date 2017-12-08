@@ -28,6 +28,8 @@ namespace message {
 
   const string openingMenu();
 
+  const string errorOpeningFile();
+
   const string connectedToServer();
 
   const string waitingForAnotherPlayer();
@@ -71,7 +73,9 @@ namespace message {
   */
   const string possibleMoves(const vector<Cell*>& moves);
 
-  const string noPossibleMoves(Color color);
+  const string noPossibleMovesForPlayer(Color color);
+
+  const string noPossibleMovesOnBoard();
 
   const string waitingForMove();
 

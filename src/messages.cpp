@@ -18,6 +18,12 @@ namespace message {
     return msg.str();
   }
 
+  const string errorOpeningFile() {
+    stringstream msg;
+    msg << "Cannot open file with server information." << endl;
+    return msg.str();
+  }
+
   const string connectedToServer() {
     stringstream msg;
     msg << "Connected to server" << endl;
@@ -102,9 +108,15 @@ namespace message {
     return msg.str();
   }
 
-  const string noPossibleMoves(Color color) {
+  const string noPossibleMovesForPlayer(Color color) {
     stringstream msg;
     msg << color << " has no possible moves." << endl;
+    return msg.str();
+  }
+
+  const string noPossibleMovesOnBoard() {
+    stringstream msg;
+    msg << "There are no more legal moves on the board for either player." << endl;
     return msg.str();
   }
 
