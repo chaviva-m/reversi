@@ -103,6 +103,7 @@ map<Color, Player*> GameSetUp::onlinePlayers() {
     printer_->printMessage(errorReadingFromSocket());
     return players;
   }
+  this->printer_->printMessage("Your color is: " + Color(color-1));//FIX******
 //  this->printer_->printMessage(getPlayerName(Color(color-1)));
   players[Color(color-1)] = new PresentOnlinePlayer
         (name, Color(color-1), *channel_);
