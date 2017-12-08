@@ -126,8 +126,9 @@ CommunicationChannel* GameSetUp::openCommunicationChannel() {
     printer_->printMessage(errorOpeningFile());
     return NULL;
   }
-  char server_IP[50];
-  server_info.getline(server_IP, 50);
+  const int SIZE = 50;
+  char server_IP[SIZE];
+  server_info.getline(server_IP, SIZE);
   int port_num;
   server_info >> port_num;
   server_info.close();
