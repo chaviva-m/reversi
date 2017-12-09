@@ -53,8 +53,5 @@ void LocalOnlinePlayer::sendMove(int row, int col, Printer& printer) const {
 void LocalOnlinePlayer::endGame(Printer& printer) const {
 	printer.printMessage("Closing client socket\n");
 	sendStatus(END, printer);
-	close(channel_.getClientSocket()); //do we need to close client socket here?
-	                                   //Or do we just send message to server to close the sockets?
-	                                   //if wec do need to clse it here then we need to close it also
-	                                   //in endGame of RemoteOnlinePlayer
+	close(channel_.getClientSocket());
 }
