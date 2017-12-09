@@ -8,23 +8,24 @@
 #ifndef GAMESETUP_H_
 #define GAMESETUP_H_
 
-#include <fstream>
-#include <map>
-#include <string>
-#include <vector>
+#include "AIPlayer.h"
 #include "CommunicationChannel.h"
 #include "ConsolePrinter.h"
 #include "GameFlow.h"
 #include "GameLogic.h"
 #include "HumanPlayer.h"
-#include "AIPlayer.h"
 #include "LocalOnlinePlayer.h"
 #include "messages.h"
+#include "onlineOptionEnums.h"
 #include "Player.h"
 #include "Printer.h"
-#include "StandardGameLogic.h"
 #include "RemoteOnlinePlayer.h"
-#include "rival.h"
+#include "StandardGameLogic.h"
+
+#include <fstream>
+#include <map>
+#include <string>
+#include <vector>
 
 /**
  * sets up and starts game
@@ -95,7 +96,7 @@ private:
   int convertStrToPoint(string& input);
   /*
    * open connection channel with server IP and port from file.
-   * output: CommunicationChannel
+   * output: CommunicationChannel*
    */
   CommunicationChannel* openCommunicationChannel();
   static const int DEFAULT_ROWS = 8;
@@ -104,7 +105,6 @@ private:
   GameLogic* logic_;
   Printer* printer_;
   std::map<Color,Player*> players_;
-
   CommunicationChannel* channel_;
 };
 

@@ -74,7 +74,8 @@ void RemoteOnlinePlayer::endGame(Printer& printer) {
 	int stat = END;
 	int n = write(channel_.getClientSocket(), &stat, sizeof(stat));
     if (n == -1) {
-    	cout <<"RemoteOnlinePlayer::endGame:";
-        printer.printMessage(errorWritingToSocket());
+      printer.printMessage(errorWritingToSocket());
 	}
+  printer.printMessage("Closing client socket\n");
+  close(channel_.getClientSocket());
 }

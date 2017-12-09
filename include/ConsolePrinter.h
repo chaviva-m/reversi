@@ -11,6 +11,9 @@
 #include "Printer.h"
 #include <iostream>
 
+/*
+ *Prints to the console.
+ */
 class ConsolePrinter: public Printer {
 public:
   /*

@@ -1,33 +1,38 @@
 /*
- * PresentOnlinePlayer.h
+ * LocalOnlinePlayer.h
  *
- *  Created on: Dec 6, 2017
- *      Author: chaviva
+ * Author1: name & ID: Dana Joffe 312129240
+ * Author2: name & ID: Chaviva Moshavi 322082892
  */
 
 #ifndef INCLUDE_LOCALONLINEPLAYER_H_
 #define INCLUDE_LOCALONLINEPLAYER_H_
 
-#include "HumanPlayer.h"
 #include "color.h"
 #include "CommunicationChannel.h"
+#include "HumanPlayer.h"
 #include "messages.h"
 #include "Point.h"
 
-#include <iostream>
-#include <sys/socket.h>
-#include <netinet/in.h>
 #include <arpa/inet.h>
+#include <iostream>
+#include <netinet/in.h>
 #include <netdb.h>
 #include <string.h>
+#include <sys/socket.h>
 #include <unistd.h>
-
+/*
+ * Local online player. A Human player that can send messages to the server.
+ */
 class LocalOnlinePlayer: public HumanPlayer {
 public:
+  /*
+   * Constructs Local Online Player with name, color and communication channel
+   */
   LocalOnlinePlayer(const std::string& name, Color color,
                     CommunicationChannel& channel);
   /*
-   * finishes player's turn
+   * finishes player's turn, send message to server with move
    */
   virtual void endTurn(Point* move, Printer& printer) const;
   /*

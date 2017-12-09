@@ -15,8 +15,8 @@
 #include "Board.h"
 #include "Cell.h"
 #include "color.h"
+#include "onlineOptionEnums.h"
 #include "Point.h"
-#include "rival.h"
 
 using namespace std;
 

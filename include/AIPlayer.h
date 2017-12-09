@@ -35,21 +35,20 @@ public:
 	* 		logic - current game logic (game rules).
 	* output: the chosen move in Point representation.
 	*/
-    virtual Point decideOnAMove(Board& board, std::vector<Cell*>& possibleMoves,
-       GameLogic& logic, Printer& printer);
-    /*
-     * destructor.
-     */
-    virtual ~AIPlayer() {};
-    /*
-     * informs the player that he has no moves to execute.
-     */
-    virtual void hasNoMoves(Printer& printer);
-    /*
-     * finishes player's turn
-     */
-    virtual void endTurn(Point* move, Printer& printer) const;
-
+  virtual Point decideOnAMove(Board& board, std::vector<Cell*>& possibleMoves,
+     GameLogic& logic, Printer& printer);
+  /*
+   * destructor.
+   */
+  virtual ~AIPlayer() {};
+  /*
+   * informs the player that he has no moves to execute.
+   */
+  virtual void hasNoMoves(Printer& printer);
+  /*
+   * finishes player's turn
+   */
+  virtual void endTurn(Point* move, Printer& printer) const;
 };
 
 #endif /* AIPLAYER_H_ */

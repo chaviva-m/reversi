@@ -34,31 +34,7 @@ public:
    * assignment board.
    * reset this board with newBoard.
    */
-  Board& operator=(const Board& newBoard) {
-    if (this != &newBoard) {
-      if (this->rows_!= newBoard.getRows() || this->columns_!= newBoard.getCols()) {
-    	cout << "Could not make Board Assignment. Sizes don't match"<<endl;
-      	return *this;
-      }
-      //delete old information.
-      for (int i = 0; i < this->rows_; i++) {
-        delete[] this->board_[i];
-      }
-      delete[] this->board_;
-      //initialize new information.
-      this->board_ = new Cell*[this->rows_];
-      for (int i = 0; i < this->rows_; i++) {
-      	this->board_[i] = new Cell[this->columns_];
-      }
-      // Copy the inherited part
-      for (int i = 0; i < this->rows_; i++) {
-    	  for (int j = 0; j < this->rows_; j++) {
-    		  this->board_[i][j] = *newBoard.getCell(i, j);
-    	  }
-      }
-    }
-    return *this;
-  }
+  Board& operator=(const Board& newBoard);
   /**
    * access # of rows of board
    * input: void

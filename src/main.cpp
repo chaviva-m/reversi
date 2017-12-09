@@ -6,17 +6,14 @@
  */
 
 #include "GameSetUp.h"
+
 #include <iostream>
 
 using namespace std;
 
 //run game
 int main() {
-  try {
 	GameSetUp g = GameSetUp();
 	g.playGame();
-  } catch (const char *msg) {
-	cout << "Error in Reversi:main. Reason: " << msg << endl;
-  }
   return 0;
 }

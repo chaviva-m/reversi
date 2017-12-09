@@ -42,7 +42,6 @@ void GameSetUp::setPlayersMenu() {
 			  this->printer_->printMessage(invalidInput());
 			  break;
 	    }
-
 	}while (!valid) ;
 }
 
@@ -96,21 +95,19 @@ map<Color, Player*> GameSetUp::onlinePlayers() {
   string name;
   getline(cin, name);
   //connect to server
-
   this->channel_ = this->openCommunicationChannel();
-
   if (this->channel_ == NULL) {
     return players;
   }
   this->channel_->connectToServer(*printer_);
   printer_->printMessage(waitingForAnotherPlayer());
+  //get color from server
   int color;
   int n = read(channel_->getClientSocket(), &color, sizeof(color));
   if (n == -1) {
     printer_->printMessage(errorReadingFromSocket());
     return players;
   }
-
   //create players
   printer_->printMessage(declareColor(Color(color-1)));
   players[Color(color-1)] = new LocalOnlinePlayer
@@ -130,7 +127,6 @@ CommunicationChannel* GameSetUp::openCommunicationChannel() {
     printer_->printMessage(errorOpeningFile());
     return NULL;
   }
-  const int SIZE = 50;
   string server_IP;
   getline(server_info, server_IP);
   int port_num;
