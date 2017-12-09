@@ -9,23 +9,18 @@
 using namespace std;
 using namespace message;
 
-CommunicationChannel::CommunicationChannel(const char *serverIP, int serverPort):
-    serverIP_(serverIP), serverPort_(serverPort), clientSocket_(0) {
-//	  cout <<"CommunicationChannel: received serverIP: "<<serverIP<<endl;
-//	  cout <<"CommunicationChannel: initialized serverIP: "<<serverIP_<<endl;
-}
+CommunicationChannel::CommunicationChannel(string serverIP, int serverPort):
+    serverIP_(serverIP), serverPort_(serverPort), clientSocket_(0) {}
 
 void CommunicationChannel::connectToServer(Printer& printer) {
-//  cout <<"connectToServer:1. this serverIP: "<<serverIP_<<endl;
   // Create a socket point
   clientSocket_ = socket(AF_INET, SOCK_STREAM, 0);
   if (clientSocket_ == -1) {
     throw "Error opening socket";
   }
   // Convert the ip string to a network address
-//  cout <<"connectToServer:2. this serverIP: "<<serverIP_<<endl;
   struct in_addr address;
-  if (inet_aton(serverIP_, &address) == 0) {
+  if (inet_aton(serverIP_.c_str(), &address) == 0) {
     throw "Can't parse IP address. IP address is invalid";
   }
   // Get a hostent structure for the given host address

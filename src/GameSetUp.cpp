@@ -131,16 +131,12 @@ CommunicationChannel* GameSetUp::openCommunicationChannel() {
     return NULL;
   }
   const int SIZE = 50;
-  char server_IP_temp[SIZE];
-  server_info.getline(server_IP_temp, SIZE);
-  const char* server_IP = server_IP_temp;
-//  cout <<"GameSetUp: serverIP: "<<server_IP<<endl;
+  string server_IP;
+  getline(server_info, server_IP);
   int port_num;
   server_info >> port_num;
   server_info.close();
-
   CommunicationChannel* channel = new CommunicationChannel(server_IP, port_num);
-
   return channel;
 }
 
