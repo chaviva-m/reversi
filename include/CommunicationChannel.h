@@ -21,12 +21,12 @@
 
 class CommunicationChannel {
 public:
-  CommunicationChannel(const char *serverIP, int serverPort);
+  CommunicationChannel(string serverIP, int serverPort);
   void connectToServer(Printer& printer);
   int getClientSocket();
 
 private:
-  const char *serverIP_;
+  string serverIP_;
   int serverPort_;
   int clientSocket_;
 };
