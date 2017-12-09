@@ -33,7 +33,7 @@ public:
   /*
    * send message to server that game is over
    */
-  virtual void endGame(Printer& printer);
+  virtual void endGame(Printer& printer) const;
   /*
    * destructor
    */

@@ -22,24 +22,27 @@ Point RemoteOnlinePlayer::decideOnAMove(Board& board,
   int r = read(channel_.getClientSocket(), &status, sizeof(status));
   if (r == -1) {
       printer.printMessage(errorReadingFromSocket());
-      return Point(-1,-1); //change? ****************************************************************
+      endGame(printer);
   }
   if(status != HAS_MOVE) {
-    printer.printMessage("ERROR IN: RemoteOnlinePlayer::decideOnAMove. closing socket\n");
+    printer.printMessage("ERROR IN: RemoteOnlinePlayer::decideOnAMove. Pipe is gonna break\n");
     endGame(printer);
   }
   //Read move arguments
   r = read(channel_.getClientSocket(), &row, sizeof(row));
   if (r == -1) {
      printer.printMessage(errorReadingFromSocket());
+     endGame(printer);
   }
   r = read(channel_.getClientSocket(), &sep, sizeof(sep));
   if (r == -1) {
      printer.printMessage(errorReadingFromSocket());
+     endGame(printer);
   }
   r = read(channel_.getClientSocket(), &col, sizeof(col));
   if (r == -1) {
      printer.printMessage(errorReadingFromSocket());
+     endGame(printer);
   }
   return Point(row, col);
 
@@ -51,10 +54,10 @@ void RemoteOnlinePlayer::hasNoMoves(Printer& printer) {
 	  int r = read(channel_.getClientSocket(), &status, sizeof(status));
 	  if (r == -1) {
 	      printer.printMessage(errorReadingFromSocket());
-	      return;
+	      endGame(printer);
 	  }
 	  if(status != NO_MOVES) {
-	    printer.printMessage("ERROR IN: RemoteOnlinePlayer::hasNoMoves. closing socket\n");
+	    printer.printMessage("ERROR IN: RemoteOnlinePlayer::hasNoMoves. Pipe is gonna break\n");
 	    endGame(printer);
 	  }
 }
@@ -68,11 +71,10 @@ void RemoteOnlinePlayer::endTurn(Point* move, Printer& printer) const {
 }
 
 void RemoteOnlinePlayer::endGame(Printer& printer) {
-	/*int stat = END;
+	int stat = END;
 	int n = write(channel_.getClientSocket(), &stat, sizeof(stat));
     if (n == -1) {
-      printer.printMessage(errorWritingToSocket());
-	    return;
-	}*/
-  close(channel_.getClientSocket());
+    	cout <<"RemoteOnlinePlayer::endGame:";
+        printer.printMessage(errorWritingToSocket());
+	}
 }

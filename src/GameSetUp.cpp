@@ -13,6 +13,7 @@ GameSetUp::GameSetUp(int board_rows, int board_cols) {
   this->board_ = new Board(board_rows, board_cols);
   this->logic_ = this->standardLogic();
   this->printer_ = this->consoleInterface();
+  this->channel_ = NULL;
   this->setPlayersMenu();
 }
 
@@ -95,7 +96,9 @@ map<Color, Player*> GameSetUp::onlinePlayers() {
   string name;
   getline(cin, name);
   //connect to server
+
   this->channel_ = this->openCommunicationChannel();
+
   if (this->channel_ == NULL) {
     return players;
   }
@@ -109,7 +112,7 @@ map<Color, Player*> GameSetUp::onlinePlayers() {
   }
 
   //create players
-  printer_->printMessage("Your color is .."); //add msg - pass Color(color-1)
+  printer_->printMessage(declareColor(Color(color-1)));
   players[Color(color-1)] = new LocalOnlinePlayer
         (name, Color(color-1), *channel_);
   stringstream second_color;
@@ -130,10 +133,13 @@ CommunicationChannel* GameSetUp::openCommunicationChannel() {
   const int SIZE = 50;
   char server_IP[SIZE];
   server_info.getline(server_IP, SIZE);
+//  cout <<"GameSetUp: serverIP: "<<server_IP<<endl;
   int port_num;
   server_info >> port_num;
   server_info.close();
+
   CommunicationChannel* channel = new CommunicationChannel(server_IP, port_num);
+
   return channel;
 }
 

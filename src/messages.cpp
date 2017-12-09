@@ -64,6 +64,11 @@ namespace message {
     }
     return msg.str();
   }
+  const string declareColor(Color color) {
+      stringstream msg;
+      msg << "Your color is " << color;
+      return msg.str();
+    }
 
   const string currentBoard() {
     stringstream msg;

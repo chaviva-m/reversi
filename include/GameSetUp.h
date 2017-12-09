@@ -105,7 +105,7 @@ private:
   Printer* printer_;
   std::map<Color,Player*> players_;
 
-  CommunicationChannel* channel_ = NULL;
+  CommunicationChannel* channel_;
 };
 
 #endif /* GAMESETUP_H_ */

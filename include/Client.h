@@ -8,7 +8,7 @@
 #ifndef INCLUDE_CLIENT_H_
 #define INCLUDE_CLIENT_H_
 
-enum Input {NO_MOVES, HAS_MOVE, END};
+//enum Input {NO_MOVES, HAS_MOVE, END};
 
 class Client {
 public:

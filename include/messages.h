@@ -39,6 +39,8 @@ namespace message {
   const string errorWritingToSocket();
 
   const string errorInitializingPlayers();
+
+  const string declareColor(Color color);
   /*
    * returns a string with the player's name (the player who's
    * color is the input color).

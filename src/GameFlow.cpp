@@ -70,7 +70,6 @@ bool GameFlow::playOneRound() {
             }
         }
       } else {
-        //printer_.printMessage(noPossibleMoves());
         //if next player has no moves as well, game is over
           if (logic_.getPossibleMoves(board_,
              Color((c + 1) % LAST_COLOR)).empty()) {

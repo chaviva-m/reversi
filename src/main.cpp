@@ -6,17 +6,17 @@
  */
 
 #include "GameSetUp.h"
-#include "Player.h"
-#include "HumanPlayer.h"
-#include "messages.h"
 #include <iostream>
-#include <stdlib.h>
-#include <unistd.h>
 
 using namespace std;
 
 //run game
 int main() {
-  GameSetUp g = GameSetUp();
-  g.playGame();
+  try {
+	GameSetUp g = GameSetUp();
+	g.playGame();
+  } catch (const char *msg) {
+	cout << "Error in Reversi:main. Reason: " << msg << endl;
+  }
+  return 0;
 }
