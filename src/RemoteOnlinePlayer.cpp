@@ -62,12 +62,3 @@ void RemoteOnlinePlayer::endTurn(Point* move, Printer& printer) const {
     printer.printMessage(noPossibleMovesForPlayer(color_));
   }
 }
-
-void RemoteOnlinePlayer::endGame(Printer& printer) {
-	int stat = END;
-	int n = write(channel_.getClientSocket(), &stat, sizeof(stat));
-    if (n == -1) {
-      printer.printMessage(errorWritingToSocket());
-	}
-}
-
