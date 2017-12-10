@@ -14,6 +14,7 @@
 #include "Player.h"
 #include "Point.h"
 
+#include <stdlib.h>
 #include <arpa/inet.h>
 #include <iostream>
 #include <netinet/in.h>

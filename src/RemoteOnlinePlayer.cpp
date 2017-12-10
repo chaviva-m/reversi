@@ -1,8 +1,8 @@
 /*
  * RemoteOnlinePlayer.cpp
  *
- *  Created on: Dec 6, 2017
- *      Author: chaviva
+ * Author1: name & ID: Dana Joffe 312129240
+ * Author2: name & ID: Chaviva Moshavi 322082892
  */
 
 #include "RemoteOnlinePlayer.h"
@@ -21,28 +21,23 @@ Point RemoteOnlinePlayer::decideOnAMove(Board& board,
   char sep;
   int r = read(channel_.getClientSocket(), &status, sizeof(status));
   if (r == -1) {
-      printer.printMessage(errorReadingFromSocket());
-      endGame(printer);
+
   }
   if(status != HAS_MOVE) {
-    printer.printMessage("ERROR IN: RemoteOnlinePlayer::decideOnAMove. Pipe is gonna break\n");
-    endGame(printer);
+
   }
   //Read move arguments
   r = read(channel_.getClientSocket(), &row, sizeof(row));
   if (r == -1) {
-     printer.printMessage(errorReadingFromSocket());
-     endGame(printer);
+
   }
   r = read(channel_.getClientSocket(), &sep, sizeof(sep));
   if (r == -1) {
-     printer.printMessage(errorReadingFromSocket());
-     endGame(printer);
+
   }
   r = read(channel_.getClientSocket(), &col, sizeof(col));
   if (r == -1) {
-     printer.printMessage(errorReadingFromSocket());
-     endGame(printer);
+
   }
   return Point(row, col);
 
@@ -53,12 +48,10 @@ void RemoteOnlinePlayer::hasNoMoves(Printer& printer) {
 	  int status;
 	  int r = read(channel_.getClientSocket(), &status, sizeof(status));
 	  if (r == -1) {
-	      printer.printMessage(errorReadingFromSocket());
-	      endGame(printer);
+
 	  }
 	  if(status != NO_MOVES) {
-	    printer.printMessage("ERROR IN: RemoteOnlinePlayer::hasNoMoves. Pipe is gonna break\n");
-	    endGame(printer);
+
 	  }
 }
 
@@ -76,6 +69,5 @@ void RemoteOnlinePlayer::endGame(Printer& printer) {
     if (n == -1) {
       printer.printMessage(errorWritingToSocket());
 	}
-  printer.printMessage("Closing client socket\n");
-  close(channel_.getClientSocket());
 }
+

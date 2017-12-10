@@ -83,25 +83,12 @@ bool GameFlow::playOneRound() {
       }
     printer_.printMessage(currentBoard());
     printer_.printBoard(board_);
-    /*if (move.getRow()>-1){
-      players_[Color(c)]->endTurn(&move);
-    }*/
     if (!moves.empty()) {
       players_[Color(c)]->endTurn(&move, printer_);
     } else {
       players_[Color(c)]->endTurn(NULL, printer_);
     }
   }
-
-
-  //socket input
-  //int result = client.sendExercise(num1,op, num2);
-	//cout << "Result: " << result << endl;
-
-
-
-
-
   //game continues
   return true;
 }
