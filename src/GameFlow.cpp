@@ -55,8 +55,14 @@ bool GameFlow::playOneRound() {
     //player places a disk in one of possible moves
     if (!moves.empty()) {
         while(invalid_move) {
-            move = players_[Color(c)]->decideOnAMove(board_, moves,
-                                  logic_, printer_);
+        	try {
+        		   move = players_[Color(c)]->decideOnAMove(board_, moves,
+        		                                  logic_, printer_);
+        	} catch (const char* msg) {
+        		printer_.printMessage(msg);
+        		players_[Color(c)]->endGame(printer_);
+        		return false;
+        	}
             printer_.printMessage("\n");
             if (board_.getCell(move) != NULL && find(moves.begin(),
             		moves.end(), board_.getCell(move)) != moves.end()) {
@@ -78,7 +84,13 @@ bool GameFlow::playOneRound() {
             return false;
         //else, play passes on to next player
           } else {
-        	 players_[Color(c)]->hasNoMoves(printer_);
+        	  try {
+             	 players_[Color(c)]->hasNoMoves(printer_);
+        	  } catch (const char* msg) {
+        	     printer_.printMessage(msg);
+        	     players_[Color(c)]->endGame(printer_);
+        	     return false;
+        	  }
         }
       }
     printer_.printMessage(currentBoard());

@@ -50,6 +50,5 @@ void LocalOnlinePlayer::sendMove(int row, int col, Printer& printer) const {
 
 
 void LocalOnlinePlayer::endGame(Printer& printer) const {
-	printer.printMessage("Closing client socket\n");
 	sendStatus(END, printer);
 }

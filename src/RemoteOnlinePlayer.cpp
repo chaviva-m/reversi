@@ -6,6 +6,7 @@
  */
 
 #include "RemoteOnlinePlayer.h"
+
 using namespace std;
 using namespace message;
 
@@ -21,26 +22,25 @@ Point RemoteOnlinePlayer::decideOnAMove(Board& board,
   char sep;
   int r = read(channel_.getClientSocket(), &status, sizeof(status));
   if (r == -1) {
-
+    throw(errorReadingFromSocket());
   }
   if(status != HAS_MOVE) {
-
+    throw "Something went wrong with the other player\n";
   }
   //Read move arguments
   r = read(channel_.getClientSocket(), &row, sizeof(row));
   if (r == -1) {
-
+    throw(errorReadingFromSocket());
   }
   r = read(channel_.getClientSocket(), &sep, sizeof(sep));
   if (r == -1) {
-
+    throw(errorReadingFromSocket());
   }
   r = read(channel_.getClientSocket(), &col, sizeof(col));
   if (r == -1) {
-
+	  throw(errorReadingFromSocket());
   }
   return Point(row, col);
-
 }
 
 void RemoteOnlinePlayer::hasNoMoves(Printer& printer) {
@@ -48,10 +48,10 @@ void RemoteOnlinePlayer::hasNoMoves(Printer& printer) {
 	  int status;
 	  int r = read(channel_.getClientSocket(), &status, sizeof(status));
 	  if (r == -1) {
-
+	    throw(errorReadingFromSocket());
 	  }
 	  if(status != NO_MOVES) {
-
+	    throw "Something went wrong with the other player\n";
 	  }
 }
 
