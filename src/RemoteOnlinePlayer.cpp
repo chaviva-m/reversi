@@ -6,6 +6,9 @@
  */
 
 #include "RemoteOnlinePlayer.h"
+
+//#include <stdio.h>      /* printf, fopen */
+#include <stdlib.h>
 using namespace std;
 using namespace message;
 
@@ -21,28 +24,23 @@ Point RemoteOnlinePlayer::decideOnAMove(Board& board,
   char sep;
   int r = read(channel_.getClientSocket(), &status, sizeof(status));
   if (r == -1) {
-      printer.printMessage(errorReadingFromSocket());
-      endGame(printer);
+	  throw(errorReadingFromSocket());
   }
   if(status != HAS_MOVE) {
-    printer.printMessage("ERROR IN: RemoteOnlinePlayer::decideOnAMove. Pipe is gonna break\n");
-    endGame(printer);
+    throw "Something went wrong with the other player\n";
   }
   //Read move arguments
   r = read(channel_.getClientSocket(), &row, sizeof(row));
   if (r == -1) {
-     printer.printMessage(errorReadingFromSocket());
-     endGame(printer);
+	  throw(errorReadingFromSocket());
   }
   r = read(channel_.getClientSocket(), &sep, sizeof(sep));
   if (r == -1) {
-     printer.printMessage(errorReadingFromSocket());
-     endGame(printer);
+	  throw(errorReadingFromSocket());
   }
   r = read(channel_.getClientSocket(), &col, sizeof(col));
   if (r == -1) {
-     printer.printMessage(errorReadingFromSocket());
-     endGame(printer);
+	  throw(errorReadingFromSocket());
   }
   return Point(row, col);
 
@@ -53,12 +51,10 @@ void RemoteOnlinePlayer::hasNoMoves(Printer& printer) {
 	  int status;
 	  int r = read(channel_.getClientSocket(), &status, sizeof(status));
 	  if (r == -1) {
-	      printer.printMessage(errorReadingFromSocket());
-	      endGame(printer);
+		  throw(errorReadingFromSocket());
 	  }
 	  if(status != NO_MOVES) {
-	    printer.printMessage("ERROR IN: RemoteOnlinePlayer::hasNoMoves. Pipe is gonna break\n");
-	    endGame(printer);
+	    throw "Something went wrong with the other player\n";
 	  }
 }
 
@@ -76,6 +72,4 @@ void RemoteOnlinePlayer::endGame(Printer& printer) {
     if (n == -1) {
       printer.printMessage(errorWritingToSocket());
 	}
-  printer.printMessage("Closing client socket\n");
-  close(channel_.getClientSocket());
 }
