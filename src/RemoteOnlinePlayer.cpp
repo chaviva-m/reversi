@@ -7,8 +7,6 @@
 
 #include "RemoteOnlinePlayer.h"
 
-//#include <stdio.h>      /* printf, fopen */
-#include <stdlib.h>
 using namespace std;
 using namespace message;
 
