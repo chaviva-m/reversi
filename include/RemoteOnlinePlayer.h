@@ -51,10 +51,6 @@ public:
    */
   virtual void endTurn(Point* move, Printer& printer) const;
   /*
-   * send message to server that game is over
-   */
-  virtual void endGame(Printer& printer);
-  /*
    * destructor.
    */
  virtual ~RemoteOnlinePlayer() {};

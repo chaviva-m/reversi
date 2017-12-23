@@ -46,8 +46,8 @@ public:
 
 private:
   CommunicationChannel& channel_;
-  void sendStatus(int stat, Printer& printer) const;
   void sendMove(int row, int col, Printer& printer) const;
+  void sendMove(Status stat, Printer& printer) const;
 };
 
 #endif /* INCLUDE_LOCALONLINEPLAYER_H_ */

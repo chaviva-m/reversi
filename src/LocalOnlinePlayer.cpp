@@ -14,41 +14,36 @@ LocalOnlinePlayer::LocalOnlinePlayer(const std::string& name, Color color,
 
 void LocalOnlinePlayer::endTurn(Point* move, Printer& printer) const {
   if (move == NULL) {
-    sendStatus(NO_MOVES, printer);
+	sendMove(NO_MOVES, printer);
   } else {
-    sendStatus(HAS_MOVE, printer);
     sendMove(move->getRow(), move->getCol(), printer);
   }
 }
 
-void LocalOnlinePlayer::sendStatus(int stat, Printer& printer) const {
-  int n = write(channel_.getClientSocket(), &stat, sizeof(stat));
-  if (n == -1) {
-    printer.printMessage(errorWritingToSocket());
-  }
-}
 void LocalOnlinePlayer::sendMove(int row, int col, Printer& printer) const {
-	int n = write(channel_.getClientSocket(), &row, sizeof(row));
+	stringstream msg;
+	msg << "Play" << " " << row << " " << col;
+	int size = strlen(msg.str().c_str());
+	int n = write(channel_.getClientSocket(), &size, sizeof(size));
 	if (n == -1) {
 		printer.printMessage(errorWritingToSocket());
 		endGame(printer);
 	}
-
-	char comma = ',';
-	n = write(channel_.getClientSocket(), &comma, sizeof(comma));
-	if (n == -1) {
-		printer.printMessage(errorWritingToSocket());
-		endGame(printer);
-	}
-
-	n = write(channel_.getClientSocket(), &col, sizeof(col));
+	n = write(channel_.getClientSocket(), msg.str().c_str(), strlen(msg.str().c_str()));
 	if (n == -1) {
 		printer.printMessage(errorWritingToSocket());
 		endGame(printer);
 	}
 }
 
+void LocalOnlinePlayer::sendMove(Status stat, Printer& printer) const {
+	if (stat == NO_MOVES){
+		sendMove(-1, -1, printer);
+	} else if (stat == END) {
+		sendMove(-2, -2, printer);
+	}
+}
 
 void LocalOnlinePlayer::endGame(Printer& printer) const {
-	sendStatus(END, printer);
+	sendMove(END, printer);
 }
