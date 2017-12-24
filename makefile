@@ -1,5 +1,5 @@
 target: compileAll
-	g++ -o reversi.out *.o 
+	g++ -pthread -o reversi.out *.o 
 	rm -f *.o
 
 compileAll: include/*.h src/*.cpp

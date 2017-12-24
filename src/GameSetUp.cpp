@@ -38,7 +38,7 @@ void GameSetUp::setPlayersMenu() {
 			  this->players_ = this->onlinePlayers();
 			  valid = true;
 			  break;
-		  default:
+		    default:
 			  this->printer_->printMessage(invalidInput());
 			  break;
 	    }

@@ -45,5 +45,5 @@ void LocalOnlinePlayer::sendMove(Status stat, Printer& printer) const {
 }
 
 void LocalOnlinePlayer::endGame(Printer& printer) const {
-	sendMove(END, printer);
+	sendMove(END, printer);//send close
 }
