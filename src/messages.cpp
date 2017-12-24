@@ -18,6 +18,15 @@ namespace message {
     return msg.str();
   }
 
+  const string onlineGameMenu() {
+    stringstream msg;
+    msg << "Choose a game to play." << endl;
+    msg << "1. To start a new game: enter 'start <name>' (example: start myGame)" << endl;
+    msg << "2. To see the list of existing available games to join: enter 'list_games'" << endl;
+    msg << "3. To join an existing game: enter 'join <name>' (example:join myGame)" << endl;
+    return msg.str();
+  }
+
   const string errorOpeningFile() {
     stringstream msg;
     msg << "Cannot open file with server information." << endl;
@@ -46,13 +55,6 @@ namespace message {
     stringstream msg;
     msg << "Error writing to socket" << endl;
     return msg.str();
-  }
-
-  const string errorInitializingPlayers() {
-    stringstream msg;
-    msg << "Error initializing players." << endl;
-    return msg.str();
-
   }
 
   const string getPlayerName(Color color) {

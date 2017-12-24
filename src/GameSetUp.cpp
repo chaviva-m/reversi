@@ -19,12 +19,12 @@ GameSetUp::GameSetUp(int board_rows, int board_cols) {
 
 void GameSetUp::setPlayersMenu() {
 	int input;
-	string strInput;
+	string str_input;
 	bool valid = false;
 	do {
 		this->printer_->printMessage(openingMenu());
-		getline(cin, strInput);
-		input = convertStrToPoint(strInput);
+		getline(cin, str_input);
+		input = convertStrToPoint(str_input);
 		switch(input) {
 			case(CONSOLE_RIVAL):
 			  this->players_ = this->consolePlayers();
@@ -35,14 +35,14 @@ void GameSetUp::setPlayersMenu() {
 			  valid = true;
 			  break;
 			case(REMOTE_RIVAL):
-			  this->players_ = this->onlinePlayers();
+        this->remotePlayerOption();
 			  valid = true;
 			  break;
 		    default:
 			  this->printer_->printMessage(invalidInput());
 			  break;
 	    }
-	}while (!valid) ;
+	}while (!valid);
 }
 
 int GameSetUp::convertStrToPoint(string& input) {
@@ -75,6 +75,7 @@ map<Color,Player*> GameSetUp::consolePlayers() {
   }
   return players;
 }
+
 map<Color,Player*> GameSetUp::AIAndConsolePlayers() {
   map<Color,Player*> players;
   int i;
@@ -88,25 +89,101 @@ map<Color,Player*> GameSetUp::AIAndConsolePlayers() {
   return players;
 }
 
+void GameSetUp::remotePlayerOption() {
+  //connect to server
+  try {
+    this->channel_ = this->openCommunicationChannel();
+    this->channel_->connectToServer(*printer_);
+  } catch (const char *msg) {
+    throw(msg);
+  }
+
+  //menu of game options
+  string command_input;
+  stringstream sstream;
+  string command_type;
+  bool valid = false;
+  bool started_game = false;
+  while(!started_game || !valid) {
+    this->printer_->printMessage(onlineGameMenu());
+    getline(cin, command_input);
+    sstream << command_input;
+    sstream >> command_type;
+    if (strcmp(command_type.c_str(),"start") == 0 ||
+        strcmp(command_type.c_str(),"join") == 0) {
+      valid = true;
+      started_game = this->startOnlineGame(command_input);
+    } else if (strcmp(command_type.c_str(),"game_list") == 0) {
+      valid = true;
+      this->listAvailableOnlineGames(command_input);
+    } else {
+      printer_->printMessage(invalidInput());
+    }
+  }
+}
+
+void GameSetUp::sendCommandToServer(string command_msg) {
+  int length = strlen(command_msg.c_str());
+  int n = write(channel_->getClientSocket(), &length, sizeof(length));
+  if (n == -1) {
+    throw(errorWritingToSocket());
+  }
+  n = write(channel_->getClientSocket(), command_msg.c_str(), length);
+  if (n == -1) {
+    throw(errorWritingToSocket());
+  }
+}
+
+bool GameSetUp::startOnlineGame(string command_msg) {
+  int result;
+  this->sendCommandToServer(command_msg);
+  int n = read(channel_->getClientSocket(), &result, sizeof(result));
+  if (n == -1) {
+    throw(errorReadingFromSocket());
+  }
+  if (result == -1) {
+    return false;
+  } else {
+    this->players_ = this->onlinePlayers();
+    return true;
+  }
+}
+
+void GameSetUp::listAvailableOnlineGames(string command_msg) {
+  this->sendCommandToServer(command_msg);
+  //get length of str input
+  int length = strlen(command_msg.c_str());
+    int n = read(channel_->getClientSocket(), &length, sizeof(length));
+    if (n == -1) {
+      throw(errorReadingFromSocket());
+    }
+  //get str input of list of games
+  string str;
+  char letter;
+  while (length >0) {
+    n = read(channel_->getClientSocket(), &letter, sizeof(letter));
+    if (n == -1) {
+      throw(errorReadingFromSocket());
+    }
+    str.append(1,letter);
+    length -= 1;
+  }
+  //print list of games
+  this->printer_->printMessage(str);
+}
+
 map<Color, Player*> GameSetUp::onlinePlayers() {
   //get name
   map<Color,Player*> players;
   this->printer_->printMessage(getPlayerName(LAST_COLOR));
   string name;
   getline(cin, name);
-  //connect to server
-  this->channel_ = this->openCommunicationChannel();
-  if (this->channel_ == NULL) {
-    return players;
-  }
-  this->channel_->connectToServer(*printer_);
   printer_->printMessage(waitingForAnotherPlayer());
   //get color from server
   int color;
   int n = read(channel_->getClientSocket(), &color, sizeof(color));
   if (n == -1) {
-    printer_->printMessage(errorReadingFromSocket());
-    return players;
+    throw(errorReadingFromSocket());
   }
   //create players
   printer_->printMessage(declareColor(Color(color-1)));
@@ -124,8 +201,7 @@ CommunicationChannel* GameSetUp::openCommunicationChannel() {
   ifstream server_info;
   server_info.open("server_info.txt");
   if(!server_info.is_open()) {
-    printer_->printMessage(errorOpeningFile());
-    return NULL;
+    throw(errorOpeningFile());
   }
   string server_IP;
   getline(server_info, server_IP);
@@ -137,10 +213,6 @@ CommunicationChannel* GameSetUp::openCommunicationChannel() {
 }
 
 void GameSetUp::playGame() const {
-  if (this->players_.empty()) {
-    printer_->printMessage(errorInitializingPlayers());
-    return;
-  }
   GameFlow game = GameFlow(*board_, *logic_, players_, *printer_);
   game.playGame();
 }

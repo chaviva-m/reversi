@@ -8,15 +8,16 @@
 #ifndef MESSAGES_H_
 #define MESSAGES_H_
 
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <vector>
 #include "Board.h"
 #include "Cell.h"
 #include "color.h"
 #include "onlineOptionEnums.h"
 #include "Point.h"
+
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <vector>
 
 using namespace std;
 
@@ -28,6 +29,8 @@ namespace message {
 
   const string openingMenu();
 
+  const string onlineGameMenu();
+
   const string errorOpeningFile();
 
   const string connectedToServer();
@@ -37,8 +40,6 @@ namespace message {
   const string errorReadingFromSocket();
 
   const string errorWritingToSocket();
-
-  const string errorInitializingPlayers();
 
   const string declareColor(Color color);
   /*

@@ -89,6 +89,22 @@ private:
    */
   void setPlayersMenu();
   /*
+   * asks user for name of game to enter.
+   */
+  void remotePlayerOption();
+  /*
+   * sends user's request to server.
+   */
+  void sendCommandToServer(string command_msg);
+  /*
+   * start online game.
+   */
+  bool startOnlineGame(string command_msg);
+  /*
+   * inform user of available online games that he/she can join.
+   */
+  void listAvailableOnlineGames(string command_msg);
+  /*
    * input: a string.
    * output: if the input contains an integer (even separated)- this func will
    * return it. else- return 0.

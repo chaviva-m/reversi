@@ -14,7 +14,7 @@ LocalOnlinePlayer::LocalOnlinePlayer(const std::string& name, Color color,
 
 void LocalOnlinePlayer::endTurn(Point* move, Printer& printer) const {
   if (move == NULL) {
-	sendMove(NO_MOVES, printer);
+    sendMove(-1, -1, printer);
   } else {
     sendMove(move->getRow(), move->getCol(), printer);
   }
