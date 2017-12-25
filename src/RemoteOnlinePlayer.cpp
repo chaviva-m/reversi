@@ -53,29 +53,6 @@ Status PlayDecoder(string message, int* row, int* col) {
 }
 
 // this method is being called ONLY IF possibleMoves isn't empty.
-//Point RemoteOnlinePlayer::decideOnAMove(Board& board,
-//    std::vector<Cell*>& possibleMoves, GameLogic& logic, Printer& printer) { //CHANGE!! recieving two ints
-//
-//  printer.printMessage(waitingForMove());
-//  int row, col;
-//  int size;
-//  //read message length
-//  int r = read(channel_.getClientSocket(), &size, sizeof(size));
-//  if (r == -1) {
-//	  throw(errorReadingFromSocket());
-//  }
-//  //reading message
-//  string msg = readStringFromSocket(size ,channel_.getClientSocket()); //throws error
-//  Status status = PlayDecoder(msg, &row, &col); //read move's arguments
-//
-//  if(status != HAS_MOVE) {
-//    throw "Something went wrong with the other player\n";
-//  }
-//  return Point(row, col);
-//}
-
-
-// this method is being called ONLY IF possibleMoves isn't empty.
 Point RemoteOnlinePlayer::decideOnAMove(Board& board,
     std::vector<Cell*>& possibleMoves, GameLogic& logic, Printer& printer) { //CHANGE!! recieving two ints
 
@@ -87,39 +64,17 @@ Point RemoteOnlinePlayer::decideOnAMove(Board& board,
     if (r == -1) {
     	throw(errorReadingFromSocket());
     }
-        cout << "ROW: " << row <<endl;
 
     //read col
     r = read(channel_.getClientSocket(), &col, sizeof(col));
     if (r == -1) {
       throw(errorReadingFromSocket());
     }
-
-    cout << "COL: " << col <<endl;
-
     if (row < 0 || col < 0) {
   	  throw "Something went wrong with the other player\n";
     }
   return Point(row, col);
 }
-
-
-//void RemoteOnlinePlayer::hasNoMoves(Printer& printer) {
-//	printer.printMessage(waitingForMove());
-//	int row, col, size;
-//	//read message length
-//	int r = read(channel_.getClientSocket(), &size, sizeof(size));
-//	if (r == -1) {
-//	   throw(errorReadingFromSocket());
-//	}
-//	//reading message
-//	string msg = readStringFromSocket(size ,channel_.getClientSocket()); //throws error
-//	Status status = PlayDecoder(msg, &row, &col); //read move's arguments
-//	if(status != NO_MOVES) {
-//		throw "Something went wrong with the other player\n";
-//	}
-//}
-
 
 void RemoteOnlinePlayer::hasNoMoves(Printer& printer) {
 	printer.printMessage(waitingForMove());

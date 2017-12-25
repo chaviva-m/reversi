@@ -31,11 +31,11 @@ void GameSetUp::setPlayersMenu() {
 			  valid = true;
 			  break;
 			case(AI_RIVAL):
-		    this->players_ = this->AIAndConsolePlayers();
+		      this->players_ = this->AIAndConsolePlayers();
 			  valid = true;
 			  break;
 			case(REMOTE_RIVAL):
-        this->remotePlayerOption();
+              this->remotePlayerOption();
 			  valid = true;
 			  break;
 		    default:
@@ -113,7 +113,7 @@ void GameSetUp::remotePlayerOption() {
         strcmp(command_type.c_str(),"join") == 0) {
       valid = true;
       started_game = this->startOnlineGame(command_input);
-    } else if (strcmp(command_type.c_str(),"game_list") == 0) {
+    } else if (strcmp(command_type.c_str(),"list_games") == 0) {
       valid = true;
       this->listAvailableOnlineGames(command_input);
     } else {
@@ -152,7 +152,7 @@ bool GameSetUp::startOnlineGame(string command_msg) {
 void GameSetUp::listAvailableOnlineGames(string command_msg) {
   this->sendCommandToServer(command_msg);
   //get length of str input
-  int length = strlen(command_msg.c_str());
+  int length;// = strlen(command_msg.c_str());
     int n = read(channel_->getClientSocket(), &length, sizeof(length));
     if (n == -1) {
       throw(errorReadingFromSocket());

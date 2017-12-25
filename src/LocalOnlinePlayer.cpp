@@ -40,7 +40,19 @@ void LocalOnlinePlayer::sendMove(Status stat, Printer& printer) const {
 	if (stat == NO_MOVES){
 		sendMove(-1, -1, printer);
 	} else if (stat == END) {
-		sendMove(-2, -2, printer);
+//		sendMove(-2, -2, printer);
+		string msg = "close";
+		int size = strlen(msg.c_str());
+		int n = write(channel_.getClientSocket(), &size, sizeof(size));
+		if (n == -1) {
+			printer.printMessage(errorWritingToSocket());
+			endGame(printer);
+		}
+		n = write(channel_.getClientSocket(), msg.c_str(), strlen(msg.c_str()));
+		if (n == -1) {
+			printer.printMessage(errorWritingToSocket());
+			endGame(printer);
+		}
 	}
 }
 
