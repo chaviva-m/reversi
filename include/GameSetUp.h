@@ -91,7 +91,7 @@ private:
   /*
    * asks user for name of game to enter.
    */
-  void remotePlayerOption();
+  void remotePlayerMenu();
   /*
    * sends user's request to server.
    */

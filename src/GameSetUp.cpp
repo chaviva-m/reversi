@@ -35,7 +35,7 @@ void GameSetUp::setPlayersMenu() {
 			  valid = true;
 			  break;
 			case(REMOTE_RIVAL):
-              this->remotePlayerOption();
+              this->remotePlayerMenu();
 			  valid = true;
 			  break;
 		    default:
@@ -89,15 +89,7 @@ map<Color,Player*> GameSetUp::AIAndConsolePlayers() {
   return players;
 }
 
-void GameSetUp::remotePlayerOption() {
-  //connect to server
-  try {
-    this->channel_ = this->openCommunicationChannel();
-    this->channel_->connectToServer(*printer_);
-  } catch (const char *msg) {
-    throw(msg);
-  }
-
+void GameSetUp::remotePlayerMenu() {
   //menu of game options
   string command_input;
   stringstream sstream;
@@ -135,6 +127,14 @@ void GameSetUp::sendCommandToServer(string command_msg) {
 }
 
 bool GameSetUp::startOnlineGame(string command_msg) {
+  //connect to server
+  try {
+    this->channel_ = this->openCommunicationChannel();
+    this->channel_->connectToServer(*printer_);
+  } catch (const char *msg) {
+    throw(msg);
+  }
+  //send start command to server
   int result;
   this->sendCommandToServer(command_msg);
   int n = read(channel_->getClientSocket(), &result, sizeof(result));
@@ -150,9 +150,16 @@ bool GameSetUp::startOnlineGame(string command_msg) {
 }
 
 void GameSetUp::listAvailableOnlineGames(string command_msg) {
+  //connect to server
+  try {
+    this->channel_ = this->openCommunicationChannel();
+    this->channel_->connectToServer(*printer_);
+  } catch (const char *msg) {
+    throw(msg);
+  }
   this->sendCommandToServer(command_msg);
   //get length of str input
-  int length;// = strlen(command_msg.c_str());
+  int length;
     int n = read(channel_->getClientSocket(), &length, sizeof(length));
     if (n == -1) {
       throw(errorReadingFromSocket());
