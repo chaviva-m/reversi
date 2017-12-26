@@ -68,7 +68,7 @@ namespace message {
   }
   const string declareColor(Color color) {
       stringstream msg;
-      msg << "Your color is " << color;
+      msg << "Your color is " << color << endl;
       return msg.str();
     }
 
@@ -145,6 +145,13 @@ namespace message {
     msg << "Input is invalid. Please try again." << endl;
     return msg.str();
   }
+
+  const string invalidGame(const string& command, const string& game) {
+     stringstream msg;
+     msg << "Cannot " << command << " game '" << game << "'.";
+     msg << " Please try a different game name." << endl;
+     return msg.str();
+   }
 
   const string declareWinner(const string& winner) {
     stringstream msg;

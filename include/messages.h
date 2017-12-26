@@ -86,6 +86,8 @@ namespace message {
 
   const string invalidInput();
 
+  const string invalidGame(const string& command, const string& game);
+
   const string declareWinner(const string& winner);
 
   const string declareTie();
