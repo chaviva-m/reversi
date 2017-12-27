@@ -22,7 +22,7 @@ void LocalOnlinePlayer::endTurn(Point* move, Printer& printer) const {
 
 void LocalOnlinePlayer::sendMove(int row, int col, Printer& printer) const {
 	stringstream msg;
-	msg << "Play" << " " << row << " " << col;
+	msg << "play" << " " << row << " " << col;
 	int size = strlen(msg.str().c_str());
 	int n = write(channel_.getClientSocket(), &size, sizeof(size));
 	if (n == -1) {

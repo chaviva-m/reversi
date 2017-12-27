@@ -28,6 +28,7 @@ void GameSetUp::setPlayersMenu() {
 		switch(input) {
 			case(CONSOLE_RIVAL):
 			  this->players_ = this->consolePlayers();
+			return;
 			  valid = true;
 			  break;
 			case(AI_RIVAL):
@@ -38,12 +39,17 @@ void GameSetUp::setPlayersMenu() {
               this->remotePlayerMenu();
 			  valid = true;
 			  break;
+			case(NONE):
+			  exit(-1);
 		    default:
 			  this->printer_->printMessage(invalidInput());
 			  break;
 	    }
 	}while (!valid);
 }
+
+
+
 
 int GameSetUp::convertStrToPoint(string& input) {
   int asciiGap = 48;
@@ -105,6 +111,14 @@ void GameSetUp::remotePlayerMenu() {
         strcmp(command_type.c_str(),"join") == 0) {
       valid = true;
       started_game = this->startOnlineGame(command_input);
+
+      ///
+      if (started_game) {
+    	  cout << "GameSetUp::remotePlayerMenu:  game starts!" << endl;
+    	  this->playGame();
+      }
+      ///
+
     } else if (strcmp(command_type.c_str(),"list_games") == 0) {
       valid = true;
       this->listAvailableOnlineGames(command_input);
@@ -115,15 +129,27 @@ void GameSetUp::remotePlayerMenu() {
 }
 
 void GameSetUp::sendCommandToServer(string command_msg) {
+  cout << "GameSetUp::sendCommandToServer :  sending commands" << endl;
+  cout << command_msg<<endl;
+
   int length = strlen(command_msg.c_str());
+
+  cout << "GameSetUp::sendCommandToServer :  writing length: "<<length << endl;
+
+
   int n = write(channel_->getClientSocket(), &length, sizeof(length));
   if (n == -1) {
     throw(errorWritingToSocket());
   }
+
+  cout << "GameSetUp::sendCommandToServer :  writing command_msg: "<<command_msg<< endl;
+
+
   n = write(channel_->getClientSocket(), command_msg.c_str(), length);
   if (n == -1) {
     throw(errorWritingToSocket());
   }
+  cout << "GameSetUp::sendCommandToServer : finish sending commands" << endl;
 }
 
 bool GameSetUp::startOnlineGame(string command_msg) {
@@ -134,19 +160,27 @@ bool GameSetUp::startOnlineGame(string command_msg) {
   } catch (const char *msg) {
     throw(msg);
   }
+
   //send start command to server
   int result;
   this->sendCommandToServer(command_msg);
+
+
   int n = read(channel_->getClientSocket(), &result, sizeof(result));
   if (n == -1) {
     throw(errorReadingFromSocket());
   }
   if (result == -1) {
+	  cout << "GameSetUp::startOnlineGame:  couldn't start a game"<<endl;
     return false;
   } else {
+	 cout << "GameSetUp::startOnlineGame: set players" <<endl;
+
+
     this->players_ = this->onlinePlayers();
     return true;
   }
+  return true;
 }
 
 void GameSetUp::listAvailableOnlineGames(string command_msg) {
