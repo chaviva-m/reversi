@@ -39,6 +39,10 @@ public:
    */
   int getClientSocket();
 
+
+  void closeClientSocket();
+
+
 private:
   string serverIP_;
   int serverPort_;

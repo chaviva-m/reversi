@@ -9,7 +9,7 @@
 #define INCLUDE_ONLINEOPTIONENUMS_H_
 
 //rival options
-enum Rival {NONE, CONSOLE_RIVAL, AI_RIVAL, REMOTE_RIVAL};
+enum Rival {NONE, CONSOLE_RIVAL, AI_RIVAL, ONLINE_RIVAL};
 
 //game status options to send to server
 enum Status {NO_MOVES, HAS_MOVE, END};

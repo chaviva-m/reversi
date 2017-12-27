@@ -14,7 +14,7 @@ namespace message {
     msg << "Choose an opponent type:" << endl;
     msg << CONSOLE_RIVAL << ". a human local player" << endl;
     msg << AI_RIVAL << ". an AI player" << endl;
-    msg << REMOTE_RIVAL << ". a remote player" << endl;
+    msg << ONLINE_RIVAL << ". a remote player" << endl;
     msg << NONE << ". exit" << endl;
     return msg.str();
   }
@@ -69,7 +69,7 @@ namespace message {
   }
   const string declareColor(Color color) {
       stringstream msg;
-      msg << "Your color is " << color;
+      msg << "Your color is " << color << endl;
       return msg.str();
     }
 
@@ -146,6 +146,13 @@ namespace message {
     msg << "Input is invalid. Please try again." << endl;
     return msg.str();
   }
+
+  const string invalidGame(const string& command, const string& game) {
+     stringstream msg;
+     msg << "Cannot " << command << " game '" << game << "'.";
+     msg << " Please try a different game name." << endl;
+     return msg.str();
+   }
 
   const string declareWinner(const string& winner) {
     stringstream msg;

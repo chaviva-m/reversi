@@ -48,3 +48,6 @@ void CommunicationChannel::connectToServer(Printer& printer) {
 int CommunicationChannel::getClientSocket() {
   return this->clientSocket_;
 }
+void CommunicationChannel::closeClientSocket() {
+	close(this->clientSocket_);
+}

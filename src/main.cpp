@@ -14,9 +14,12 @@ using namespace std;
 //run game
 int main() {
 
-  GameSetUp g = GameSetUp(4,4);
-  g.playGame();
-
-
+  try {
+    GameSetUp g = GameSetUp(4,4);
+    g.playGame();
+  } catch (const char* msg) {
+    cout << msg;
+    return -1;
+  }
   return 0;
 }
