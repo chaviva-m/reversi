@@ -21,21 +21,18 @@ namespace message {
 
   const string onlineGameMenu() {
     stringstream msg;
-    msg << "Choose a game to play." << endl;
-    msg << "1. To start a new game: enter 'start <name>' (example: start myGame)" << endl;
-    msg << "2. To see the list of existing available games to join: enter 'list_games'" << endl;
-    msg << "3. To join an existing game: enter 'join <name>' (example:join myGame)" << endl;
+    msg << "Choose from the following options:" << endl;
+    msg << START_GAME <<". start a new game" << endl;
+    msg << LIST_GAMES << ". see the list of existing available games to join" << endl;
+    msg << JOIN_GAME <<". join an existing game" << endl;
     return msg.str();
   }
 
-  const string AlterOnlineGameMenu() {
-      stringstream msg;
-      msg << "Choose from the following options:" << endl;
-      msg << START_GAME <<". start a new game" << endl;
-      msg << LIST_GAMES << ". see the list of existing available games to join" << endl;
-      msg << JOIN_GAME <<". join an existing game" << endl;
-      return msg.str();
-    }
+  const string enterGameName() {
+    stringstream msg;
+    msg << "Enter name of game: ";
+    return msg.str();
+  }
 
   const string errorOpeningFile() {
     stringstream msg;

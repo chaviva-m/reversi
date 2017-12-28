@@ -22,8 +22,11 @@ void GameSetUp::setPlayersMenu() {
 	string str_input;
 	bool valid = false;
 	do {
-		this->printer_->printMessage(openingMenu());
-		getline(cin, str_input);
+		str_input = "";
+		while (str_input.empty()) {
+	    this->printer_->printMessage(openingMenu());
+		  getline(cin, str_input);
+		}
 		input = convertStrToPoint(str_input);
 		switch(input) {
 			case(CONSOLE_RIVAL):
@@ -40,15 +43,12 @@ void GameSetUp::setPlayersMenu() {
 			  break;
 			case(NONE):
 			  exit(-1);
-		    default:
-			  this->printer_->printMessage(invalidInput());
+		  default:
+		    this->printer_->printMessage(invalidInput());
 			  break;
 	    }
 	}while (!valid);
 }
-
-
-
 
 int GameSetUp::convertStrToPoint(string& input) {
   int asciiGap = 48;
@@ -94,13 +94,10 @@ map<Color,Player*> GameSetUp::AIAndConsolePlayers() {
   return players;
 }
 
-
 map<Color, Player*> GameSetUp::onlinePlayers() {
   map<Color,Player*> players;
-  OnlineGamePreparer* prep = NULL;
-  prep = new OnlineGamePreparer(*printer_, channel_);
-  players = prep->getOnlinePlayers();
-  delete prep;
+  OnlineGamePreparer prep = OnlineGamePreparer(*printer_, channel_);
+  players = prep.getOnlinePlayers();
   return players;
 }
 

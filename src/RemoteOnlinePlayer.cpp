@@ -22,7 +22,9 @@ string readStringFromSocket(int length, int socket) {
 		r = read(socket, &letter, sizeof(letter));
 		if (r == -1) {
 			throw(errorReadingFromSocket());
-		}
+		} else if (r == 0) {
+      throw("Something went wrong with the server.\n");
+    }
 		str.append(1,letter);
 		length -= 1;
 	}
@@ -63,15 +65,20 @@ Point RemoteOnlinePlayer::decideOnAMove(Board& board,
     int r = read(channel_.getClientSocket(), &row, sizeof(row));
     if (r == -1) {
     	throw(errorReadingFromSocket());
+    } else if (r == 0) {
+      throw("Something went wrong with the server.\n");
     }
 
     //read col
     r = read(channel_.getClientSocket(), &col, sizeof(col));
     if (r == -1) {
       throw(errorReadingFromSocket());
+    } else if (r == 0) {
+      throw("Something went wrong with the server.\n");
     }
+
     if (row < 0 || col < 0) {
-  	  throw "Something went wrong with the other player\n";
+  	  throw "Game was disconnected.\n";
     }
   return Point(row, col);
 }
@@ -83,16 +90,20 @@ void RemoteOnlinePlayer::hasNoMoves(Printer& printer) {
 	int r = read(channel_.getClientSocket(), &row, sizeof(row));
 	if (r == -1) {
 	    throw(errorReadingFromSocket());
-	}
+	} else if (r == 0) {
+    throw("Something went wrong with the server.\n");
+  }
 
 	//read col
 	r = read(channel_.getClientSocket(), &col, sizeof(col));
 	if (r == -1) {
 	    throw(errorReadingFromSocket());
-	}
+	} else if (r == 0) {
+    throw("Something went wrong with the server.\n");
+  }
 
 	if(row != -1 || col != -1) {
-		throw "Something went wrong with the other player\n";
+		throw "Something went wrong with the other player.\n";
 	}
 }
 

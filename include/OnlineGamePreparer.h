@@ -1,8 +1,8 @@
 /*
  * OnlinePlayersCreator.h
  *
- *  Created on: Dec 26, 2017
- *      Author: chaviva
+ * Author1: name & ID: Dana Joffe 312129240
+ * Author2: name & ID: Chaviva Moshavi 322082892
  */
 
 #ifndef INCLUDE_ONLINEGAMEPREPARER_H_
@@ -21,45 +21,61 @@
 #include <iostream>
 #include <map>
 #include <limits>
+#include <poll.h>
 #include <string>
 #include <vector>
 
 class OnlineGamePreparer {
 public:
+  /*
+   * constructor
+   */
   OnlineGamePreparer(Printer& printer, CommunicationChannel* channel);
+  /*
+   * destructor
+   */
   virtual ~OnlineGamePreparer() {};
+  /*
+   * access online playeres
+   */
   std::map<Color,Player*> getOnlinePlayers();
 
 private:
+  /*
+   * prepare game
+   */
   void prepareOnlineGame();
-  void remotePlayerMenu();
-  void AlterRemotePlayerMenu();
-
+  /*
+   * display game options to user
+   */
+  void gameMenu();
   /*
    * sends user's request to server.
    */
-  void sendCommandToServer(string command_msg);
+  void sendCommandToServer(const string& command_msg);
   /*
    * start online game.
    */
-  bool startOnlineGame(string command_msg);
-
-  bool startOnlineGame(string command, string gameName);
-
+  bool startOnlineGame(const string& command);
   /*
    * inform user of available online games that he/she can join.
    */
-  void listAvailableOnlineGames(string command_msg);
-  void listAvailableOnlineGames();
-
-
+  void listAvailableOnlineGames(const string& command_msg);
   /*
    * open connection channel with server IP and port from file.
    * output: CommunicationChannel*
    */
   CommunicationChannel* openCommunicationChannel();
-  int convertStrToInt(string& input);
-
+  /*
+   * input: a string.
+   * output: if the input contains an integer (even separated)- this func will
+   * return int. else- return 0.
+   */
+  int convertStrToInt(const string& input) const;
+  /*
+   * checks if server socket is closed.
+   */
+  bool is_server_closed(const int cs) const;
 
   //data members
   std::map<Color,Player*> players_;

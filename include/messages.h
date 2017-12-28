@@ -31,7 +31,7 @@ namespace message {
 
   const string onlineGameMenu();
 
-  const string AlterOnlineGameMenu();
+  const string enterGameName();
 
   const string errorOpeningFile();
 

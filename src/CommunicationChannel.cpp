@@ -42,7 +42,6 @@ void CommunicationChannel::connectToServer(Printer& printer) {
   if (connect(clientSocket_, (struct sockaddr*)&serverAddress, sizeof(serverAddress)) == -1) {
     throw "Error connecting to server";
   }
-//  printer.printMessage(connectedToServer());
 }
 
 int CommunicationChannel::getClientSocket() {

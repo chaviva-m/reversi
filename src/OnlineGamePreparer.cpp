@@ -1,8 +1,8 @@
 /*
  * OnlinePlayersCreator.cpp
  *
- *  Created on: Dec 26, 2017
- *      Author: chaviva
+ * Author1: name & ID: Dana Joffe 312129240
+ * Author2: name & ID: Chaviva Moshavi 322082892
  */
 
 #include "OnlineGamePreparer.h"
@@ -15,8 +15,8 @@ OnlineGamePreparer::OnlineGamePreparer(Printer& printer,
 }
 
 void OnlineGamePreparer::prepareOnlineGame() {
-  this->remotePlayerMenu();
-//  this->AlterRemotePlayerMenu();
+  //this->remotePlayerMenu();
+  this->gameMenu();
   //get name
   map<Color,Player*> players;
   this->printer_.printMessage(getPlayerName(LAST_COLOR));
@@ -28,6 +28,9 @@ void OnlineGamePreparer::prepareOnlineGame() {
   int n = read(channel_->getClientSocket(), &color, sizeof(color));
   if (n == -1) {
     throw(errorReadingFromSocket());
+  } else if (n == 0) {
+    throw("Something went wrong with the server.\n");
+    return;
   }
   //create players
   printer_.printMessage(declareColor(Color(color-1)));
@@ -44,37 +47,7 @@ std::map<Color,Player*> OnlineGamePreparer::getOnlinePlayers() {
   return this->players_;
 }
 
-void OnlineGamePreparer::remotePlayerMenu() {
-  //menu of game options
-  string command_input;
-  stringstream sstream;
-  string command_type;
-  bool valid_input = false;
-  bool started_game = false;
-
-  while(!started_game || !valid_input) {
-    this->printer_.printMessage(onlineGameMenu());
-    getline(cin, command_input);
-    sstream.str(command_input);
-    sstream >> command_type;
-    sstream.seekg(0, ios::beg);
-
-    if (strcmp(command_type.c_str(),"start") == 0 ||
-        strcmp(command_type.c_str(),"join") == 0) {
-      valid_input = true;
-      started_game = this->startOnlineGame(command_input);
-
-    } else if (strcmp(command_type.c_str(),"list_games") == 0) {
-      valid_input = true;
-      this->listAvailableOnlineGames(command_input);
-
-    } else {
-      printer_.printMessage(invalidInput());
-    }
-  }
-}
-
-int OnlineGamePreparer::convertStrToInt(string& input) {
+int OnlineGamePreparer::convertStrToInt(const string& input) const {
   int asciiGap = 48;
   int num = 0;
   for (unsigned int i = 0; i < input.size(); i++) {
@@ -86,54 +59,37 @@ int OnlineGamePreparer::convertStrToInt(string& input) {
   return (num);
 }
 
-void OnlineGamePreparer::AlterRemotePlayerMenu() {
-  //menu of game options
-//  string command_input;
-
+void OnlineGamePreparer::gameMenu() {
   int input;
-  string command, gameName;
+  string command;
   bool valid_input = false;
   bool started_game = false;
 
   do {
-    this->printer_.printMessage(AlterOnlineGameMenu());
-	getline(cin, command);
-	input = convertStrToInt(command);
-	switch(input) {
-		case(START_GAME):
+    this->printer_.printMessage(onlineGameMenu());
+    getline(cin, command);
+    input = convertStrToInt(command);
+    switch(input) {
+		  case(START_GAME):
+    	      valid_input = true;
+	        started_game = this->startOnlineGame("start");
+	        break;
+		  case(LIST_GAMES):
+		      valid_input = true;
+		      this->listAvailableOnlineGames("list_games");
+		      break;
+		  case(JOIN_GAME):
     	    valid_input = true;
-		    this->printer_.printMessage("Enter games' name\n");
-		    getline(cin, gameName);
-	        started_game = this->startOnlineGame("start", gameName);
-		    break;
-		case(LIST_GAMES):
-		    valid_input = true;
-		    this->listAvailableOnlineGames();
-		    break;
-		case(JOIN_GAME):
-    	    valid_input = true;
-			this->printer_.printMessage("Enter games' name\n");
-			getline(cin, gameName);
-			started_game = this->startOnlineGame("join", gameName);
-//            started_game = this->startOnlineGame(command, "");
-		    break;
-		default:
+			  started_game = this->startOnlineGame("join");
+			  break;
+		  default:
 		    printer_.printMessage(invalidInput());
 		    break;
-	}
-
-  }while(!started_game || !valid_input);
+    }
+  } while(!started_game || !valid_input);
 }
 
-
-
-void OnlineGamePreparer::listAvailableOnlineGames() {
-	string command = "list_games";
-	listAvailableOnlineGames(command);
-}
-
-
-void OnlineGamePreparer::listAvailableOnlineGames(string command_msg) {
+void OnlineGamePreparer::listAvailableOnlineGames(const string& command_msg) {
   //connect to server
   try {
     this->channel_ = this->openCommunicationChannel();
@@ -141,12 +97,15 @@ void OnlineGamePreparer::listAvailableOnlineGames(string command_msg) {
   } catch (const char *msg) {
     throw(msg);
   }
+
   this->sendCommandToServer(command_msg);
   //get length of str input
   int length;
     int n = read(channel_->getClientSocket(), &length, sizeof(length));
     if (n == -1) {
       throw(errorReadingFromSocket());
+    } else if (n == 0) {
+      throw("Something went wrong with the server.\n");
     }
   //get str input of list of games
   string str;
@@ -155,31 +114,19 @@ void OnlineGamePreparer::listAvailableOnlineGames(string command_msg) {
     n = read(channel_->getClientSocket(), &letter, sizeof(letter));
     if (n == -1) {
       throw(errorReadingFromSocket());
+    } else if (n == 0) {
+      throw("Something went wrong with the server.\n");
     }
     str.append(1,letter);
     length -= 1;
   }
   //print list of games
-  if (str.empty()) {
-	  this->printer_.printMessage("There are no available games/n");
-  } else {
-	  this->printer_.printMessage(str);
-  }
+  this->printer_.printMessage("\n");
+  this->printer_.printMessage(str);
+  this->printer_.printMessage("\n");
 }
 
-bool OnlineGamePreparer::startOnlineGame(string command, string gameName) {
-	stringstream stream;
-	stream << command << " " << gameName;
-	if (strcmp(command.c_str(), "start")) {
-		return this->startOnlineGame(stream.str());
-	}
-	return this->startOnlineGame(stream.str());
-
-
-}
-
-
-bool OnlineGamePreparer::startOnlineGame(string command_msg) {
+bool OnlineGamePreparer::startOnlineGame(const string& command) {
   //connect to server
   try {
     this->channel_ = this->openCommunicationChannel();
@@ -187,31 +134,36 @@ bool OnlineGamePreparer::startOnlineGame(string command_msg) {
   } catch (const char *msg) {
     throw(msg);
   }
+
+  string game_name;
+  while(game_name.empty()) {
+    this->printer_.printMessage(enterGameName());
+    getline(cin, game_name);
+  }
+
+  stringstream command_msg;
+  command_msg << command << " " << game_name;
+
   //send start command to server
   int result;
-  this->sendCommandToServer(command_msg);
-  cout <<"reading from server" <<endl;
+  this->sendCommandToServer(command_msg.str());
 
   int n = read(channel_->getClientSocket(), &result, sizeof(result));
   if (n == -1) {
     throw(errorReadingFromSocket());
+  } else if (n == 0) {
+    throw("Something went wrong with the server.\n");
   }
 
-  cout <<"finished reading from server" <<endl;
-
-  stringstream sstream(command_msg);
-  string game_name;
-  string command_type;
-  sstream >> command_type;
-  sstream >> game_name;
   if (result == -1) {
-    printer_.printMessage(invalidGame(command_type, game_name));
+    printer_.printMessage("\n");
+    printer_.printMessage(invalidGame(command, game_name));
+    printer_.printMessage("\n");
     return false;
   } else {
     return true;
   }
 }
-
 
 CommunicationChannel* OnlineGamePreparer::openCommunicationChannel() {
   //get server IP and port from file
@@ -229,14 +181,42 @@ CommunicationChannel* OnlineGamePreparer::openCommunicationChannel() {
   return channel;
 }
 
-void OnlineGamePreparer::sendCommandToServer(string command_msg) {
+void OnlineGamePreparer::sendCommandToServer(const string& command_msg) {
   int length = strlen(command_msg.c_str());
-  int n = write(channel_->getClientSocket(), &length, sizeof(length));
+  int n;
+  if (!is_server_closed(channel_->getClientSocket())) {
+    n = write(channel_->getClientSocket(), &length, sizeof(length));
+  } else {
+    throw("something went wrong with the server.\n");
+  }
   if (n == -1) {
     throw(errorWritingToSocket());
   }
-  n = write(channel_->getClientSocket(), command_msg.c_str(), length);
+  if (!is_server_closed(channel_->getClientSocket())) {
+    n = write(channel_->getClientSocket(), command_msg.c_str(), length);
+  } else {
+    throw("something went wrong with the server.\n");
+  }
   if (n == -1) {
     throw(errorWritingToSocket());
   }
+}
+
+bool OnlineGamePreparer::is_server_closed(const int cs) const {
+  pollfd pfd;
+  pfd.fd = cs;
+  pfd.events = POLLIN | POLLHUP | POLLRDNORM;
+  pfd.revents = 0;
+
+  // call poll with a timeout of 100 ms
+  if(poll(&pfd, 1, 100) > 0) {
+    // if result > 0, this means that there is either data available on the
+    // socket, or the socket has been closed
+    char buffer[32];
+    if(recv(cs, buffer, sizeof(buffer), MSG_PEEK | MSG_DONTWAIT) == 0) {
+      // if recv returns zero, that means the connection has been closed:
+      return true;
+    }
+  }
+  return false;
 }

@@ -25,7 +25,11 @@ void GameFlow::playGame() {
   while (continue_game) {
     continue_game = this->playOneRound();
   }
-  this->endGame();
+  try {
+    this->endGame();
+  } catch (const char* msg){
+    printer_.printMessage(msg);
+  }
 }
 
 void GameFlow::initializeBoard() {
@@ -47,7 +51,12 @@ bool GameFlow::playOneRound() {
 	Point move;
     //game is over if board is full
     if (num_disks_played_ == (board_.getRows() * board_.getCols())) {
-      players_[Color(c)]->endGame(printer_);
+      try {
+        players_[Color(c)]->endGame(printer_);
+      } catch (const char* msg) {
+        printer_.printMessage(msg);
+        return false;
+      }
       return false;
     }
     vector<Cell*> moves(logic_.getPossibleMoves(board_, Color(c)));
@@ -56,11 +65,15 @@ bool GameFlow::playOneRound() {
     if (!moves.empty()) {
         while(invalid_move) {
         	try {
-        		   move = players_[Color(c)]->decideOnAMove(board_, moves,
+        		move = players_[Color(c)]->decideOnAMove(board_, moves,
         		                                  logic_, printer_);
         	} catch (const char* msg) {
         		printer_.printMessage(msg);
-        		players_[Color(c)]->endGame(printer_);
+        		try {
+        		  players_[Color(c)]->endGame(printer_);
+        		} catch  (const char* msg) {
+        		  return false;
+        		}
         		return false;
         	}
             printer_.printMessage("\n");
@@ -88,7 +101,12 @@ bool GameFlow::playOneRound() {
              	 players_[Color(c)]->hasNoMoves(printer_);
         	  } catch (const char* msg) {
         	     printer_.printMessage(msg);
-        	     players_[Color(c)]->endGame(printer_);
+        	     try {
+        	       players_[Color(c)]->endGame(printer_);
+        	     } catch (const char* msg) {
+        	       printer_.printMessage(msg);
+        	       return false;
+        	     }
         	     return false;
         	  }
         }
@@ -96,9 +114,19 @@ bool GameFlow::playOneRound() {
     printer_.printMessage(currentBoard());
     printer_.printBoard(board_);
     if (!moves.empty()) {
-      players_[Color(c)]->endTurn(&move, printer_);
+      try {
+        players_[Color(c)]->endTurn(&move, printer_);
+      } catch (const char* msg) {
+        printer_.printMessage(msg);
+        return false;
+      }
     } else {
-      players_[Color(c)]->endTurn(NULL, printer_);
+      try {
+        players_[Color(c)]->endTurn(NULL, printer_);
+      } catch (const char* msg) {
+        printer_.printMessage(msg);
+        return false;
+      }
     }
   }
   //game continues
