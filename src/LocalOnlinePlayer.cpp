@@ -21,6 +21,8 @@ void LocalOnlinePlayer::endTurn(Point* move, Printer& printer) const {
 }
 
 void LocalOnlinePlayer::sendMove(int row, int col, Printer& printer) const {
+//	cout<<"LocalOnlinePlayer::sendMove"<<endl;
+
 	stringstream msg;
 	msg << "play" << " " << row << " " << col;
 	int size = strlen(msg.str().c_str());
@@ -28,6 +30,10 @@ void LocalOnlinePlayer::sendMove(int row, int col, Printer& printer) const {
 	if (n == -1) {
 		printer.printMessage(errorWritingToSocket());
 		endGame(printer);
+	}
+	if (n == 0) {
+		printer.printMessage("Exception: server is closed");
+		throw "Exception: server is closed";
 	}
 	n = write(channel_.getClientSocket(), msg.str().c_str(), strlen(msg.str().c_str()));
 	if (n == -1) {
@@ -41,13 +47,20 @@ void LocalOnlinePlayer::sendMove(Status stat, Printer& printer) const {
 		sendMove(-1, -1, printer);
 	} else if (stat == END) {
 //		sendMove(-2, -2, printer);
+
+		cout << "writing 'close' to server" <<endl;
+
 		string msg = "close";
 		int size = strlen(msg.c_str());
+
+		// write length
 		int n = write(channel_.getClientSocket(), &size, sizeof(size));
 		if (n == -1) {
 			printer.printMessage(errorWritingToSocket());
 			endGame(printer);
 		}
+
+		// write message
 		n = write(channel_.getClientSocket(), msg.c_str(), strlen(msg.c_str()));
 		if (n == -1) {
 			printer.printMessage(errorWritingToSocket());

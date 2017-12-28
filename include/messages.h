@@ -31,6 +31,8 @@ namespace message {
 
   const string onlineGameMenu();
 
+  const string AlterOnlineGameMenu();
+
   const string errorOpeningFile();
 
   const string connectedToServer();

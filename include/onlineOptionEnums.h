@@ -14,6 +14,6 @@ enum Rival {NONE, CONSOLE_RIVAL, AI_RIVAL, ONLINE_RIVAL};
 //game status options to send to server
 enum Status {NO_MOVES, HAS_MOVE, END};
 
-
+enum Command {NON, START_GAME, LIST_GAMES, JOIN_GAME};
 
 #endif /* INCLUDE_ONLINEOPTIONENUMS_H_ */

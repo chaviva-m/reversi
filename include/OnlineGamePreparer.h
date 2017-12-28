@@ -33,6 +33,8 @@ public:
 private:
   void prepareOnlineGame();
   void remotePlayerMenu();
+  void AlterRemotePlayerMenu();
+
   /*
    * sends user's request to server.
    */
@@ -41,15 +43,23 @@ private:
    * start online game.
    */
   bool startOnlineGame(string command_msg);
+
+  bool startOnlineGame(string command, string gameName);
+
   /*
    * inform user of available online games that he/she can join.
    */
   void listAvailableOnlineGames(string command_msg);
+  void listAvailableOnlineGames();
+
+
   /*
    * open connection channel with server IP and port from file.
    * output: CommunicationChannel*
    */
   CommunicationChannel* openCommunicationChannel();
+  int convertStrToInt(string& input);
+
 
   //data members
   std::map<Color,Player*> players_;

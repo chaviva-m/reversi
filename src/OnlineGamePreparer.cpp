@@ -16,6 +16,7 @@ OnlineGamePreparer::OnlineGamePreparer(Printer& printer,
 
 void OnlineGamePreparer::prepareOnlineGame() {
   this->remotePlayerMenu();
+//  this->AlterRemotePlayerMenu();
   //get name
   map<Color,Player*> players;
   this->printer_.printMessage(getPlayerName(LAST_COLOR));
@@ -73,6 +74,65 @@ void OnlineGamePreparer::remotePlayerMenu() {
   }
 }
 
+int OnlineGamePreparer::convertStrToInt(string& input) {
+  int asciiGap = 48;
+  int num = 0;
+  for (unsigned int i = 0; i < input.size(); i++) {
+    if (isdigit(input.at(i))) {
+      int digit = (int)input[i] - asciiGap;
+        num = num*10 + digit;
+    }
+  }
+  return (num);
+}
+
+void OnlineGamePreparer::AlterRemotePlayerMenu() {
+  //menu of game options
+//  string command_input;
+
+  int input;
+  string command, gameName;
+  bool valid_input = false;
+  bool started_game = false;
+
+  do {
+    this->printer_.printMessage(AlterOnlineGameMenu());
+	getline(cin, command);
+	input = convertStrToInt(command);
+	switch(input) {
+		case(START_GAME):
+    	    valid_input = true;
+		    this->printer_.printMessage("Enter games' name\n");
+		    getline(cin, gameName);
+	        started_game = this->startOnlineGame("start", gameName);
+		    break;
+		case(LIST_GAMES):
+		    valid_input = true;
+		    this->listAvailableOnlineGames();
+		    break;
+		case(JOIN_GAME):
+    	    valid_input = true;
+			this->printer_.printMessage("Enter games' name\n");
+			getline(cin, gameName);
+			started_game = this->startOnlineGame("join", gameName);
+//            started_game = this->startOnlineGame(command, "");
+		    break;
+		default:
+		    printer_.printMessage(invalidInput());
+		    break;
+	}
+
+  }while(!started_game || !valid_input);
+}
+
+
+
+void OnlineGamePreparer::listAvailableOnlineGames() {
+	string command = "list_games";
+	listAvailableOnlineGames(command);
+}
+
+
 void OnlineGamePreparer::listAvailableOnlineGames(string command_msg) {
   //connect to server
   try {
@@ -105,12 +165,19 @@ void OnlineGamePreparer::listAvailableOnlineGames(string command_msg) {
   } else {
 	  this->printer_.printMessage(str);
   }
+}
 
-  //close socket*********************************************************************
-//  this->channel_->closeClientSocket();
+bool OnlineGamePreparer::startOnlineGame(string command, string gameName) {
+	stringstream stream;
+	stream << command << " " << gameName;
+	if (strcmp(command.c_str(), "start")) {
+		return this->startOnlineGame(stream.str());
+	}
+	return this->startOnlineGame(stream.str());
 
 
 }
+
 
 bool OnlineGamePreparer::startOnlineGame(string command_msg) {
   //connect to server
@@ -123,10 +190,15 @@ bool OnlineGamePreparer::startOnlineGame(string command_msg) {
   //send start command to server
   int result;
   this->sendCommandToServer(command_msg);
+  cout <<"reading from server" <<endl;
+
   int n = read(channel_->getClientSocket(), &result, sizeof(result));
   if (n == -1) {
     throw(errorReadingFromSocket());
   }
+
+  cout <<"finished reading from server" <<endl;
+
   stringstream sstream(command_msg);
   string game_name;
   string command_type;

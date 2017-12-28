@@ -28,6 +28,15 @@ namespace message {
     return msg.str();
   }
 
+  const string AlterOnlineGameMenu() {
+      stringstream msg;
+      msg << "Choose from the following options:" << endl;
+      msg << START_GAME <<". start a new game" << endl;
+      msg << LIST_GAMES << ". see the list of existing available games to join" << endl;
+      msg << JOIN_GAME <<". join an existing game" << endl;
+      return msg.str();
+    }
+
   const string errorOpeningFile() {
     stringstream msg;
     msg << "Cannot open file with server information." << endl;
