@@ -14,6 +14,7 @@
 #include "Player.h"
 #include "Point.h"
 
+#include <csignal>
 #include <stdlib.h>
 #include <arpa/inet.h>
 #include <iostream>
@@ -29,7 +30,7 @@
 class RemoteOnlinePlayer: public Player {
 public:
   /*
-   * construcs remote online player with name, color and communication channel
+   * constructs remote online player with name, color and communication channel
    */
   RemoteOnlinePlayer(const std::string& name, Color color,
       CommunicationChannel& channel);
@@ -50,6 +51,10 @@ public:
    * finishes player's turn
    */
   virtual void endTurn(Point* move, Printer& printer) const;
+  /*
+   * send message to server that game is over.
+   */
+  virtual void endGame(Printer& printer);
   /*
    * destructor.
    */

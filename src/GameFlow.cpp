@@ -25,11 +25,7 @@ void GameFlow::playGame() {
   while (continue_game) {
     continue_game = this->playOneRound();
   }
-  try {
-    this->endGame();
-  } catch (const char* msg){
-    printer_.printMessage(msg);
-  }
+  this->endGame();
 }
 
 void GameFlow::initializeBoard() {
@@ -51,12 +47,7 @@ bool GameFlow::playOneRound() {
 	Point move;
     //game is over if board is full
     if (num_disks_played_ == (board_.getRows() * board_.getCols())) {
-      try {
-        players_[Color(c)]->endGame(printer_);
-      } catch (const char* msg) {
-        printer_.printMessage(msg);
-        return false;
-      }
+      players_[Color(c)]->endGame(printer_);
       return false;
     }
     vector<Cell*> moves(logic_.getPossibleMoves(board_, Color(c)));
@@ -69,16 +60,12 @@ bool GameFlow::playOneRound() {
         		                                  logic_, printer_);
         	} catch (const char* msg) {
         		printer_.printMessage(msg);
-        		try {
-        		  players_[Color(c)]->endGame(printer_);
-        		} catch  (const char* msg) {
-        		  return false;
-        		}
+        		players_[Color(c)]->endGame(printer_);
         		return false;
         	}
             printer_.printMessage("\n");
             if (board_.getCell(move) != NULL && find(moves.begin(),
-            		moves.end(), board_.getCell(move)) != moves.end()) {
+            		   moves.end(), board_.getCell(move)) != moves.end()) {
                 invalid_move = false;
                 players_[Color(c)]->insertDisk(*board_.getCell(move));
                 this->num_disks_played_++;
@@ -101,12 +88,7 @@ bool GameFlow::playOneRound() {
              	 players_[Color(c)]->hasNoMoves(printer_);
         	  } catch (const char* msg) {
         	     printer_.printMessage(msg);
-        	     try {
-        	       players_[Color(c)]->endGame(printer_);
-        	     } catch (const char* msg) {
-        	       printer_.printMessage(msg);
-        	       return false;
-        	     }
+        	     players_[Color(c)]->endGame(printer_);
         	     return false;
         	  }
         }

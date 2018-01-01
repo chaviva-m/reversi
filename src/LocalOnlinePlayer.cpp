@@ -25,28 +25,22 @@ void LocalOnlinePlayer::sendMove(int row, int col, Printer& printer) const {
 	stringstream msg;
 	msg << "play" << " " << row << " " << col;
 
+  int n;
+
+	//ignore broken pipe signal, if server is closed result of write will be -1
+  signal(SIGPIPE, SIG_IGN);
+
 	//write size to server
 	int size = strlen(msg.str().c_str());
-	int n;
-	if (!this->is_server_closed(channel_.getClientSocket())) {
-	  n = write(channel_.getClientSocket(), &size, sizeof(size));
-	  if (n == -1) {
-	    printer.printMessage(errorWritingToSocket());
-	    endGame(printer);
-	  }
-	} else {
-	  throw("something went wrong with the server.\n");
-	}
+  n = write(channel_.getClientSocket(), &size, sizeof(size));
+  if (n == -1) {
+    throw("Game was disconnected.\n");
+  }
 
 	//write move to server
-	if (!this->is_server_closed(channel_.getClientSocket())) {
-	  n = write(channel_.getClientSocket(), msg.str().c_str(), strlen(msg.str().c_str()));
-	  if (n == -1) {
-	    printer.printMessage(errorWritingToSocket());
-	    endGame(printer);
-	  }
-	} else {
-	  throw("something went wrong with the server.\n");
+	n = write(channel_.getClientSocket(), msg.str().c_str(), strlen(msg.str().c_str()));
+	if (n == -1) {
+    throw("Game was disconnected.\n");
 	}
 }
 
@@ -56,50 +50,28 @@ void LocalOnlinePlayer::sendMove(Status stat, Printer& printer) const {
 	} else if (stat == END) {
 
 		string msg = "close";
-		int size = strlen(msg.c_str());
+    int n;
+
+	  //ignore broken pipe signal, if server is closed result of write will be -1
+    signal(SIGPIPE, SIG_IGN);
 
 		// write length
-		int n;
-		if (!this->is_server_closed(channel_.getClientSocket())) {
-		  n = write(channel_.getClientSocket(), &size, sizeof(size));
-	    if (n == -1) {
-	      printer.printMessage(errorWritingToSocket());
-	    }
-	  } else {
-	    throw("something went wrong with the server.\n");
+    int size = strlen(msg.c_str());
+		n = write(channel_.getClientSocket(), &size, sizeof(size));
+	  if (n == -1) {
+	    printer.printMessage(errorWritingToSocket());
+	    return;
 	  }
 
 		// write message
-		if (!this->is_server_closed(channel_.getClientSocket())) {
-		  n = write(channel_.getClientSocket(), msg.c_str(), strlen(msg.c_str()));
-	    if (n == -1) {
-	      printer.printMessage(errorWritingToSocket());
-	    }
-		} else {
-      throw("something went wrong with the server.\n");
-    }
+	  n = write(channel_.getClientSocket(), msg.c_str(), strlen(msg.c_str()));
+	  if (n == -1) {
+	    printer.printMessage(errorWritingToSocket());
+	  }
+
 	}
 }
 
 void LocalOnlinePlayer::endGame(Printer& printer) const {
 	sendMove(END, printer);//send close
-}
-
-bool LocalOnlinePlayer::is_server_closed(const int cs) const {
-  pollfd pfd;
-  pfd.fd = cs;
-  pfd.events = POLLIN | POLLHUP | POLLRDNORM;
-  pfd.revents = 0;
-
-  // call poll with a timeout of 100 ms
-  if(poll(&pfd, 1, 100) > 0) {
-    // if result > 0, this means that there is either data available on the
-    // socket, or the socket has been closed
-    char buffer[32];
-    if(recv(cs, buffer, sizeof(buffer), MSG_PEEK | MSG_DONTWAIT) == 0) {
-      // if recv returns zero, that means the connection has been closed:
-      return true;
-    }
-  }
-  return false;
 }

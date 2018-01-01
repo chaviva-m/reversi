@@ -30,19 +30,19 @@ void GameSetUp::setPlayersMenu() {
 		input = convertStrToPoint(str_input);
 		switch(input) {
 			case(CONSOLE_RIVAL):
-              valid = true;
+        valid = true;
 			  this->players_ = this->consolePlayers();
 			  break;
 			case(AI_RIVAL):
-              valid = true;
+        valid = true;
 		    this->players_ = this->AIAndConsolePlayers();
 			  break;
 			case(ONLINE_RIVAL):
-              valid = true;
+        valid = true;
 			  this->players_ = this->onlinePlayers();
 			  break;
-			case(NONE):
-			  exit(-1);
+			case(EXIT):
+			    exit(0);
 		  default:
 		    this->printer_->printMessage(invalidInput());
 			  break;
@@ -73,9 +73,11 @@ Printer* GameSetUp::consoleInterface() {
 map<Color,Player*> GameSetUp::consolePlayers() {
   map<Color,Player*> players;
   for (int i = BLACK; i < LAST_COLOR; i++) {
-    this->printer_->printMessage(getPlayerName((Color((i)))));
     string name;
-    getline(cin, name);
+    while(name.empty()) {
+      this->printer_->printMessage(getPlayerName((Color((i)))));
+      getline(cin, name);
+    }
     players[Color(i)] = new HumanPlayer(name, Color(i));
   }
   return players;
@@ -85,9 +87,11 @@ map<Color,Player*> GameSetUp::AIAndConsolePlayers() {
   map<Color,Player*> players;
   int i;
   for (i = BLACK; i < LAST_COLOR-1; i++) {
-    this->printer_->printMessage(getPlayerName((Color((i)))));
     string name;
-    getline(cin, name);
+    while (name.empty()) {
+      this->printer_->printMessage(getPlayerName((Color((i)))));
+      getline(cin, name);
+    }
     players[Color(i)] = new HumanPlayer(name, Color(i));
   }
   players[Color(i)] = new AIPlayer("AI", Color(i));

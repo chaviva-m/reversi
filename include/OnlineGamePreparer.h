@@ -17,6 +17,7 @@
 #include "Printer.h"
 #include "RemoteOnlinePlayer.h"
 
+#include <csignal>
 #include <fstream>
 #include <iostream>
 #include <map>
@@ -72,10 +73,6 @@ private:
    * return int. else- return 0.
    */
   int convertStrToInt(const string& input) const;
-  /*
-   * checks if server socket is closed.
-   */
-  bool is_server_closed(const int cs) const;
 
   //data members
   std::map<Color,Player*> players_;

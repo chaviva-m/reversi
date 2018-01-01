@@ -21,9 +21,9 @@ string readStringFromSocket(int length, int socket) {
 	while (length >0) {
 		r = read(socket, &letter, sizeof(letter));
 		if (r == -1) {
-			throw(errorReadingFromSocket());
+			throw("Game was disconnected.\n");
 		} else if (r == 0) {
-      throw("Something went wrong with the server.\n");
+      throw("Game was disconnected.\n");
     }
 		str.append(1,letter);
 		length -= 1;
@@ -56,7 +56,7 @@ Status PlayDecoder(string message, int* row, int* col) {
 
 // this method is being called ONLY IF possibleMoves isn't empty.
 Point RemoteOnlinePlayer::decideOnAMove(Board& board,
-    std::vector<Cell*>& possibleMoves, GameLogic& logic, Printer& printer) { //CHANGE!! recieving two ints
+    std::vector<Cell*>& possibleMoves, GameLogic& logic, Printer& printer) {
 
     printer.printMessage(waitingForMove());
     int row, col;
@@ -64,21 +64,21 @@ Point RemoteOnlinePlayer::decideOnAMove(Board& board,
     //read row
     int r = read(channel_.getClientSocket(), &row, sizeof(row));
     if (r == -1) {
-    	throw(errorReadingFromSocket());
+    	throw("Error reading from socket.\n");
     } else if (r == 0) {
-      throw("Something went wrong with the server.\n");
+      throw("Game was disconnected.\n");
     }
 
     //read col
     r = read(channel_.getClientSocket(), &col, sizeof(col));
     if (r == -1) {
-      throw(errorReadingFromSocket());
+      throw("Error reading from socket.\n");
     } else if (r == 0) {
-      throw("Something went wrong with the server.\n");
+      throw("Game was disconnected.\n");
     }
 
     if (row < 0 || col < 0) {
-  	  throw "Game was disconnected.\n";
+  	  throw("Game was disconnected.\n");
     }
   return Point(row, col);
 }
@@ -89,26 +89,23 @@ void RemoteOnlinePlayer::hasNoMoves(Printer& printer) {
 	//read row
 	int r = read(channel_.getClientSocket(), &row, sizeof(row));
 	if (r == -1) {
-	    throw(errorReadingFromSocket());
+	    throw("Error reading from socket.\n");
 	} else if (r == 0) {
-    throw("Something went wrong with the server.\n");
+    throw("Game was disconnected.\n");
   }
 
 	//read col
 	r = read(channel_.getClientSocket(), &col, sizeof(col));
 	if (r == -1) {
-	    throw(errorReadingFromSocket());
+	    throw("Error reading from socket.\n");
 	} else if (r == 0) {
-    throw("Something went wrong with the server.\n");
+    throw("Game was disconnected.\n");
   }
 
 	if(row != -1 || col != -1) {
-		throw "Something went wrong with the other player.\n";
+		throw("Game was disconnected.\n");
 	}
 }
-
-
-
 
 void RemoteOnlinePlayer::endTurn(Point* move, Printer& printer) const {
   if (move != NULL) {
@@ -116,4 +113,28 @@ void RemoteOnlinePlayer::endTurn(Point* move, Printer& printer) const {
   } else {
     printer.printMessage(noPossibleMovesForPlayer(color_));
   }
+}
+
+void RemoteOnlinePlayer::endGame(Printer& printer) {
+
+  string msg = "close";
+  int n;
+
+  //ignore broken pipe signal, if server is closed result of write will be -1
+  signal(SIGPIPE, SIG_IGN);
+
+  // write length
+  int size = strlen(msg.c_str());
+  n = write(channel_.getClientSocket(), &size, sizeof(size));
+  if (n == -1) {
+    printer.printMessage(errorWritingToSocket());
+    return;
+  }
+
+  // write message
+  n = write(channel_.getClientSocket(), msg.c_str(), strlen(msg.c_str()));
+  if (n == -1) {
+    printer.printMessage(errorWritingToSocket());
+  }
+
 }

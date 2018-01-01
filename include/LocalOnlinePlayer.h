@@ -15,10 +15,10 @@
 #include "Point.h"
 
 #include <arpa/inet.h>
+#include <csignal>
 #include <iostream>
 #include <netinet/in.h>
 #include <netdb.h>
-#include <poll.h>
 #include <string.h>
 #include <sys/socket.h>
 #include <unistd.h>
@@ -40,10 +40,6 @@ public:
    * send message to server that game is over
    */
   virtual void endGame(Printer& printer) const;
-  /*
-   * checks if server socket is closed.
-   */
-  bool is_server_closed(const int cs) const;
   /*
    * destructor
    */

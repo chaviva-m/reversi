@@ -19,18 +19,22 @@ void OnlineGamePreparer::prepareOnlineGame() {
   this->gameMenu();
   //get name
   map<Color,Player*> players;
-  this->printer_.printMessage(getPlayerName(LAST_COLOR));
   string name;
-  getline(cin, name);
+  while(name.empty()) {
+    this->printer_.printMessage(getPlayerName(LAST_COLOR));
+    getline(cin, name);
+  }
   printer_.printMessage(waitingForAnotherPlayer());
   //get color from server
   int color;
   int n = read(channel_->getClientSocket(), &color, sizeof(color));
   if (n == -1) {
-    throw(errorReadingFromSocket());
+    throw("Error reading from socket.\n");
   } else if (n == 0) {
     throw("Something went wrong with the server.\n");
     return;
+  } else if (color < 0) {
+    throw("Something went wrong with the server.\n");
   }
   //create players
   printer_.printMessage(declareColor(Color(color-1)));
@@ -103,7 +107,7 @@ void OnlineGamePreparer::listAvailableOnlineGames(const string& command_msg) {
   int length;
     int n = read(channel_->getClientSocket(), &length, sizeof(length));
     if (n == -1) {
-      throw(errorReadingFromSocket());
+      throw("Something went wrong with the server.\n");
     } else if (n == 0) {
       throw("Something went wrong with the server.\n");
     }
@@ -113,7 +117,7 @@ void OnlineGamePreparer::listAvailableOnlineGames(const string& command_msg) {
   while (length >0) {
     n = read(channel_->getClientSocket(), &letter, sizeof(letter));
     if (n == -1) {
-      throw(errorReadingFromSocket());
+      throw("Error reading from socket.\n");
     } else if (n == 0) {
       throw("Something went wrong with the server.\n");
     }
@@ -150,7 +154,7 @@ bool OnlineGamePreparer::startOnlineGame(const string& command) {
 
   int n = read(channel_->getClientSocket(), &result, sizeof(result));
   if (n == -1) {
-    throw(errorReadingFromSocket());
+    throw("Error reading from socket.\n");
   } else if (n == 0) {
     throw("Something went wrong with the server.\n");
   }
@@ -170,7 +174,7 @@ CommunicationChannel* OnlineGamePreparer::openCommunicationChannel() {
   ifstream server_info;
   server_info.open("server_info.txt");
   if(!server_info.is_open()) {
-    throw(errorOpeningFile());
+    throw("Cannot open file with server information.\n");
   }
   string server_IP;
   getline(server_info, server_IP);
@@ -184,39 +188,18 @@ CommunicationChannel* OnlineGamePreparer::openCommunicationChannel() {
 void OnlineGamePreparer::sendCommandToServer(const string& command_msg) {
   int length = strlen(command_msg.c_str());
   int n;
-  if (!is_server_closed(channel_->getClientSocket())) {
-    n = write(channel_->getClientSocket(), &length, sizeof(length));
-  } else {
+
+  //ignore broken pipe signal, if server is closed result of write will be -1
+  signal(SIGPIPE, SIG_IGN);
+
+  //write length of command
+  n = write(channel_->getClientSocket(), &length, sizeof(length));
+  if (n == -1) {
     throw("something went wrong with the server.\n");
   }
+  //write command
+  n = write(channel_->getClientSocket(), command_msg.c_str(), length);
   if (n == -1) {
-    throw(errorWritingToSocket());
-  }
-  if (!is_server_closed(channel_->getClientSocket())) {
-    n = write(channel_->getClientSocket(), command_msg.c_str(), length);
-  } else {
     throw("something went wrong with the server.\n");
   }
-  if (n == -1) {
-    throw(errorWritingToSocket());
-  }
-}
-
-bool OnlineGamePreparer::is_server_closed(const int cs) const {
-  pollfd pfd;
-  pfd.fd = cs;
-  pfd.events = POLLIN | POLLHUP | POLLRDNORM;
-  pfd.revents = 0;
-
-  // call poll with a timeout of 100 ms
-  if(poll(&pfd, 1, 100) > 0) {
-    // if result > 0, this means that there is either data available on the
-    // socket, or the socket has been closed
-    char buffer[32];
-    if(recv(cs, buffer, sizeof(buffer), MSG_PEEK | MSG_DONTWAIT) == 0) {
-      // if recv returns zero, that means the connection has been closed:
-      return true;
-    }
-  }
-  return false;
 }
