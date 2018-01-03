@@ -15,7 +15,6 @@ namespace message {
     msg << CONSOLE_RIVAL << ". a human local player" << endl;
     msg << AI_RIVAL << ". an AI player" << endl;
     msg << ONLINE_RIVAL << ". a remote player" << endl;
-    msg << EXIT << ". exit game" << endl;
     return msg.str();
   }
 

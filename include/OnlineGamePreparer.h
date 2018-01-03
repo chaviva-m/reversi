@@ -40,6 +40,11 @@ public:
    * access online playeres
    */
   std::map<Color,Player*> getOnlinePlayers();
+  /*
+   * returns the address of the CommunicationChannel
+   */
+  CommunicationChannel* getChannel();
+
 
 private:
   /*
@@ -73,6 +78,15 @@ private:
    * return int. else- return 0.
    */
   int convertStrToInt(const string& input) const;
+  /*
+   * create a communication channel
+   */
+  void creatChannel();
+  /*
+   *delete the allocated communication channel
+   */
+  void deleteChannel();
+
 
   //data members
   std::map<Color,Player*> players_;

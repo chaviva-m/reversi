@@ -13,12 +13,13 @@ using namespace std;
 
 //run game
 int main() {
+	GameSetUp g = GameSetUp();
   try {
-    GameSetUp g = GameSetUp(4,4);
-    g.playGame();
+    g.setPlayers();
+	g.playGame();
   } catch (const char* msg) {
     cout << endl << msg << endl;
-    return -1;
+    return 0;
   }
   return 0;
 }

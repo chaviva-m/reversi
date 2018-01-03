@@ -52,6 +52,11 @@ public:
    * output: void
    */
   ~GameSetUp();
+  /*
+   * set the game's type players.
+   */
+  void setPlayers();
+
 private:
   /**
    * return standard game logic

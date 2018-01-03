@@ -15,7 +15,6 @@ OnlineGamePreparer::OnlineGamePreparer(Printer& printer,
 }
 
 void OnlineGamePreparer::prepareOnlineGame() {
-  //this->remotePlayerMenu();
   this->gameMenu();
   //get name
   map<Color,Player*> players;
@@ -45,6 +44,9 @@ void OnlineGamePreparer::prepareOnlineGame() {
   players[Color(color % LAST_COLOR)] = new RemoteOnlinePlayer
         (second_color.str(), Color(color % LAST_COLOR), *channel_);
   this->players_ = players;
+}
+CommunicationChannel* OnlineGamePreparer::getChannel() {
+	return this->channel_;
 }
 
 std::map<Color,Player*> OnlineGamePreparer::getOnlinePlayers() {
@@ -95,20 +97,17 @@ void OnlineGamePreparer::gameMenu() {
 
 void OnlineGamePreparer::listAvailableOnlineGames(const string& command_msg) {
   //connect to server
-  try {
-    this->channel_ = this->openCommunicationChannel();
-    this->channel_->connectToServer(printer_);
-  } catch (const char *msg) {
-    throw(msg);
-  }
+	this->creatChannel();
 
   this->sendCommandToServer(command_msg);
   //get length of str input
   int length;
     int n = read(channel_->getClientSocket(), &length, sizeof(length));
     if (n == -1) {
+	  this->deleteChannel();
       throw("Something went wrong with the server.\n");
     } else if (n == 0) {
+	  this->deleteChannel();
       throw("Something went wrong with the server.\n");
     }
   //get str input of list of games
@@ -117,8 +116,10 @@ void OnlineGamePreparer::listAvailableOnlineGames(const string& command_msg) {
   while (length >0) {
     n = read(channel_->getClientSocket(), &letter, sizeof(letter));
     if (n == -1) {
+	  this->deleteChannel();
       throw("Error reading from socket.\n");
     } else if (n == 0) {
+	  this->deleteChannel();
       throw("Something went wrong with the server.\n");
     }
     str.append(1,letter);
@@ -128,16 +129,25 @@ void OnlineGamePreparer::listAvailableOnlineGames(const string& command_msg) {
   this->printer_.printMessage("\n");
   this->printer_.printMessage(str);
   this->printer_.printMessage("\n");
+  this->deleteChannel();
+}
+void OnlineGamePreparer::creatChannel() {
+	//new CommunicationChannel
+	this->channel_ = this->openCommunicationChannel();
+	try {
+		this->channel_->connectToServer(printer_);
+	} catch (const char *msg) {
+		this->deleteChannel();
+		throw(msg);
+	}
+}
+void OnlineGamePreparer::deleteChannel() {
+	delete channel_;
 }
 
 bool OnlineGamePreparer::startOnlineGame(const string& command) {
   //connect to server
-  try {
-    this->channel_ = this->openCommunicationChannel();
-    this->channel_->connectToServer(printer_);
-  } catch (const char *msg) {
-    throw(msg);
-  }
+	this->creatChannel();
 
   string game_name;
   while(game_name.empty()) {
@@ -154,15 +164,18 @@ bool OnlineGamePreparer::startOnlineGame(const string& command) {
 
   int n = read(channel_->getClientSocket(), &result, sizeof(result));
   if (n == -1) {
+	this->deleteChannel();
     throw("Error reading from socket.\n");
   } else if (n == 0) {
-    throw("Something went wrong with the server.\n");
+	 this->deleteChannel();
+     throw("Something went wrong with the server.\n");
   }
 
   if (result == -1) {
     printer_.printMessage("\n");
     printer_.printMessage(invalidGame(command, game_name));
     printer_.printMessage("\n");
+    this->deleteChannel();
     return false;
   } else {
     return true;

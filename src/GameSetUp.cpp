@@ -14,7 +14,9 @@ GameSetUp::GameSetUp(int board_rows, int board_cols) {
   this->logic_ = this->standardLogic();
   this->printer_ = this->consoleInterface();
   this->channel_ = NULL;
-  this->setPlayersMenu();
+}
+void GameSetUp::setPlayers() {
+	this->setPlayersMenu();
 }
 
 void GameSetUp::setPlayersMenu() {
@@ -41,8 +43,6 @@ void GameSetUp::setPlayersMenu() {
         valid = true;
 			  this->players_ = this->onlinePlayers();
 			  break;
-			case(EXIT):
-			    exit(0);
 		  default:
 		    this->printer_->printMessage(invalidInput());
 			  break;
@@ -102,6 +102,7 @@ map<Color, Player*> GameSetUp::onlinePlayers() {
   map<Color,Player*> players;
   OnlineGamePreparer prep = OnlineGamePreparer(*printer_, channel_);
   players = prep.getOnlinePlayers();
+  this->channel_ = prep.getChannel();
   return players;
 }
 
@@ -111,6 +112,7 @@ void GameSetUp::playGame() const {
 }
 
 GameSetUp::~GameSetUp() {
+  cout<<"delete ~" <<endl;
   delete this->board_;
   delete this->logic_;
   delete this->printer_;
