@@ -87,6 +87,8 @@ private:
    */
   void deleteChannel();
 
+  void throwError(const char* msg);
+
 
   //data members
   std::map<Color,Player*> players_;
