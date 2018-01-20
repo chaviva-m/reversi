@@ -82,11 +82,10 @@ private:
    * create a communication channel
    */
   void creatChannel();
-  /*
-   *delete the allocated communication channel
-   */
-  void deleteChannel();
 
+  /*
+   *delete the allocated communication channel (if exists) and throws Exception.
+   */
   void throwError(const char* msg);
 
 

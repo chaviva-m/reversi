@@ -16,7 +16,7 @@ OnlineGamePreparer::OnlineGamePreparer(Printer& printer,
 
 void OnlineGamePreparer::throwError(const char* msg) {
 	if (this->channel_!= NULL) {
-		this->deleteChannel();
+		delete channel_;
 	}
 	throw msg;
 }
@@ -36,14 +36,11 @@ void OnlineGamePreparer::prepareOnlineGame() {
   int n = read(channel_->getClientSocket(), &color, sizeof(color));
   if (n == -1) {
 	  throwError("Error reading from socket.\n");
-//    throw("Error reading from socket.\n");
   } else if (n == 0) {
 	  throwError("Something went wrong with the server.\n");
-	  //    throw("Something went wrong with the server.\n");
     return;
   } else if (color < 0) {
 	  throwError("Something went wrong with the server.\n");
-//	  throw("Something went wrong with the server.\n");
   }
   //create players
   printer_.printMessage(declareColor(Color(color-1)));
@@ -114,13 +111,9 @@ void OnlineGamePreparer::listAvailableOnlineGames(const string& command_msg) {
   int length;
     int n = read(channel_->getClientSocket(), &length, sizeof(length));
     if (n == -1) {
-//	  this->deleteChannel();
 	  throwError("Something went wrong with the server.\n");
-//      throw("Something went wrong with the server.\n");
     } else if (n == 0) {
-//	  this->deleteChannel();
 	  throwError("Something went wrong with the server.\n");
-//      throw("Something went wrong with the server.\n");
     }
   //get str input of list of games
   string str;
@@ -128,13 +121,9 @@ void OnlineGamePreparer::listAvailableOnlineGames(const string& command_msg) {
   while (length >0) {
     n = read(channel_->getClientSocket(), &letter, sizeof(letter));
     if (n == -1) {
-//	  this->deleteChannel();
 	  throwError("Error reading from socket.\n");
-      throw("Error reading from socket.\n");
     } else if (n == 0) {
-//	  this->deleteChannel();
     	throwError("Something went wrong with the server.\n");
-//      throw("Something went wrong with the server.\n");
     }
     str.append(1,letter);
     length -= 1;
@@ -143,7 +132,7 @@ void OnlineGamePreparer::listAvailableOnlineGames(const string& command_msg) {
   this->printer_.printMessage("\n");
   this->printer_.printMessage(str);
   this->printer_.printMessage("\n");
-  this->deleteChannel();
+	delete channel_;
 }
 void OnlineGamePreparer::creatChannel() {
 	//new CommunicationChannel
@@ -152,12 +141,7 @@ void OnlineGamePreparer::creatChannel() {
 		this->channel_->connectToServer(printer_);
 	} catch (const char *msg) {
 		throwError(msg);
-//		this->deleteChannel();
-//		throw(msg);
 	}
-}
-void OnlineGamePreparer::deleteChannel() {
-	delete channel_;
 }
 
 bool OnlineGamePreparer::startOnlineGame(const string& command) {
@@ -179,20 +163,16 @@ bool OnlineGamePreparer::startOnlineGame(const string& command) {
 
   int n = read(channel_->getClientSocket(), &result, sizeof(result));
   if (n == -1) {
-//	this->deleteChannel();
 	throwError("Error reading from socket.\n");
-//    throw("Error reading from socket.\n");
   } else if (n == 0) {
-//	 this->deleteChannel();
 	  throwError("Something went wrong with the server.\n");
-//	  throw("Something went wrong with the server.\n");
   }
 
   if (result == -1) {
     printer_.printMessage("\n");
     printer_.printMessage(invalidGame(command, game_name));
     printer_.printMessage("\n");
-    this->deleteChannel();
+    delete this->channel_;
     return false;
   } else {
     return true;
@@ -205,7 +185,6 @@ CommunicationChannel* OnlineGamePreparer::openCommunicationChannel() {
   server_info.open("server_info.txt");
   if(!server_info.is_open()) {
 	  throwError("Cannot open file with server information.\n");
-//    throw("Cannot open file with server information.\n");
   }
   string server_IP;
   getline(server_info, server_IP);
@@ -227,12 +206,10 @@ void OnlineGamePreparer::sendCommandToServer(const string& command_msg) {
   n = write(channel_->getClientSocket(), &length, sizeof(length));
   if (n == -1) {
 	  throwError("something went wrong with the server.\n");
-//    throw("something went wrong with the server.\n");
   }
   //write command
   n = write(channel_->getClientSocket(), command_msg.c_str(), length);
   if (n == -1) {
 	  throwError("something went wrong with the server.\n");
-//    throw("something went wrong with the server.\n");
   }
 }

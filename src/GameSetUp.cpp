@@ -112,7 +112,6 @@ void GameSetUp::playGame() const {
 }
 
 GameSetUp::~GameSetUp() {
-  cout<<"delete ~" <<endl;
   delete this->board_;
   delete this->logic_;
   delete this->printer_;
