@@ -127,14 +127,13 @@ void RemoteOnlinePlayer::endGame(Printer& printer) {
   int size = strlen(msg.c_str());
   n = write(channel_.getClientSocket(), &size, sizeof(size));
   if (n == -1) {
-    printer.printMessage(errorWritingToSocket());
     return;
   }
 
   // write message
   n = write(channel_.getClientSocket(), msg.c_str(), strlen(msg.c_str()));
   if (n == -1) {
-    printer.printMessage(errorWritingToSocket());
+    return;
   }
 
 }
