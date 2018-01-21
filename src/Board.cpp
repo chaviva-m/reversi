@@ -82,7 +82,7 @@ Board::~Board() {
   for (int i = 0; i < this->rows_; i++) {
     delete[] this->board_[i];
   }
-  delete[] this->board_;//CHANGE
+  delete[] this->board_;
 }
 
 ostream& operator << (ostream &out, const Board &board) {
